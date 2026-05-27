@@ -1,4 +1,4 @@
-# Noelclaw — Documentation
+﻿# Noelclaw — Documentation
 
 Noelclaw is an AI-native crypto platform built on autonomous agents, real-time market intelligence, and on-chain execution. Users chat with specialized AI agents, research any crypto topic on demand, earn credits through an arcade, manage crypto wallets, and automate DeFi workflows — all in one interface.
 
@@ -21,7 +21,7 @@ Noelclaw is an AI-native crypto platform built on autonomous agents, real-time m
 | **NoelBuild** | AI app generator — describe any app in plain English, get a working HTML/JS app |
 | **Game to Earn** | 4 arcade games that pay out credits |
 | **Noel Framework** | Sentinel-gated agent execution — define what your AI can and can't do before it runs |
-| **MCP Skill** | 43 tools accessible via `npx @noelclaw/research@latest` in Claude, Cursor, Hermes, Windsurf, or any MCP client |
+| **MCP Skill** | 43 tools accessible via `npx @noelclaw/mcp@latest` in Claude, Cursor, Hermes, Windsurf, or any MCP client |
 
 ---
 

@@ -1,15 +1,15 @@
-# Add to Hermes
+﻿# Add to Hermes
 
 Add Noelclaw as an MCP skill in Hermes. Once connected, all 16 Noel tools are available directly in your agent conversations.
 
-No build step needed — runs via `npx @noelclaw/research`.
+No build step needed — runs via `npx @noelclaw/mcp`.
 
 ---
 
 ## Method 1 — CLI (Fastest)
 
 ```bash
-hermes mcp add noelclaw --command npx --args @noelclaw/research
+hermes mcp add noelclaw --command npx --args @noelclaw/mcp
 ```
 
 Reload without restarting:
@@ -28,7 +28,7 @@ mcp_servers:
   noelclaw:
     command: npx
     args:
-      - "@noelclaw/research"
+      - "@noelclaw/mcp"
     timeout: 30
     connect_timeout: 10
 ```
@@ -43,7 +43,7 @@ Run `/reload-mcp` in any Hermes session.
 /list-tools
 ```
 
-You should see all 16 tools including `get_market_data`, `get_latest_signal`, `get_whale_alerts`, `swap_tokens`, `get_portfolio`, and more.
+You should see all 43 tools including `get_market_data`, `get_latest_signal`, `get_smart_money_alerts`, `swap_tokens`, `research`, and more.
 
 ---
 
@@ -70,12 +70,6 @@ research query "What is the latest on Solana ecosystem?"
 ```
 Noel searches the web and returns a structured analysis with key findings, market impact, and sentiment.
 
-**DeFi portfolio:**
-```
-get_portfolio userId: "my-id"
-```
-Auto-creates a Base mainnet wallet on first use.
-
 **Set up Telegram:**
 ```
 set_telegram userId: "my-id" telegramBotToken: "..." telegramChatId: "..."
@@ -90,7 +84,7 @@ mcp_servers:
   noelclaw:
     command: npx
     args:
-      - "@noelclaw/research"
+      - "@noelclaw/mcp"
     env:
       NOELCLAW_CONVEX_URL: https://your-deployment.convex.site
     timeout: 30

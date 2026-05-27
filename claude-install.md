@@ -1,19 +1,19 @@
-# Add to Claude Desktop & Claude Code
+﻿# Add to Claude Desktop & Claude Code
 
-No build step needed. The Noelclaw MCP server runs via `npx @noelclaw/research`.
+No build step needed. The Noelclaw MCP server runs via `npx @noelclaw/mcp`.
 
 ---
 
 ## Claude Code
 
 ```bash
-claude mcp add noelclaw -- npx @noelclaw/research
+claude mcp add noelclaw -- npx @noelclaw/mcp
 ```
 
 Verify it's registered:
 ```bash
 claude mcp list
-# noelclaw   npx @noelclaw/research
+# noelclaw   npx @noelclaw/mcp
 ```
 
 Use tools in any conversation:
@@ -36,7 +36,7 @@ Edit: `~/Library/Application Support/Claude/claude_desktop_config.json`
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/research"]
+      "args": ["@noelclaw/mcp"]
     }
   }
 }
@@ -51,7 +51,7 @@ Edit: `%APPDATA%\Claude\claude_desktop_config.json`
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/research"]
+      "args": ["@noelclaw/mcp"]
     }
   }
 }
@@ -70,7 +70,7 @@ If you're running your own Convex deployment:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/research"],
+      "args": ["@noelclaw/mcp"],
       "env": {
         "NOELCLAW_CONVEX_URL": "https://your-deployment.convex.site"
       }

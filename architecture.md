@@ -1,4 +1,4 @@
-# Architecture Overview
+﻿# Architecture Overview
 
 ## System Diagram
 
@@ -13,7 +13,7 @@
 └────────────────────────────┼─────────────────────────────┘
                              │
 ┌────────────────────────────▼─────────────────────────────┐
-│            Cloudflare Worker — api.noelclaw.xyz           │
+│            Cloudflare Worker — api.noelclaw.com           │
 │   Rate limit: 100 req/min/IP  |  CORS  |  Header proxy   │
 └────────────────────────────┬─────────────────────────────┘
                              │
@@ -48,8 +48,8 @@
                   └────────────────────┘
 
                     ┌────────────────────────┐
-                    │   MCP Server v1.9.0    │
-                    │  @noelclaw/research    │
+                    │   MCP Server v1.4.1    │
+                    │   @noelclaw/mcp        │
                     │  13 modules, 43 tools  │
                     │  stdio transport       │
                     └───────────┬────────────┘
@@ -90,14 +90,14 @@ Convex is the entire backend — database, serverless functions, scheduling, and
 | Database | Convex (document DB with real-time subscriptions) |
 | Serverless | Actions (`"use node"`) for external API calls |
 | Scheduling | Cron jobs: research (5 min), signals (daily 08:00 UTC), whale alerts (6h), weekly recap (Sunday 23:55 UTC) |
-| HTTP | `convex.site` endpoints for MCP + webhooks, proxied via `api.noelclaw.xyz` |
+| HTTP | `convex.site` endpoints for MCP + webhooks, proxied via `api.noelclaw.com` |
 | Auth | JWT validation via Privy tokens + Noelclaw session tokens |
 
 ---
 
 ## Cloudflare Proxy Layer
 
-`api.noelclaw.xyz` is a Cloudflare Worker that sits in front of the Convex backend:
+`api.noelclaw.com` is a Cloudflare Worker that sits in front of the Convex backend:
 
 - **Hides** the raw Convex URL from users and MCP configs
 - **Rate limiting:** 100 req/min per IP (KV-based fixed-window counter)
@@ -207,24 +207,20 @@ outcomeTracker.ts
 ## Data Flow: DeFi Wallet (MCP)
 
 ```
-MCP client calls swap_tokens / send_token / get_portfolio
+MCP client calls swap_tokens / send_token
       │
       ▼
 MCP server (local Node.js process)
       │
-      ├── get_portfolio:
-      │     POST api.noelclaw.xyz/mcp/defi/portfolio
-      │     → Convex queries Alchemy for Base balances
-      │
       ├── swap_tokens:
-      │     POST api.noelclaw.xyz/mcp/defi/swap
+      │     POST api.noelclaw.com/mcp/defi/swap
       │     → Convex fetches 0x Permit2 quote
       │     → returns quote to MCP server
       │     → MCP server signs + broadcasts locally (ethers.js)
       │     → transaction signed on user's machine, not server
       │
       └── send_token:
-            POST api.noelclaw.xyz/mcp/defi/send
+            POST api.noelclaw.com/mcp/defi/send
             → Convex builds tx params
             → MCP server signs + broadcasts locally
 ```
@@ -233,7 +229,7 @@ All transaction signing happens in the MCP server process on the user's machine.
 
 ---
 
-## MCP Architecture (v1.9.0)
+## MCP Architecture (v1.4.1)
 
 The MCP server is split into 13 modules:
 
@@ -265,7 +261,7 @@ mcp-server/src/
 ## Security Model
 
 - **API keys** — stored as Convex env vars, never in client bundle or MCP server
-- **Convex URL** — hidden behind `api.noelclaw.xyz` Cloudflare proxy
+- **Convex URL** — hidden behind `api.noelclaw.com` Cloudflare proxy
 - **Wallet keys (platform)** — AES-256-CBC encrypted before storing in DB
 - **Wallet keys (MCP)** — stored locally at `~/.noelclaw/wallet.json`, encrypted with a machine-derived key, never leave the user's device
 - **Auth** — Privy JWT tokens or Noelclaw session tokens validated per request; MCP uses wallet-native signatures

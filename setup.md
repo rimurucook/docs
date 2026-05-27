@@ -1,6 +1,6 @@
-# How to Setup
+﻿# How to Setup
 
-Noelclaw's MCP server runs via `npx` — no build step, no cloning, no local files needed. One command and all 16 tools are available in any MCP-compatible AI client.
+Noelclaw's MCP server runs via `npx` — no build step, no cloning, no local files needed. One command and all 43 tools are available in any MCP-compatible AI client.
 
 **Requirement:** Node.js >= 18 installed on your machine. That's it.
 
@@ -9,13 +9,13 @@ Noelclaw's MCP server runs via `npx` — no build step, no cloning, no local fil
 ## Claude Code
 
 ```bash
-claude mcp add noelclaw -- npx @noelclaw/research
+claude mcp add noelclaw -- npx @noelclaw/mcp
 ```
 
 Verify:
 ```bash
 claude mcp list
-# noelclaw   npx @noelclaw/research
+# noelclaw   npx @noelclaw/mcp
 ```
 
 Done. Use any Noel tool directly in conversation:
@@ -38,7 +38,7 @@ research query: "Latest BTC news and market outlook"
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/research"]
+      "args": ["@noelclaw/mcp"]
     }
   }
 }
@@ -57,7 +57,7 @@ Save the file, then **restart Claude Desktop**. Tools appear automatically in th
 3. Add server:
    - Name: `noelclaw`
    - Command: `npx`
-   - Args: `@noelclaw/research`
+   - Args: `@noelclaw/mcp`
 
 ### Via Config File
 
@@ -68,7 +68,7 @@ Edit `~/.cursor/mcp.json` (create if it doesn't exist):
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/research"]
+      "args": ["@noelclaw/mcp"]
     }
   }
 }
@@ -87,7 +87,7 @@ Edit `~/.windsurf/mcp_config.json`:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/research"]
+      "args": ["@noelclaw/mcp"]
     }
   }
 }
@@ -102,7 +102,7 @@ Restart Windsurf.
 ### CLI (fastest)
 
 ```bash
-hermes mcp add noelclaw --command npx --args @noelclaw/research
+hermes mcp add noelclaw --command npx --args @noelclaw/mcp
 ```
 
 Then reload:
@@ -119,7 +119,7 @@ mcp_servers:
   noelclaw:
     command: npx
     args:
-      - "@noelclaw/research"
+      - "@noelclaw/mcp"
     timeout: 30
     connect_timeout: 10
 ```
@@ -135,7 +135,7 @@ Use this generic config anywhere that accepts `command / args / env`:
 ```json
 {
   "command": "npx",
-  "args": ["@noelclaw/research"]
+  "args": ["@noelclaw/mcp"]
 }
 ```
 
@@ -144,7 +144,7 @@ With optional custom backend:
 ```json
 {
   "command": "npx",
-  "args": ["@noelclaw/research"],
+  "args": ["@noelclaw/mcp"],
   "env": {
     "NOELCLAW_CONVEX_URL": "https://your-deployment.convex.site"
   }
@@ -161,7 +161,7 @@ In any client that supports tool listing:
 ```
 list all noelclaw tools
 ```
-Should show 16 tools.
+Should show 43 tools.
 
 ### 2. Get live market data
 
@@ -186,15 +186,7 @@ How to get your Telegram credentials:
 2. Start a chat with your new bot → send any message
 3. Visit `https://api.telegram.org/bot<TOKEN>/getUpdates` → copy the `chat.id`
 
-### 4. Get your wallet
-
-```
-get_portfolio userId: "your-id"
-```
-
-Auto-creates an encrypted Base mainnet wallet on first call. Returns your wallet address and token balances.
-
-### 5. Research a topic
+### 4. Research a topic
 
 ```
 research query: "What is happening with Ethereum this week?"

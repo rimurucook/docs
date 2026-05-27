@@ -42,7 +42,6 @@ Require a Noelclaw session token (`NOELCLAW_SESSION_TOKEN`) or a per-call USDC p
 | Tool | Description |
 |------|-------------|
 | `get_token_data` | Price, 24h change, market cap, and volume for any specific token |
-| `get_portfolio` | Base wallet address and full token balances with USD values. Auto-creates wallet on first use |
 | `create_automation` | Create an automation in plain English — DCA, price alerts, conditional buys/sells, recurring updates |
 
 ### $0.01 USDC

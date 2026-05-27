@@ -1,6 +1,6 @@
-# Add to Cursor / Windsurf
+﻿# Add to Cursor / Windsurf
 
-No build step needed. The Noelclaw MCP server runs via `npx @noelclaw/research`.
+No build step needed. The Noelclaw MCP server runs via `npx @noelclaw/mcp`.
 
 ---
 
@@ -13,7 +13,7 @@ No build step needed. The Noelclaw MCP server runs via `npx @noelclaw/research`.
 3. Add a new server:
    - **Name:** `noelclaw`
    - **Command:** `npx`
-   - **Args:** `@noelclaw/research`
+   - **Args:** `@noelclaw/mcp`
 
 ### Via Config File
 
@@ -24,7 +24,7 @@ Edit `~/.cursor/mcp.json` (create it if it doesn't exist):
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/research"]
+      "args": ["@noelclaw/mcp"]
     }
   }
 }
@@ -52,7 +52,7 @@ Edit `~/.windsurf/mcp_config.json`:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/research"]
+      "args": ["@noelclaw/mcp"]
     }
   }
 }
@@ -69,7 +69,7 @@ Restart Windsurf.
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/research"],
+      "args": ["@noelclaw/mcp"],
       "env": {
         "NOELCLAW_CONVEX_URL": "https://your-deployment.convex.site"
       }

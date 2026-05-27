@@ -1,4 +1,4 @@
-# Environment Variables
+﻿# Environment Variables
 
 All secrets are stored as Convex environment variables — never in the frontend bundle or MCP server.
 
@@ -53,9 +53,9 @@ The MCP server reads these from the local environment (set in your MCP client co
 
 | Variable | Purpose | Default |
 |----------|---------|---------|
-| `NOELCLAW_API_KEY` | Link to your noelclaw.xyz account | — (wallet-native auth used) |
+| `NOELCLAW_API_KEY` | Link to your noelclaw.com account | — (wallet-native auth used) |
 | `NOELCLAW_SESSION_TOKEN` | Alternative session token | — |
-| `NOELCLAW_CONVEX_URL` | Override API proxy URL | `https://api.noelclaw.xyz` |
+| `NOELCLAW_CONVEX_URL` | Override API proxy URL | `https://api.noelclaw.com` |
 | `NOELCLAW_PAYMENT_HEADER` | x402 payment proof header (single-use) | — |
 | `ALCHEMY_API_KEY` | Faster swap quotes and portfolio queries | — |
 | `GROK_API_KEY` | BYOK — forwarded as `X-User-Grok-Key` | — |
@@ -72,7 +72,7 @@ Example with all options in Claude Desktop config:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/research@latest"],
+      "args": ["@noelclaw/mcp@latest"],
       "env": {
         "NOELCLAW_API_KEY": "noel_sk_xxx",
         "ALCHEMY_API_KEY": "your-alchemy-key",

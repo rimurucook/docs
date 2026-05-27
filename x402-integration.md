@@ -1,4 +1,4 @@
-# x402 Integration Guide
+﻿# x402 Integration Guide
 
 Three ways to authenticate with Noelclaw MCP tools. Free tools work without any setup.
 
@@ -9,7 +9,7 @@ Three ways to authenticate with Noelclaw MCP tools. Free tools work without any 
 Get your session token from noelclaw.com → Settings → API. Set it as an env var when running the MCP server.
 
 ```bash
-NOELCLAW_SESSION_TOKEN=your_token_here npx @noelclaw/research
+NOELCLAW_SESSION_TOKEN=your_token_here npx @noelclaw/mcp
 ```
 
 Or in your MCP client config:
@@ -19,7 +19,7 @@ Or in your MCP client config:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/research"],
+      "args": ["@noelclaw/mcp"],
       "env": {
         "NOELCLAW_SESSION_TOKEN": "your_token_here"
       }
@@ -67,7 +67,7 @@ No transaction calldata or memo is required. The server verifies by matching the
 
 ```typescript
 // Using the built-in helper from the MCP server package
-import { buildPaymentHeader } from '@noelclaw/research';
+import { buildPaymentHeader } from '@noelclaw/mcp';
 
 const header = buildPaymentHeader(txHash, requestId);
 // → base64("0xYourTxHash:550e8400-e29b-41d4-a716-446655440000")
@@ -126,7 +126,7 @@ This does not bypass x402 — it only affects which Bankr account is billed for 
 ## Full x402 flow in Node.js
 
 ```typescript
-import { buildPaymentHeader } from '@noelclaw/research';
+import { buildPaymentHeader } from '@noelclaw/mcp';
 
 const CONVEX_SITE = 'https://valuable-fish-533.convex.site';
 

@@ -1,10 +1,10 @@
-# Quick Start
+﻿# Quick Start
 
 ---
 
 ## Option A — Use the Hosted Platform
 
-Go to [noelclaw.xyz](https://noelclaw.xyz), sign up, and you're in. No setup needed.
+Go to [noelclaw.com](https://noelclaw.com), sign up, and you're in. No setup needed.
 
 To add the MCP skill to your AI client (Claude, Cursor, Hermes, etc.), see [How to Setup](setup.md).
 
@@ -89,13 +89,6 @@ research query: "What is happening with Ethereum ETFs?"
 ```
 
 Noel searches the web and returns a structured analysis in seconds.
-
-**Check your portfolio:**
-```
-get_portfolio
-```
-
-Auto-creates an encrypted Base mainnet wallet on first use. Wallet is stored locally at `~/.noelclaw/wallet.json`.
 
 **Swap tokens:**
 ```

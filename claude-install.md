@@ -1,6 +1,6 @@
-﻿# Add to Claude Desktop & Claude Code
+# Add to Claude
 
-No build step needed. The Noelclaw MCP server runs via `npx @noelclaw/mcp`.
+Install the Noelclaw MCP skill in Claude Code or Claude Desktop. No build step — runs via `npx`.
 
 ---
 
@@ -10,41 +10,19 @@ No build step needed. The Noelclaw MCP server runs via `npx @noelclaw/mcp`.
 claude mcp add noelclaw -- npx @noelclaw/mcp
 ```
 
-Verify it's registered:
+Verify:
 ```bash
 claude mcp list
 # noelclaw   npx @noelclaw/mcp
-```
-
-Use tools in any conversation:
-```
-get_market_data
-get_latest_signal token: BTC
-research query: "Latest BTC news and market outlook"
 ```
 
 ---
 
 ## Claude Desktop
 
-### Mac
+**Mac** — Edit `~/Library/Application Support/Claude/claude_desktop_config.json`
 
-Edit: `~/Library/Application Support/Claude/claude_desktop_config.json`
-
-```json
-{
-  "mcpServers": {
-    "noelclaw": {
-      "command": "npx",
-      "args": ["@noelclaw/mcp"]
-    }
-  }
-}
-```
-
-### Windows
-
-Edit: `%APPDATA%\Claude\claude_desktop_config.json`
+**Windows** — Edit `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
@@ -57,13 +35,11 @@ Edit: `%APPDATA%\Claude\claude_desktop_config.json`
 }
 ```
 
-After saving, **restart Claude Desktop**. Tools appear in the tool picker automatically.
+Save the file, then **restart Claude Desktop**. Tools appear automatically.
 
 ---
 
-## Optional: Point to a Custom Backend
-
-If you're running your own Convex deployment:
+## Optional: With Custom Backend
 
 ```json
 {
@@ -81,10 +57,12 @@ If you're running your own Convex deployment:
 
 ---
 
-## Troubleshooting
+## First Things to Try
 
-| Problem | Fix |
-|---------|-----|
-| Tools not showing in Claude Desktop | Restart Claude Desktop after saving config |
-| `npx: command not found` | Install Node.js 18+ from nodejs.org |
-| `spawn npx ENOENT` | Use full path to npx: find it with `where npx` (Windows) or `which npx` (Mac) |
+```
+get_market_data
+get_insight
+ask_noel: "What's the market doing right now?"
+vault_save key: "my-note" content: "..." type: "note"
+miroshark_simulate scenario: "What happens if BTC hits $200k?"
+```

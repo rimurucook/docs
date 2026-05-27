@@ -50,7 +50,7 @@
                     ┌────────────────────────┐
                     │   MCP Server v1.4.1    │
                     │   @noelclaw/mcp        │
-                    │  12 modules, 37 tools  │
+                    │  12 modules, 36 tools  │
                     │  stdio transport       │
                     └───────────┬────────────┘
                                 │
@@ -258,7 +258,7 @@ mcp-server/src/
 **callConvex features:**
 - Retry on 429/500/502/503/504 — 3 attempts, 500ms/1s/2s delays
 - BYOK headers forwarded on every request: `X-User-Grok-Key`, `X-User-Bankr-Key`, `X-User-Telegram-Token`, `X-User-Telegram-Chat`
-- Zod validation on all 37 tool inputs
+- Zod validation on all 36 tool inputs
 
 ---
 

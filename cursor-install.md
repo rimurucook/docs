@@ -1,6 +1,6 @@
-﻿# Add to Cursor / Windsurf
+# Add to Cursor / Windsurf
 
-No build step needed. The Noelclaw MCP server runs via `npx @noelclaw/mcp`.
+Install the Noelclaw MCP skill in Cursor or Windsurf. No build step — runs via `npx`.
 
 ---
 
@@ -9,15 +9,15 @@ No build step needed. The Noelclaw MCP server runs via `npx @noelclaw/mcp`.
 ### Via Settings UI
 
 1. Open Cursor → **Settings** (Ctrl+, / Cmd+,)
-2. Search for **MCP** or go to **Features → MCP**
-3. Add a new server:
-   - **Name:** `noelclaw`
-   - **Command:** `npx`
-   - **Args:** `@noelclaw/mcp`
+2. Search **MCP** or go to **Features → MCP**
+3. Add server:
+   - Name: `noelclaw`
+   - Command: `npx`
+   - Args: `@noelclaw/mcp`
 
 ### Via Config File
 
-Edit `~/.cursor/mcp.json` (create it if it doesn't exist):
+Edit `~/.cursor/mcp.json`:
 
 ```json
 {
@@ -30,16 +30,7 @@ Edit `~/.cursor/mcp.json` (create it if it doesn't exist):
 }
 ```
 
-Restart Cursor. Tools appear in Composer when in **Agent mode**.
-
-### Use in Cursor Composer
-
-Open Composer (Cmd+I / Ctrl+I), enable Agent mode, then:
-```
-use noelclaw to get the current crypto market
-ask noel what the best DeFi opportunities are right now
-get the latest BTC signal from noelclaw
-```
+Restart Cursor. Tools appear in Composer (Agent mode).
 
 ---
 
@@ -62,7 +53,7 @@ Restart Windsurf.
 
 ---
 
-## Optional: Custom Backend
+## Optional: With Custom Backend
 
 ```json
 {
@@ -77,13 +68,3 @@ Restart Windsurf.
   }
 }
 ```
-
----
-
-## Troubleshooting
-
-| Problem | Fix |
-|---------|-----|
-| Tools not showing | Restart Cursor/Windsurf after saving config |
-| `npx: command not found` | Install Node.js 18+ from nodejs.org |
-| Connection timeout | Normal on first run — `npx` downloads the package. Retries will be instant |

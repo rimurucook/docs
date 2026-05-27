@@ -72,7 +72,7 @@ Example with all options in Claude Desktop config:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/mcp@latest"],
+      "args": ["@noelclaw/mcp"],
       "env": {
         "NOELCLAW_API_KEY": "noel_sk_xxx",
         "ALCHEMY_API_KEY": "your-alchemy-key",

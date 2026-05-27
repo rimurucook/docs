@@ -1,4 +1,4 @@
-# Add to Hermes
+﻿# Add to Hermes
 
 Add Noelclaw as an MCP skill in Hermes. Once connected, all 37 Noel tools are available directly in your agent conversations.
 
@@ -9,7 +9,7 @@ No build step needed — runs via `npx @noelclaw/mcp`.
 ## Method 1 — CLI (Fastest)
 
 ```bash
-hermes mcp add noelclaw --command npx --args @noelclaw/mcp@latest
+hermes mcp add noelclaw --command npx --args @noelclaw/mcp
 ```
 
 Reload without restarting:
@@ -28,7 +28,7 @@ mcp_servers:
   noelclaw:
     command: npx
     args:
-      - "@noelclaw/mcp@latest"
+      - "@noelclaw/mcp"
     timeout: 30
     connect_timeout: 10
 ```
@@ -83,7 +83,7 @@ mcp_servers:
   noelclaw:
     command: npx
     args:
-      - "@noelclaw/mcp@latest"
+      - "@noelclaw/mcp"
     env:
       NOELCLAW_CONVEX_URL: https://your-deployment.convex.site
     timeout: 30

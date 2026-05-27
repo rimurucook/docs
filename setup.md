@@ -161,7 +161,7 @@ In any client that supports tool listing:
 ```
 list all noelclaw tools
 ```
-Should show 43 tools.
+Should show 37 tools.
 
 ### 2. Get live market data
 
@@ -171,14 +171,10 @@ get_market_data
 
 ### 3. Set up Telegram (optional)
 
-To receive signals, whale alerts, and research reports directly in Telegram:
+To receive signals, alerts, and swarm events directly in Telegram:
 
 ```
-set_telegram(
-  userId: "pick-any-id",
-  telegramBotToken: "your-bot-token",
-  telegramChatId: "your-chat-id"
-)
+set_telegram telegramBotToken: "your-bot-token" telegramChatId: "your-chat-id"
 ```
 
 How to get your Telegram credentials:

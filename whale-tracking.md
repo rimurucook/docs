@@ -85,23 +85,6 @@ Mcap: $28,000 | Volume/Mcap ratio: 0.85
 
 ---
 
-## Accessing Alerts via MCP
-
-```
-get_smart_money_alerts
-get_smart_money_alerts(hours: 6)
-get_smart_money_alerts(hours: 48)
-```
-
-Returns:
-- Token name and symbol
-- Direction (BUY/SELL)
-- Significance (HIGH/MEDIUM)
-- Description with real mcap and flow data
-- Alpha implication
-
----
-
 ## Database
 
 Alerts are stored in the `whaleAlerts` table:
@@ -121,11 +104,6 @@ telegramSent: boolean
 
 ## Configuration
 
-Smart money alerts run automatically every hour with no setup required. Telegram delivery is enabled when configured:
+Smart money alerts run automatically every hour with no setup required. To receive them via Telegram, use `set_telegram` in your MCP client or configure it from the Profile page in the platform UI.
 
-**Via MCP:**
-```
-set_telegram
-```
-
-Alerts are saved to the database regardless of Telegram config and remain accessible via `get_smart_money_alerts`.
+Alerts are saved to the database and visible in the platform regardless of Telegram config.

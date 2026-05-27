@@ -134,20 +134,6 @@ Every Sunday at **23:55 UTC**, a full weekly recap is generated:
 
 ---
 
-## Accessing Signals via MCP
-
-```
-get_latest_signal
-get_latest_signal(token: "BTC")
-get_latest_signal(token: "ETH")
-
-get_signal_history(token: "BTC", days: 7)
-
-get_daily_recap
-```
-
----
-
 ## Database
 
 | Table | Purpose |
@@ -176,10 +162,6 @@ generatedAt: number
 
 ## Configuration
 
-Signals run automatically — no setup required. To receive them via Telegram:
+Signals run automatically — no setup required. To receive them via Telegram, use `set_telegram` in your MCP client or configure it from the Profile page in the platform UI.
 
-```
-set_telegram
-```
-
-Signals are generated and saved regardless of Telegram config — accessible via MCP tools and the platform UI.
+Signals are saved to the database and visible in the platform regardless of Telegram config.

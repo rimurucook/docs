@@ -1,43 +1,35 @@
-﻿# MCP Server — Noelclaw Skill
+# MCP Server — Noelclaw Skill
 
-The `@noelclaw/mcp` MCP server exposes Noel's tools to any MCP-compatible AI client. Install once via `npx` — no build step, no config required — and get live crypto signals, market data, on-chain DeFi, autonomous research, and a multi-agent swarm from Claude, Hermes, Cursor, or any other MCP host.
+The `@noelclaw/mcp` MCP server exposes all of Noel's tools to any MCP-compatible AI client. Install once via `npx` — no build step, no config required.
 
 ```bash
 npx @noelclaw/mcp@latest
 ```
 
+**37 tools across 12 modules.** Market data, DeFi execution, autonomous research, multi-agent swarm, persistent vault memory, Noel Framework playbooks, scenario simulation, and more.
+
 ---
 
-## Available Tools
+## Tool Categories
 
-### Market & Signals
+### Market & Research
 
 | Tool | Description |
 |------|-------------|
 | `get_market_data` | Live top-20 coins by market cap, trending, BTC/ETH/SOL prices |
 | `get_token_data` | Price, 24h change, market cap, and volume for any specific token |
-| `get_latest_signal` | Latest BTC/ETH 4H trading signals — entry, TP, SL, confidence score |
-| `get_signal_history` | Signal history with win/loss record and winrate stats |
-| `get_smart_money_alerts` | Smart money / insider wallet movements for micro-cap tokens |
-| `get_daily_recap` | Today's trading performance recap with AI review |
-
-### Research & AI
-
-| Tool | Description |
-|------|-------------|
 | `research` | On-demand web-search backed crypto analysis — overview, key findings, market impact, sentiment |
+| `get_insight` | On-demand crypto + macro briefing powered by Grok — BTC/ETH action, narratives, what's moving on X |
 | `ask_noel` | Chat with Noel — DeFi AI with live market context |
-| `get_insight` | On-demand crypto + macro briefing powered by Grok — what's happening right now |
 
 ### Wallet & DeFi
 
 | Tool | Description |
 |------|-------------|
-| `swap_tokens` | Swap ETH/USDC/USDT/DAI/WETH on Base via 0x Permit2, human-readable amounts |
+| `get_wallet_address` | Get your local Noelclaw wallet address — keys never leave your machine |
+| `swap_tokens` | Swap ETH/USDC/USDT/DAI/WETH on Base via 0x Permit2, signed locally |
 | `send_token` | Send ETH or ERC-20 to any address on Base mainnet |
-| `deploy_token` | Launch a memecoin on Base via Flaunch. Sets your revenue share (default 80% of swap fees). Returns Memestream NFT that earns ETH from every swap forever. |
-| `claim_fees` | Claim accumulated ETH from your Flaunch token swap fees. No params needed. |
-| `mint_nft` | Auto-mint any NFT on Base. Pass URL or contract address — Noel detects the contract, checks eligibility and balance, mints from your wallet. |
+| `claim_fees` | Claim accumulated ETH from Flaunch token swap fees |
 
 ### Automations
 
@@ -52,19 +44,62 @@ npx @noelclaw/mcp@latest
 
 | Tool | Description |
 |------|-------------|
-| `start_swarm` | Start the multi-agent swarm |
-| `stop_swarm` | Stop the swarm |
-| `get_swarm_status` | Active agents, shared memory snapshot, execution scores |
+| `start_swarm` | Start the multi-agent swarm — 5 coordinated agents |
+| `stop_swarm` | Stop the active swarm session |
+| `get_swarm_status` | Active agents, shared memory snapshot, execution scores, recent runs |
 | `write_swarm_memory` | Write a key-value entry to shared memory (optional TTL) |
 | `get_swarm_memory` | Read a shared memory entry by key |
 | `get_execution_scores` | Skill success rates, win/loss, avg duration, last adapted |
+
+### Noel Framework
+
+| Tool | Description |
+|------|-------------|
+| `create_task_packet` | Define a scoped task with territory, permissions, and constraints |
+| `list_task_packets` | List all task packets — draft, active, completed, blocked |
+| `list_playbooks` | List available playbooks with step counts and usage |
+| `run_playbook` | Execute a playbook with Sentinel gating per step |
+| `get_noel_ledger` | Audit trail of Sentinel gate decisions — checks, duration, reason |
+| `get_sentinel_rules` | Sentinel rules per agent/role — territory, permissions, caps |
+
+### Noel Vault
+
+| Tool | Description |
+|------|-------------|
+| `vault_save` | Save or update an artifact with auto-versioning — research, code, notes, plans |
+| `vault_read` | Read a vault entry by key — full content, version, tags, links |
+| `vault_list` | List vault entries filtered by type, agent, or pinned status |
+| `vault_search` | Full-text search across the vault with ranking and previews |
+| `vault_history` | Full version history of a vault entry (git log style) |
+| `vault_diff` | Compare two versions of a vault entry (git diff style) |
+| `vault_export` | Export entire vault or specific type as a structured bundle |
+
+### MiroShark
+
+| Tool | Description |
+|------|-------------|
+| `miroshark_simulate` | Run a multi-agent social simulation for any scenario in plain English |
+| `miroshark_status` | Poll simulation status through prep, running, and completion phases |
+
+### Notifications & Social
+
+| Tool | Description |
+|------|-------------|
+| `set_telegram` | Connect Telegram for push notifications — signals, alerts, swarm events |
+| `post_tweet` | Post a tweet on X via Ayrshare API |
+
+### Humanizer
+
+| Tool | Description |
+|------|-------------|
+| `humanize_text` | Strip AI writing patterns — makes output sound natural and human |
 
 ---
 
 ## How It Works
 
 ```
-AI Client (Claude / Cursor / Hermes)
+AI Client (Claude / Cursor / Hermes / Windsurf)
     │
     │  MCP protocol (stdio)
     ▼
@@ -76,29 +111,22 @@ https://api.noelclaw.com          ← Cloudflare Worker (rate limit + CORS)
     │
     │  proxied with all headers
     ▼
-https://[convex].convex.site      ← Convex backend (hidden from users)
+Convex backend (convex.site)
     │
-    ├── /mcp/market              → Market data
-    ├── /mcp/chat                → Noel / CoinGecko agent
-    ├── /mcp/insight             → Grok-powered briefing
-    ├── /mcp/research            → Web-search analysis (Bankr Agent)
-    ├── /signals/latest          → BTC/ETH signals
-    ├── /signals/history         → Signal history
-    ├── /signals/winrate         → Winrate stats
-    ├── /whales/latest           → Smart money alerts
-    ├── /recap/today             → Daily recap
-    ├── /mcp/defi/portfolio      → Wallet balances
-    ├── /mcp/defi/swap           → 0x Permit2 swap quote
-    ├── /mcp/defi/send           → Token send
-    ├── /mcp/token/deploy        → Flaunch token deploy tx
-    ├── /mcp/token/claim         → Flaunch fee claim tx
-    ├── /mcp/nft/mint            → NFT auto-mint tx
-    ├── /automations/*           → CRUD + list
-    ├── /swarm/*                 → Swarm start/stop/status/memory/scores
-    └── /user/telegram/notify    → Per-user Telegram delivery
+    ├── /mcp/chat                → ask_noel
+    ├── /mcp/insight             → get_insight
+    ├── /mcp/research            → research
+    ├── /mcp/defi/swap           → swap_tokens
+    ├── /mcp/defi/send           → send_token
+    ├── /mcp/token/claim         → claim_fees
+    ├── /automations/*           → create/list/pause/delete
+    ├── /swarm/*                 → swarm tools
+    ├── /vault/*                 → vault tools
+    ├── /framework/*             → task packets, playbooks, ledger
+    └── /miroshark/*             → simulate, status
 ```
 
-The MCP server is a typed proxy — no API keys stored locally. All secrets live in Convex environment variables.
+Market data (`get_market_data`, `get_token_data`) is pulled from CoinGecko via the swarm's shared memory. Wallet signing happens locally in the MCP process — Convex never holds your keys.
 
 ---
 
@@ -125,8 +153,6 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (Mac) or 
 }
 ```
 
-Restart Claude Desktop. Tools appear automatically.
-
 ### Cursor / Windsurf
 
 ```json
@@ -140,7 +166,7 @@ Restart Claude Desktop. Tools appear automatically.
 }
 ```
 
-### Hermes Agent
+### Hermes
 
 ```yaml
 mcp_servers:
@@ -166,44 +192,7 @@ mcp_servers:
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `question` | string | yes | Token name or natural-language query, e.g. `"show me ETH and SOL"` |
-
----
-
-### `get_latest_signal`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `token` | string | no | `"BTC"`, `"ETH"`, or omit for both |
-
-Returns the latest 4H signal generated at 08:00 UTC — entry price, TP1, TP2, stop loss, and confidence score.
-
----
-
-### `get_signal_history`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `token` | string | no | `"BTC"` or `"ETH"` |
-| `days` | number | no | Days to look back (default: 7) |
-
----
-
-### `get_smart_money_alerts`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `hours` | number | no | How far back to look (default: 24) |
-
-Returns large on-chain movements, smart money accumulation, and CEX inflow/outflow patterns.
-
----
-
-### `get_daily_recap`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `date` | string | no | `YYYY-MM-DD` (default: today UTC) |
+| `question` | string | yes | Token name or query, e.g. `"show me ETH and SOL"` |
 
 ---
 
@@ -213,7 +202,13 @@ Returns large on-chain movements, smart money accumulation, and CEX inflow/outfl
 |-----------|------|----------|-------------|
 | `query` | string | yes | Topic to research, e.g. `"Ethereum ETF approval impact"` |
 
-Returns structured analysis: overview, key findings, market impact, affected tokens, sentiment, and what to watch.
+Returns structured analysis: overview, key findings, market impact, affected tokens, sentiment.
+
+---
+
+### `get_insight`
+
+No parameters. Returns an on-demand crypto + macro briefing generated by Grok: BTC/ETH price action, macro events, and trending narratives on X.
 
 ---
 
@@ -226,9 +221,9 @@ Returns structured analysis: overview, key findings, market impact, affected tok
 
 ---
 
-### `get_insight`
+### `get_wallet_address`
 
-No parameters. Returns an on-demand crypto + macro briefing generated by Grok: BTC/ETH price action, macro events, and trending narratives on X/Twitter.
+No parameters. Returns your local Noelclaw wallet address. Keys are stored at `~/.noelclaw/wallet.json`, encrypted with a machine-derived key — they never leave your device.
 
 ---
 
@@ -238,9 +233,9 @@ No parameters. Returns an on-demand crypto + macro briefing generated by Grok: B
 |-----------|------|----------|-------------|
 | `fromToken` | string | yes | Token to sell: `ETH`, `USDC`, `USDT`, `DAI`, `WETH` |
 | `toToken` | string | yes | Token to buy |
-| `amount` | string | yes | Human-readable amount, e.g. `"0.01"` for 0.01 ETH, `"10"` for 10 USDC |
+| `amount` | string | yes | Human-readable amount, e.g. `"0.01"` for 0.01 ETH |
 
-Routes through 0x Permit2 on Base mainnet (chainId 8453). Transaction is signed and broadcast locally from your wallet — the MCP server signs it, not Convex.
+Routes through 0x Permit2 on Base mainnet. Transaction is signed locally — the MCP server signs it, not Convex.
 
 ---
 
@@ -250,41 +245,13 @@ Routes through 0x Permit2 on Base mainnet (chainId 8453). Transaction is signed 
 |-----------|------|----------|-------------|
 | `token` | string | yes | `ETH`, `USDC`, `USDT`, `DAI`, or `WETH` |
 | `toAddress` | string | yes | Recipient address (`0x...`) |
-| `amount` | string | yes | Human-readable amount, e.g. `"5"` for 5 USDC |
-
----
-
-### `deploy_token`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Token name, e.g. `"Pepe Noel"` |
-| `symbol` | string | yes | Ticker, 3–6 chars, e.g. `"PNOEL"` |
-| `imageUrl` | string | yes | Public image URL for the token |
-| `description` | string | no | Token description |
-| `initialMarketCapUSD` | number | no | Starting market cap in USD (default: 10000, min: 1000) |
-| `creatorFeePercent` | number | no | Your % of swap fees (default: 80, max: 100) |
-| `preminePercent` | number | no | % of supply to premine at launch (default: 0, max: 50) |
-| `fairLaunchDurationMinutes` | number | no | Fair launch window in minutes (default: 30) |
-
-Returns unsigned tx data. The MCP server signs and broadcasts locally from `~/.noelclaw/wallet.json`. After launch, your wallet holds a Memestream NFT that earns ETH from every swap on the token forever.
+| `amount` | string | yes | Human-readable amount |
 
 ---
 
 ### `claim_fees`
 
-No parameters. Calls `claim()` on the Flaunch PositionManager — pulls all pending ETH from your deployed tokens to your wallet.
-
----
-
-### `mint_nft`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `mintUrl` | string | yes | NFT mint page URL (OpenSea, Zora, Highlight) or raw contract address (`0x...`) |
-| `quantity` | number | no | How many to mint (default: 1, max: 100) |
-
-Detects the contract from the URL, fetches the verified ABI from Basescan (if available), checks your max-per-wallet eligibility and ETH balance, then returns signed tx data minted from your local wallet.
+No parameters. Calls `claim()` on the Flaunch PositionManager — pulls all pending ETH from your deployed tokens.
 
 ---
 
@@ -297,14 +264,13 @@ Detects the contract from the URL, fetches the verified ABI from Basescan (if av
 Examples:
 - `"Buy 50 USDC of ETH every day. Stop after spending 500 USDC."`
 - `"If ETH drops 5% from current price, buy $100 of ETH"`
-- `"Alert me when BTC dominance drops below 50%"`
-- `"Sell 20% of my ETH if it's up 3x from current price"`
+- `"Alert me when BTC price hits $120,000"`
 
 ---
 
 ### `list_automations`
 
-No parameters. Returns all automations (active, paused, completed) with status, run counts, total spent, and next scheduled run.
+No parameters. Returns all automations (active, paused, completed) with status, run counts, and next scheduled run.
 
 ---
 
@@ -324,8 +290,6 @@ Toggles between `active` and `paused`.
 |-----------|------|----------|-------------|
 | `automationId` | string | yes | Automation ID from `list_automations` |
 
-Permanent — cannot be undone.
-
 ---
 
 ### `start_swarm`
@@ -333,9 +297,8 @@ Permanent — cannot be undone.
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `config.enabledAgents` | string[] | no | Agent IDs to start (default: all 5) |
-| `config.byok` | boolean | no | Use your own `BANKR_API_KEY` from env |
 
-Available agent IDs: `market-monitor`, `sentiment-tracker`, `workflow-executor`, `memory-manager`, `risk-verifier`
+Available agents: `market-monitor`, `sentiment-tracker`, `workflow-executor`, `memory-manager`, `risk-verifier`
 
 ---
 
@@ -347,7 +310,7 @@ No parameters.
 
 ### `get_swarm_status`
 
-No parameters. Returns active job status, shared memory snapshot (up to 5 entries), and top execution scores.
+No parameters. Returns active session status, shared memory snapshot, and top execution scores.
 
 ---
 
@@ -355,10 +318,10 @@ No parameters. Returns active job status, shared memory snapshot (up to 5 entrie
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `agentId` | string | yes | ID of the agent writing this entry |
+| `agentId` | string | yes | ID of the writing agent |
 | `key` | string | yes | Memory key |
 | `value` | string | yes | Value (JSON-serializable string) |
-| `ttlSeconds` | number | no | Auto-delete after this many seconds |
+| `ttlSeconds` | number | no | Auto-delete after N seconds |
 
 ---
 
@@ -372,24 +335,199 @@ No parameters. Returns active job status, shared memory snapshot (up to 5 entrie
 
 ### `get_execution_scores`
 
-No parameters. Returns all skill scores sorted by performance: success rate, win/loss counts, average duration, and when thresholds were last adapted.
+No parameters. All skill scores sorted by performance: success rate, win/loss counts, avg duration, last adapted.
+
+---
+
+### `create_task_packet`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | yes | Task name |
+| `description` | string | yes | What the task does |
+| `territory` | string[] | yes | Allowed action domains |
+| `permissions` | string[] | yes | Allowed operations |
+| `constraints` | object | no | Value limits, rate limits, etc. |
+
+---
+
+### `list_task_packets`
+
+No parameters. Returns all task packets with status, usage counts, and Sentinel outcomes.
+
+---
+
+### `list_playbooks`
+
+No parameters. Returns available Noel Framework playbooks with step counts and last run.
+
+---
+
+### `run_playbook`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `playbookId` | string | yes | Playbook ID from `list_playbooks` |
+| `context` | object | no | Runtime variables for the playbook |
+
+Each step passes through Sentinel gating before execution. Blocked steps halt the run and log to the ledger.
+
+---
+
+### `get_noel_ledger`
+
+No parameters. Returns the Sentinel audit trail — every gate decision with check type, duration, and reason.
+
+---
+
+### `get_sentinel_rules`
+
+No parameters. Shows Sentinel rules per agent and role: territory, allowed permissions, value caps, rate limits.
+
+---
+
+### `vault_save`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `key` | string | yes | Unique key for this artifact |
+| `content` | string | yes | Content to store |
+| `type` | string | no | `research`, `code`, `note`, `plan`, `signal`, etc. |
+| `tags` | string[] | no | Tags for filtering and search |
+| `links` | string[] | no | Related vault keys |
+
+Auto-versions on every update — previous versions are preserved and diffable.
+
+---
+
+### `vault_read`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `key` | string | yes | Vault key to read |
+| `version` | number | no | Specific version number (default: latest) |
+
+---
+
+### `vault_list`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `type` | string | no | Filter by type |
+| `pinned` | boolean | no | Only pinned entries |
+| `agent` | string | no | Filter by agent that wrote it |
+
+---
+
+### `vault_search`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | yes | Search query — full-text across all vault entries |
+
+Returns ranked results with content previews.
+
+---
+
+### `vault_history`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `key` | string | yes | Vault key |
+
+Returns all versions with timestamps, change summaries, and who wrote each.
+
+---
+
+### `vault_diff`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `key` | string | yes | Vault key |
+| `fromVersion` | number | yes | Earlier version |
+| `toVersion` | number | yes | Later version |
+
+Returns added/removed lines (unified diff format).
+
+---
+
+### `vault_export`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `type` | string | no | Export only this type (omit for full export) |
+
+Returns a structured bundle of all matching entries with metadata.
+
+---
+
+### `miroshark_simulate`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `scenario` | string | yes | What to simulate in plain English |
+| `num_agents` | number | no | Number of agents (default: 20, max: 100) |
+| `num_rounds` | number | no | Simulation rounds (default: 50) |
+
+Runs a full multi-agent social simulation: builds a knowledge graph from your scenario, generates agent personas, runs belief propagation rounds, and returns behavioral analysis.
+
+---
+
+### `miroshark_status`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `simulation_id` | string | yes | Simulation ID from `miroshark_simulate` |
+
+Poll this to track progress through: `pending → preparing → running → complete`.
+
+---
+
+### `set_telegram`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `telegramBotToken` | string | yes | Bot token from @BotFather |
+| `telegramChatId` | string | yes | Your chat ID |
+
+Once set, you receive swarm events, automation alerts, and platform notifications directly in Telegram.
+
+---
+
+### `post_tweet`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `content` | string | yes | Tweet text |
+
+Posts via Ayrshare API. Requires `AYRSHARE_API_KEY` environment variable.
+
+---
+
+### `humanize_text`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `text` | string | yes | AI-generated text to humanize |
+
+Strips AI writing patterns (em dashes, sycophantic openers, robotic structure) using MiniMax-M2.7. Output sounds natural and human.
 
 ---
 
 ## Environment Variables
 
-No env vars are required for basic use. Set these to unlock additional features:
+No env vars required for basic use. Set these to unlock additional features:
 
 | Var | Purpose |
 |-----|---------|
 | `NOELCLAW_API_KEY` | Link to your noelclaw.com account (`noel_sk_xxx` from Settings → API Keys) |
-| `ALCHEMY_API_KEY` | Faster, more reliable swap quotes and portfolio lookups on Base |
-| `GROK_API_KEY` | Your own X.AI key for `get_insight` and signal generation |
-| `BANKR_API_KEY` | Your own Bankr key for swarm agents and research |
+| `ALCHEMY_API_KEY` | Faster swap quotes and Base balance lookups |
+| `GROK_API_KEY` | Your own X.AI key for `get_insight` |
+| `BANKR_API_KEY` | Your own Bankr key for research and swarm agents |
 | `TELEGRAM_BOT_TOKEN` | Your Telegram bot token (from @BotFather) |
 | `TELEGRAM_CHAT_ID` | Your Telegram chat ID |
-
-> **Telegram is optional.** It's only needed if you want push notifications outside your AI client. If you use Noelclaw through Claude, Hermes, Cursor, or any MCP client, you already get all results inline — no Telegram setup needed.
+| `MINIMAX_API_KEY` | Your own MiniMax key for `humanize_text` |
+| `AYRSHARE_API_KEY` | Required for `post_tweet` |
 
 ---
 
@@ -398,9 +536,9 @@ No env vars are required for basic use. Set these to unlock additional features:
 | Error | Fix |
 |-------|-----|
 | Tools not appearing | Restart your MCP client after adding the config |
-| `Noelclaw API error: 404` | Wrong `NOELCLAW_CONVEX_URL` or Convex not deployed |
 | Server starts but no response | Normal — it waits for MCP stdin, not HTTP |
 | Research times out | Try again — Bankr LLM gateway may be under load |
-| Swap or send fails | Check your ETH/USDC balance before swapping |
+| Swap or send fails | Check your ETH balance and that Base mainnet is reachable |
 | `get_swarm_status` returns empty | Start the swarm first with `start_swarm` |
 | Rate limit (429) | The server retries automatically up to 3 times with backoff |
+| `humanize_text` returns raw `<think>` | Outdated version — run `npx @noelclaw/mcp@latest` to upgrade |

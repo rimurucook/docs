@@ -1,4 +1,4 @@
-﻿# Quick Start
+# Quick Start
 
 ---
 
@@ -73,11 +73,6 @@ get_market_data
 get_insight
 ```
 
-**Get the latest BTC signal:**
-```
-get_latest_signal token: BTC
-```
-
 **Ask Noel:**
 ```
 ask_noel: "What's your read on the market this week?"
@@ -93,31 +88,27 @@ Noel searches the web and returns a structured analysis in seconds.
 **Swap tokens:**
 ```
 swap_tokens fromToken: ETH toToken: USDC amount: "0.01"
-swap_tokens fromToken: ETH toToken: USDC amount: "50%"
 ```
 
-Amounts are human-readable (`"0.01"` = 0.01 ETH) or a percentage of your balance (`"50%"`, `"100%"`).
-
-**Launch a memecoin:**
+**Save something to the vault:**
 ```
-deploy_token name: "Pepe Noel" symbol: "PNOEL" imageUrl: "https://..."
+vault_save key: "eth-thesis" content: "ETH is..." type: "research"
 ```
 
-Deploys via Flaunch on Base. You earn 80% of swap fees forever via your Memestream NFT.
-
-**Auto-mint an NFT:**
+**Run a scenario simulation:**
 ```
-mint_nft mintUrl: "https://zora.co/collect/base:0x..."
+miroshark_simulate scenario: "How would markets react if the Fed cuts rates by 100bps?"
 ```
-
-Pass any mint page URL or raw contract address. Noel detects the contract, checks your eligibility and balance, and mints from your wallet.
 
 **Claim your token fees:**
 ```
 claim_fees
 ```
 
-Pulls all pending ETH from your deployed Flaunch tokens to your wallet.
+**Humanize AI-generated text:**
+```
+humanize_text text: "In conclusion, it is imperative to..."
+```
 
 ---
 

@@ -50,7 +50,7 @@
                     ┌────────────────────────┐
                     │   MCP Server v1.4.1    │
                     │   @noelclaw/mcp        │
-                    │  13 modules, 43 tools  │
+                    │  12 modules, 37 tools  │
                     │  stdio transport       │
                     └───────────┬────────────┘
                                 │
@@ -241,20 +241,24 @@ mcp-server/src/
   wallet.ts       — wallet creation, RPC helpers, signAndBroadcast
   types.ts        — shared ToolResult interface
   tools/
-    market.ts     — 6 tools: market data, signals, whale alerts, recap
+    market.ts     — 2 tools: get_market_data, get_token_data
     research.ts   — 1 tool: research
     insight.ts    — 2 tools: get_insight, ask_noel
-    defi.ts       — 3 tools: portfolio, swap, send
+    defi.ts       — 3 tools: swap_tokens, send_token, claim_fees
     automation.ts — 4 tools: create/list/pause/delete automation
-    swarm.ts      — 6 tools: start/stop swarm, memory, scores
-    vault.ts      — 7 tools: save, commit, search, diff, export, links, list
+    swarm.ts      — 6 tools: start/stop swarm, status, memory, scores
+    framework.ts  — 6 tools: task packets, playbooks, ledger, sentinel
+    vault.ts      — 7 tools: save, read, list, search, history, diff, export
+    wallet.ts     — 2 tools: get_wallet_address, set_telegram
     twitter.ts    — 1 tool: post_tweet
+    miroshark.ts  — 2 tools: miroshark_simulate, miroshark_status
+    humanizer.ts  — 1 tool: humanize_text
 ```
 
 **callConvex features:**
 - Retry on 429/500/502/503/504 — 3 attempts, 500ms/1s/2s delays
 - BYOK headers forwarded on every request: `X-User-Grok-Key`, `X-User-Bankr-Key`, `X-User-Telegram-Token`, `X-User-Telegram-Chat`
-- Zod validation on all 43 tool inputs
+- Zod validation on all 37 tool inputs
 
 ---
 

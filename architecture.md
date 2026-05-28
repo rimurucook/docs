@@ -1,205 +1,198 @@
 ﻿# Architecture Overview
 
-## System Diagram
+## Infrastructure Components
+
+| Component | What It Is | What It Does |
+|---|---|---|
+| **Cloudflare Worker** | `api.noelclaw.com` | Rate limiting, CORS, header proxy |
+| **Convex** | Main backend | DB, serverless actions, cron scheduling, real-time |
+| **Supabase Edge Functions** | Supabase-hosted functions | Swarm (`/swarm/*`) and vault (`/vault/*`) |
+| **Railway** | Hobby plan, $5/mo, 8 GB RAM | MiroShark multi-agent simulation backend |
+
+---
+
+## Full System Diagram
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    User Interfaces                       │
-│                                                          │
-│  noelclaw.fun         noelapp (React 19 + Vite)         │
-│  (Landing Page)       (Full Platform)                    │
-│                            │                             │
-│                     Privy / Email Auth                   │
-└────────────────────────────┼─────────────────────────────┘
-                             │
-┌────────────────────────────▼─────────────────────────────┐
-│            Cloudflare Worker — api.noelclaw.com           │
-│   Rate limit: 100 req/min/IP  |  CORS  |  Header proxy   │
-└────────────────────────────┬─────────────────────────────┘
-                             │
-┌────────────────────────────▼─────────────────────────────┐
-│                   Convex Backend                          │
-│  ┌──────────────┐  ┌──────────────┐  ┌───────────────┐  │
-│  │   Queries    │  │  Mutations   │  │    Actions    │  │
-│  │ (real-time)  │  │ (DB writes)  │  │ (node.js env) │  │
-│  └──────────────┘  └──────────────┘  └───────┬───────┘  │
-│                                               │           │
-│  ┌────────────────────────────────────────────▼───────┐  │
-│  │              HTTP Router (convex.site)              │  │
-│  │  /mcp/market      /mcp/chat    /mcp/insight        │  │
-│  │  /mcp/research    /signals/*   /whales/latest      │  │
-│  │  /recap/today     /mcp/defi/*  /automations/*      │  │
-│  │  /swarm/*         /swarm/ledger                    │  │
-│  │  /user/telegram   /app/*                           │  │
-│  └────────────────────────────────────────────────────┘  │
-└──────────────────────────────────────────────────────────┘
-                             │
-        ┌────────────────────┼────────────────────┐
-        │                    │                     │
-┌───────▼──────┐  ┌──────────▼────────┐  ┌────────▼─────┐
-│ Bankr LLM +  │  │   0x Permit2 API  │  │   Grok API   │
-│ Agent APIs   │  │   swap routing    │  │  X sentiment │
-│ (all agents) │  │   Base mainnet    │  │   analysis   │
-└──────────────┘  └───────────────────┘  └──────────────┘
-                             │
-                  ┌──────────▼─────────┐
-                  │   Telegram Bot API │
-                  │  (signals/alerts)  │
-                  └────────────────────┘
+  AI Clients
+  ┌───────────────────────────────────────────────────┐
+  │  Claude Code / Claude Desktop / Cursor / Windsurf │
+  │  Hermes / Aeon                                    │
+  └────────────────────┬──────────────────────────────┘
+                       │ MCP protocol (stdio)
+                       ▼
+            ┌─────────────────────┐
+            │   @noelclaw/mcp     │
+            │   (Node.js, npx)    │
+            │   36 tools          │
+            └──────────┬──────────┘
+                       │ HTTPS (retries on 429/5xx)
+                       ▼
+  ┌────────────────────────────────────────────────────┐
+  │        Cloudflare Worker — api.noelclaw.com        │
+  │  Rate limit: 100 req/min/IP  |  CORS  |  Headers  │
+  └────────────────────┬───────────────────────────────┘
+                       │
+          ┌────────────┴─────────────┐
+          │                          │
+          ▼                          ▼
+  ┌───────────────────┐    ┌──────────────────────┐
+  │  Convex Backend   │    │ Supabase Edge Funcs   │
+  │                   │    │                       │
+  │  - Queries        │    │  /swarm/*             │
+  │  - Mutations      │    │  /vault/*             │
+  │  - Actions        │    │                       │
+  │  - Cron jobs      │    └──────────────────────┘
+  │  - HTTP router    │
+  │                   │
+  │  Routes:          │
+  │  /mcp/chat        │
+  │  /mcp/insight     │
+  │  /mcp/defi/*      │
+  │  /automations/*   │
+  │  /framework/*     │
+  │  /miroshark/*     │
+  └───────────────────┘
+          │
+          ▼
+  ┌───────────────────────────────────────────────────┐
+  │              External Services                    │
+  │  Grok API (X.AI)     — get_insight               │
+  │  0x Permit2 API      — swap_tokens               │
+  │  Telegram Bot API    — set_telegram              │
+  │  Ayrshare API        — post_tweet                │
+  │  MiniMax M2.7        — humanize_text             │
+  └───────────────────────────────────────────────────┘
 
-                    ┌────────────────────────┐
-                    │   MCP Server v1.4.1    │
-                    │   @noelclaw/mcp        │
-                    │  12 modules, 36 tools  │
-                    │  stdio transport       │
-                    └───────────┬────────────┘
-                                │
-              ┌─────────────────┼──────────────────┐
-              │                 │                  │
-       ┌──────▼──────┐  ┌───────▼──────┐  ┌───────▼──────┐
-       │   Hermes    │  │ Claude Code  │  │   Cursor /   │
-       │  OpenClaw   │  │   Desktop    │  │   Windsurf   │
-       └─────────────┘  └──────────────┘  └──────────────┘
+  ┌───────────────────────────────────────────────────┐
+  │         Railway — MiroShark Backend               │
+  │  Hobby plan, $5/mo, 8 GB RAM                      │
+  │  miroshark_simulate → miroshark_status            │
+  │  Knowledge graph, agent personas, belief prop     │
+  └───────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Frontend Stack
+## Cloudflare Worker
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | React 19.2.0 + TypeScript |
-| Build | Vite 7.2.4 |
-| Styling | TailwindCSS 3.4 + Radix UI |
-| Animation | Framer Motion 12.38, GSAP |
-| State | Zustand |
-| Data | Convex React SDK (real-time) |
-| Auth | Privy SDK + Noelclaw email/password |
-| Web3 | Wagmi 3.6 + Viem 2.48 + Ethers 6.16 |
-| Payments | x402 protocol (Base mainnet) |
-| Games | Phaser 3.90 (PokemonAutoChess), Canvas API |
+`api.noelclaw.com` is a Cloudflare Worker that proxies all MCP and platform API traffic to Convex.
+
+- **Rate limiting:** 100 requests/min per IP using KV-based fixed-window counters
+- **CORS:** correct headers returned for browser clients
+- **Header forwarding:** passes all `X-User-*` BYOK headers through to Convex (Grok key, Bankr key, Telegram token/chat ID)
+- **Error handling:** 503 if Convex is unreachable, 429 with `Retry-After` header on rate limit
+- **Routes:** `/miroshark/*` proxied with prefix stripped and admin token injected
 
 ---
 
-## Backend Stack (Convex)
+## Convex Backend
 
-Convex is the entire backend — database, serverless functions, scheduling, and HTTP router in one.
+Convex is the main backend — database, serverless functions, real-time subscriptions, and HTTP router.
 
 | Layer | Details |
-|-------|---------|
-| Database | Convex (document DB with real-time subscriptions) |
+|---|---|
+| Database | Document DB with real-time subscriptions |
 | Serverless | Actions (`"use node"`) for external API calls |
-| Scheduling | Cron jobs: research (5 min), signals (daily 08:00 UTC), whale alerts (6h), weekly recap (Sunday 23:55 UTC) |
-| HTTP | `convex.site` endpoints for MCP + webhooks, proxied via `api.noelclaw.com` |
-| Auth | JWT validation via Privy tokens + Noelclaw session tokens |
+| Scheduling | Cron jobs: signals (daily 08:00 UTC), whale alerts (hourly), weekly recap |
+| HTTP | `convex.site` endpoints for MCP, proxied via `api.noelclaw.com` |
+| Auth | Session token validation per request |
 
 ---
 
-## Cloudflare Proxy Layer
+## Supabase Edge Functions
 
-`api.noelclaw.com` is a Cloudflare Worker that sits in front of the Convex backend:
+Supabase hosts the swarm and vault backends.
 
-- **Hides** the raw Convex URL from users and MCP configs
-- **Rate limiting:** 100 req/min per IP (KV-based fixed-window counter)
-- **CORS:** returns correct headers for browser clients
-- **Header forwarding:** passes all `X-User-*` BYOK headers through to Convex
-- **Error handling:** returns 503 if Convex is unreachable, 429 with `Retry-After` on rate limit
+- `/swarm/*` — all swarm tool operations (start, stop, status, memory read/write, execution scores)
+- `/vault/*` — all vault operations (save, read, list, search, history, diff, export)
 
-Source: `cloudflare-api-proxy/worker.js`
+Traffic flows: MCP client → `@noelclaw/mcp` → `api.noelclaw.com` (Cloudflare) → Supabase Edge Functions.
 
 ---
 
-## Noel Framework / Sentinel
+## Railway — MiroShark
 
-Every agent action in the swarm passes through a mechanical safety gate before execution:
+MiroShark runs on a Railway Hobby plan ($5/mo, 8 GB RAM). It is a multi-agent social simulation engine.
 
-```
-Agent run requested
-      │
-      ▼
-steward.check (internalAction)
-  1. DoNotDo check — blocked keywords per agent
-  2. Territory check — action must be in agent's allowed domain
-  3. Value limit — reject if USD value exceeds per-agent cap
-  4. Grudge book — block repeated bad actors (per-user, per-agent)
-  5. Rate limit — max N actions per agent per 60s window
-      │
-      ▼
-decision: approved | warned | blocked
-      │
-      ├── blocked → throw error, log to stewardLedger
-      └── approved/warned → continue to agent execution
-```
+- Builds a knowledge graph from the scenario description
+- Generates agent personas with initial belief states
+- Runs belief propagation across N rounds
+- Returns behavioral analysis: consensus, dissent, signal strength per narrative
 
-**Tables:** `stewardRules`, `grudgeBook`, `stewardLedger`
-
-The ledger is visible in the Swarm Dashboard → Steward Ledger section.
+The `/miroshark/*` proxy on `api.noelclaw.com` strips the prefix and injects the admin token before forwarding to the Railway service.
 
 ---
 
-## Data Flow: User Sends Chat Message
+## Data Flow: MCP Tool Call
 
 ```
-User types message
+User prompts AI client
+      │
+      ▼ MCP protocol (stdio)
+@noelclaw/mcp — validates input with Zod
+      │
+      ▼ HTTPS POST
+api.noelclaw.com (Cloudflare Worker)
+  → rate limit check
+  → CORS headers
+  → forward BYOK headers
       │
       ▼
-React component (Chat.tsx)
+Convex / Supabase / Railway (depending on tool)
       │
       ▼
-Convex action: api.chat.chat
+Response returned to MCP server
       │
-      ▼
-Bankr LLM gateway (https://llm.bankr.bot)
-  → model: gpt-4o / claude-sonnet-4-6
-      │
-      ▼
-Response streamed back
-      │
-      ▼
-Convex mutation: save to DB
-      │
-      ▼
-React re-renders (real-time subscription)
+      ▼ MCP protocol
+AI client renders result
 ```
 
 ---
 
-## Data Flow: On-Demand Research
+## Data Flow: Swarm Execution
 
 ```
-User calls research(query: "...") via MCP or HTTP POST /mcp/research
+start_swarm called
       │
       ▼
-Convex action: research.queryResearch
-  → POST to Bankr LLM gateway (web search + AI analysis)
-  → returns structured text in seconds: overview, findings, impact, sentiment
+POST /swarm/start (Supabase Edge Function)
+  → creates session record
+  → initializes 5 agent contexts:
+      market-monitor, sentiment-tracker,
+      workflow-executor, memory-manager, risk-verifier
+  → each agent reads/writes shared memory via KV
       │
       ▼
-MCP server formats and returns result to user
+get_swarm_status polls session state
+write_swarm_memory / get_swarm_memory operate on shared KV
+get_execution_scores returns per-skill metrics
+      │
+      ▼
+stop_swarm terminates session
 ```
 
 ---
 
-## Data Flow: Trading Signal (Daily)
+## Data Flow: MiroShark Simulation
 
 ```
-Convex cron fires at 08:00 UTC
+miroshark_simulate called with scenario string
       │
       ▼
-signalEngine.ts — internalAction
-  → sends 4H market analysis prompt to Bankr LLM
-  → parses JSON: signal, entry, TP1, TP2, SL, confidence
-  → saves to tradingSignals table
-  → sends Telegram signal card
+POST /miroshark/simulate (Railway backend)
+  → returns simulation_id immediately
+  → async pipeline starts:
+      1. Build knowledge graph from scenario
+      2. Generate N agent personas
+      3. Initialize belief states
+      4. Run M rounds of belief propagation
+      5. Compute consensus metrics
       │
-      ▼ (every 2h, cron)
-outcomeTracker.ts
-  → fetches live price from Bankr
-  → for each PENDING signal:
-       if price >= TP1 → WIN
-       if price <= SL  → LOSS
-       if age > 6h     → EXPIRED
-  → updates tradingSignals record
+      ▼
+miroshark_status polls with simulation_id
+  → states: pending → preparing → running → complete
+  → complete response includes full analysis
 ```
 
 ---
@@ -207,67 +200,82 @@ outcomeTracker.ts
 ## Data Flow: DeFi Wallet (MCP)
 
 ```
-MCP client calls swap_tokens / send_token
+swap_tokens / send_token called
       │
       ▼
-MCP server (local Node.js process)
-      │
-      ├── swap_tokens:
-      │     POST api.noelclaw.com/mcp/defi/swap
-      │     → Convex fetches 0x Permit2 quote
-      │     → returns quote to MCP server
-      │     → MCP server signs + broadcasts locally (ethers.js)
-      │     → transaction signed on user's machine, not server
-      │
-      └── send_token:
-            POST api.noelclaw.com/mcp/defi/send
-            → Convex builds tx params
-            → MCP server signs + broadcasts locally
+@noelclaw/mcp:
+  swap_tokens:
+    POST api.noelclaw.com/mcp/defi/swap
+    → Convex fetches 0x Permit2 quote
+    → returns quote + tx params to MCP server
+    → MCP server signs tx locally (ethers.js)
+    → MCP server broadcasts to Base mainnet
+
+  send_token:
+    POST api.noelclaw.com/mcp/defi/send
+    → Convex builds tx params
+    → MCP server signs + broadcasts locally
 ```
 
-All transaction signing happens in the MCP server process on the user's machine. Convex only provides quotes and tx parameters — it never holds a signing key for MCP users.
+Keys at `~/.noelclaw/wallet.json` never leave the local machine. Convex never holds or sees private keys for MCP users.
 
 ---
 
-## MCP Architecture (v1.4.1)
-
-The MCP server is split into 13 modules:
+## Data Flow: Trading Signals (Daily)
 
 ```
-mcp-server/src/
-  index.ts        — entrypoint: boots server, logs wallet address
-  server.ts       — Server setup, composes all handlers
-  convex.ts       — callConvex with retry/backoff + BYOK headers
-  wallet.ts       — wallet creation, RPC helpers, signAndBroadcast
-  types.ts        — shared ToolResult interface
-  tools/
-    market.ts     — 2 tools: get_market_data, get_token_data
-    research.ts   — 1 tool: research
-    insight.ts    — 2 tools: get_insight, ask_noel
-    defi.ts       — 3 tools: swap_tokens, send_token, claim_fees
-    automation.ts — 4 tools: create/list/pause/delete automation
-    swarm.ts      — 6 tools: start/stop swarm, status, memory, scores
-    framework.ts  — 6 tools: task packets, playbooks, ledger, sentinel
-    vault.ts      — 7 tools: save, read, list, search, history, diff, export
-    wallet.ts     — 2 tools: get_wallet_address, set_telegram
-    twitter.ts    — 1 tool: post_tweet
-    miroshark.ts  — 2 tools: miroshark_simulate, miroshark_status
-    humanizer.ts  — 1 tool: humanize_text
+Convex cron fires at 08:00 UTC
+      │
+      ▼
+Signal engine action
+  → sends 4H market analysis to Grok
+  → parses: signal direction, entry, TP1, TP2, SL, confidence
+  → saves to DB
+  → sends formatted signal card to Telegram
+      │
+      ▼ (cron, hourly)
+Outcome tracker
+  → fetches live price
+  → for each PENDING signal:
+       price >= TP1 → WIN
+       price <= SL  → LOSS
+       age > 6h     → EXPIRED
+  → updates record
 ```
 
-**callConvex features:**
-- Retry on 429/500/502/503/504 — 3 attempts, 500ms/1s/2s delays
-- BYOK headers forwarded on every request: `X-User-Grok-Key`, `X-User-Bankr-Key`, `X-User-Telegram-Token`, `X-User-Telegram-Chat`
-- Zod validation on all 36 tool inputs
+---
+
+## Sentinel / Noel Framework
+
+Every action in the Noel Framework passes through the Sentinel gate before execution.
+
+```
+Action requested
+      │
+      ▼
+Sentinel checks (in order):
+  1. DoNotDo list — blocked keywords per agent
+  2. Territory check — action must be in agent's allowed domain
+  3. Value limit — reject if USD value exceeds per-agent cap
+  4. Grudge book — block repeated offenders (per-user, per-agent)
+  5. Rate limit — max N actions per agent per 60s window
+      │
+      ▼
+Decision: approved | warned | blocked
+  blocked → error thrown, logged to ledger
+  approved/warned → execution continues
+```
+
+Ledger accessible via `get_noel_ledger`. Rules accessible via `get_sentinel_rules`.
 
 ---
 
 ## Security Model
 
-- **API keys** — stored as Convex env vars, never in client bundle or MCP server
-- **Convex URL** — hidden behind `api.noelclaw.com` Cloudflare proxy
-- **Wallet keys (platform)** — AES-256-CBC encrypted before storing in DB
-- **Wallet keys (MCP)** — stored locally at `~/.noelclaw/wallet.json`, encrypted with a machine-derived key, never leave the user's device
-- **Auth** — Privy JWT tokens or Noelclaw session tokens validated per request; MCP uses wallet-native signatures
-- **Agent safety** — Steward layer gates all swarm agent actions mechanically before execution
-- **Payments** — x402 protocol, on-chain verification via Base mainnet
+| Concern | How It's Handled |
+|---|---|
+| Convex URL hidden | All traffic goes through `api.noelclaw.com` — raw Convex URL is never exposed |
+| Rate limiting | 100 req/min/IP at the Cloudflare layer |
+| Wallet keys (MCP) | Stored locally at `~/.noelclaw/wallet.json`, encrypted with a machine-derived key, never leave the device |
+| API keys | Stored as server-side env vars, never in the MCP package or client bundle |
+| Agent actions | Sentinel gates all Framework actions before execution |

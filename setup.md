@@ -1,8 +1,8 @@
-# How to Setup
+# Setup & Install
 
-Noelclaw's MCP server runs via `npx` — no build step, no cloning, no local files needed. One command and all 36 tools are available in any MCP-compatible AI client.
+The `@noelclaw/mcp` package runs via `npx` — no build step, no cloning, no local files needed. One command gives you all 36 tools in any MCP-compatible AI client.
 
-**Requirement:** Node.js >= 18.
+**Requirement:** Node.js >= 18. Check with `node --version`. Download from [nodejs.org](https://nodejs.org) if needed.
 
 ---
 
@@ -12,10 +12,17 @@ Noelclaw's MCP server runs via `npx` — no build step, no cloning, no local fil
 claude mcp add noelclaw -- npx @noelclaw/mcp
 ```
 
-Verify:
+Verify the server is registered:
+
 ```bash
 claude mcp list
 # noelclaw   npx @noelclaw/mcp
+```
+
+Then in any Claude Code session:
+
+```
+get_market_data
 ```
 
 ---
@@ -37,11 +44,22 @@ claude mcp list
 }
 ```
 
-Restart Claude Desktop.
+Save the file, then **restart Claude Desktop**. All 36 tools appear automatically in the tool list.
 
 ---
 
 ## Cursor
+
+### Via Settings UI
+
+1. Open Cursor → **Settings** (Ctrl+, / Cmd+,)
+2. Search **MCP** or go to **Features → MCP**
+3. Add server:
+   - Name: `noelclaw`
+   - Command: `npx`
+   - Args: `@noelclaw/mcp`
+
+### Via Config File
 
 Edit `~/.cursor/mcp.json`:
 
@@ -56,7 +74,7 @@ Edit `~/.cursor/mcp.json`:
 }
 ```
 
-Or via Settings → Features → MCP → Add Server (Name: `noelclaw`, Command: `npx`, Args: `@noelclaw/mcp`).
+Restart Cursor. Tools appear in Composer when in **Agent** mode.
 
 ---
 
@@ -75,22 +93,25 @@ Edit `~/.windsurf/mcp_config.json`:
 }
 ```
 
+Restart Windsurf after saving.
+
 ---
 
 ## Hermes
 
-### CLI
+### CLI Method
 
 ```bash
 hermes mcp add noelclaw --command npx --args @noelclaw/mcp
 ```
 
-Then reload:
+Reload without restarting:
+
 ```
 /reload-mcp
 ```
 
-### Config File
+### Config File Method
 
 Edit `~/.hermes/config.yaml`:
 
@@ -104,9 +125,27 @@ mcp_servers:
     connect_timeout: 10
 ```
 
+Then run `/reload-mcp` in any Hermes session.
+
+---
+
+## Aeon
+
+See [Aeon integration guide](aeon.md) for the full setup.
+
+Quick install via Aeon skill registry:
+
+```bash
+aeon skill add noelclaw
+```
+
+Or add manually to your Aeon config — see the [Aeon page](aeon.md).
+
 ---
 
 ## Any MCP Client
+
+If your client accepts a generic MCP server definition:
 
 ```json
 {
@@ -119,42 +158,68 @@ mcp_servers:
 
 ## First Steps After Install
 
-### 1. Check tools are loaded
+### 1. Confirm tools are loaded
+
+Ask your AI client:
 
 ```
 list all noelclaw tools
 ```
 
-Should show 36 tools.
+You should see 36 tools.
 
-### 2. Get live market data
+### 2. Pull live market data
 
 ```
 get_market_data
 ```
 
-### 3. Set up Telegram (optional)
+### 3. Get a briefing
+
+```
+get_insight
+```
+
+### 4. Connect Telegram (optional)
 
 ```
 set_telegram telegramBotToken: "your-bot-token" telegramChatId: "your-chat-id"
 ```
 
-How to get credentials:
+To get credentials:
 1. Open Telegram → search **@BotFather** → `/newbot` → copy the token
-2. Start a chat with your bot → send any message
+2. Start a chat with your bot and send any message
 3. Visit `https://api.telegram.org/bot<TOKEN>/getUpdates` → copy the `chat.id`
 
-### 4. Research a topic
+### 5. Save something to vault
 
 ```
-ask_noel: "What is happening with Ethereum this week?"
+vault_save key: "first-note" content: "Started using noelclaw" type: "note"
 ```
 
-### 5. Save to vault
+---
 
+## Optional: Environment Variables
+
+Pass env vars to unlock extra tools or use your own API keys:
+
+```json
+{
+  "mcpServers": {
+    "noelclaw": {
+      "command": "npx",
+      "args": ["@noelclaw/mcp"],
+      "env": {
+        "MINIMAX_API_KEY": "your-key",
+        "AYRSHARE_API_KEY": "your-key",
+        "GROK_API_KEY": "your-key"
+      }
+    }
+  }
+}
 ```
-vault_save key: "eth-notes" content: "My thoughts on ETH..." type: "note"
-```
+
+See [Environment Variables](env-vars.md) for the full list.
 
 ---
 
@@ -162,7 +227,10 @@ vault_save key: "eth-notes" content: "My thoughts on ETH..." type: "note"
 
 | Problem | Fix |
 |---------|-----|
-| Tools not showing | Restart your MCP client after adding the config |
+| Tools not showing | Restart your MCP client after saving the config |
 | `npx: command not found` | Install Node.js 18+ from [nodejs.org](https://nodejs.org) |
-| Server starts but no response | Normal — MCP server waits for stdin, not HTTP |
-| Slow first start | `npx` downloads the package on first run (~2s). Subsequent starts are instant |
+| Server starts but no response | Normal — the MCP server waits for stdin (MCP protocol), it does not serve HTTP |
+| Slow first start | `npx` downloads the package on first run. Subsequent starts are instant |
+| `connect_timeout` errors | Increase to `connect_timeout: 20` in your config — first run takes longer |
+| `humanize_text` fails | Requires `MINIMAX_API_KEY` env var |
+| `post_tweet` fails | Requires `AYRSHARE_API_KEY` env var |

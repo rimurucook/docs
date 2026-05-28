@@ -2,6 +2,8 @@
 
 Install the Noelclaw MCP skill in Cursor or Windsurf. No build step — runs via `npx`.
 
+**Requirement:** Node.js >= 18.
+
 ---
 
 ## Cursor
@@ -9,11 +11,12 @@ Install the Noelclaw MCP skill in Cursor or Windsurf. No build step — runs via
 ### Via Settings UI
 
 1. Open Cursor → **Settings** (Ctrl+, / Cmd+,)
-2. Search **MCP** or go to **Features → MCP**
-3. Add server:
+2. Search **MCP** or navigate to **Features → MCP**
+3. Click **Add Server** and fill in:
    - Name: `noelclaw`
    - Command: `npx`
    - Args: `@noelclaw/mcp`
+4. Save and restart Cursor
 
 ### Via Config File
 
@@ -30,7 +33,7 @@ Edit `~/.cursor/mcp.json`:
 }
 ```
 
-Restart Cursor. Tools appear in Composer (Agent mode).
+Restart Cursor. Tools appear in **Composer** when using Agent mode.
 
 ---
 
@@ -49,11 +52,11 @@ Edit `~/.windsurf/mcp_config.json`:
 }
 ```
 
-Restart Windsurf.
+Restart Windsurf after saving.
 
 ---
 
-## Optional: With Custom Backend
+## Optional: With Environment Variables
 
 ```json
 {
@@ -62,9 +65,41 @@ Restart Windsurf.
       "command": "npx",
       "args": ["@noelclaw/mcp"],
       "env": {
-        "NOELCLAW_CONVEX_URL": "https://your-deployment.convex.site"
+        "MINIMAX_API_KEY": "your-minimax-key",
+        "AYRSHARE_API_KEY": "your-ayrshare-key",
+        "GROK_API_KEY": "your-grok-key"
       }
     }
   }
 }
 ```
+
+See [Environment Variables](env-vars.md) for the full list.
+
+---
+
+## First Steps
+
+After install, try in Composer (Agent mode):
+
+```
+get_market_data
+```
+
+```
+get_insight
+```
+
+```
+swap_tokens fromToken: "ETH" toToken: "USDC" amount: "0.01"
+```
+
+---
+
+## Troubleshooting
+
+| Problem | Fix |
+|---|---|
+| Tools not showing | Restart Cursor/Windsurf after saving config |
+| `npx: command not found` | Install Node.js 18+ from [nodejs.org](https://nodejs.org) |
+| Slow first start | `npx` downloads the package on first run. Subsequent starts are instant |

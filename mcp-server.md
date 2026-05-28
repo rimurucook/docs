@@ -1,12 +1,12 @@
 # MCP Server — Noelclaw Skill
 
-The `@noelclaw/mcp` MCP server exposes all of Noel's tools to any MCP-compatible AI client. Install once via `npx` — no build step, no config required.
+The `@noelclaw/mcp` package is a Model Context Protocol server that exposes all of Noelclaw's tools to any MCP-compatible AI client. Install once via `npx` — no build step, no config required.
 
 ```bash
 npx @noelclaw/mcp
 ```
 
-**36 tools across 12 modules.** Market data, DeFi execution, multi-agent swarm, persistent vault memory, Noel Framework playbooks, scenario simulation, and more.
+**36 tools across 8 categories.** Market data, DeFi execution, multi-agent swarm, persistent vault memory, Noel Framework playbooks, MiroShark simulation, social, and humanizer.
 
 ---
 

@@ -1,108 +1,141 @@
-# Quick Start
+# Getting Started
 
 ---
 
-## Option A — Use the Hosted Platform
+## Step 1 — Sign Up on the Platform
 
-Go to [noelclaw.com](https://noelclaw.com), sign up, and you're in.
-
-To add the MCP skill to your AI client, see [How to Setup](setup.md).
+Go to [noelclaw.com](https://noelclaw.com) and create an account. The platform gives you access to the web UI for managing automations, viewing trading signals, and tracking your wallet.
 
 ---
 
-## Option B — Self-Hosted
+## Step 2 — Install the MCP Skill
 
-### Prerequisites
-- Node.js >= 18
-- Convex account (free at convex.dev)
+The MCP skill runs via `npx` — no install step, no files to clone.
 
-### 1. Install dependencies
+**Requirement:** Node.js >= 18. Check with `node --version`.
 
-```bash
-cd noelapp/app
-npm install
-```
-
-### 2. Set up Convex
+### Claude Code
 
 ```bash
-npx convex dev
+claude mcp add noelclaw -- npx @noelclaw/mcp
 ```
 
-### 3. Set environment variables
+### Claude Desktop / Cursor / Windsurf
 
-```bash
-npx convex env set BANKR_API_KEY "your-key"
-npx convex env set GROK_API_KEY "your-grok-key"
-npx convex env set TELEGRAM_BOT_TOKEN "your-bot-token"
-npx convex env set TELEGRAM_CHAT_ID "your-chat-id"
-npx convex env set WALLET_ENCRYPTION_KEY "your-strong-random-key"
-npx convex env set ZX_API_KEY "your-0x-key"
+Add to your MCP config file:
+
+```json
+{
+  "mcpServers": {
+    "noelclaw": {
+      "command": "npx",
+      "args": ["@noelclaw/mcp"]
+    }
+  }
+}
 ```
 
-See [Environment Variables](env-vars.md) for the full list.
+Config file locations:
+- Claude Desktop (Mac): `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Claude Desktop (Windows): `%APPDATA%\Claude\claude_desktop_config.json`
+- Cursor: `~/.cursor/mcp.json`
+- Windsurf: `~/.windsurf/mcp_config.json`
 
-### 4. Start
+Restart your client after saving.
 
-```bash
-npm run dev         # frontend at http://localhost:5173
-npx convex deploy   # deploy functions
-```
+For full setup guides including Hermes and Aeon, see [Setup & Install](setup.md).
 
 ---
 
-## First Things to Try (MCP)
+## Step 3 — First Things to Try
 
-After installing the MCP skill:
+### Get live market data
 
-**Live market data:**
 ```
 get_market_data
 ```
 
-**Daily crypto briefing:**
+Returns the top-20 coins by market cap, BTC/ETH/SOL prices, and trending tokens.
+
+### Get a crypto briefing
+
 ```
 get_insight
 ```
 
-**Ask Noel:**
+On-demand analysis via Grok — BTC/ETH price action, macro context, and what's moving on X.
+
+### Ask Noel
+
 ```
-ask_noel: "What's your read on the market this week?"
+ask_noel question: "What's your read on the ETH/BTC ratio right now?"
 ```
 
-**Swap tokens on Base:**
+Noel AI with live market context for DeFi analysis.
+
+### Check your wallet address
+
 ```
-swap_tokens fromToken: ETH toToken: USDC amount: "0.01"
+get_wallet_address
 ```
 
-**Save to vault:**
+Returns your local wallet address. Keys are stored at `~/.noelclaw/wallet.json` and never leave your machine.
+
+### Swap tokens on Base
+
+```
+swap_tokens fromToken: "ETH" toToken: "USDC" amount: "0.01"
+```
+
+Routes through 0x Permit2 on Base mainnet, signed locally.
+
+### Save something to the vault
+
 ```
 vault_save key: "eth-thesis" content: "ETH is undervalued because..." type: "note"
 ```
 
-**Run a simulation:**
+Auto-versioned persistent storage accessible across any MCP session.
+
+### Run a MiroShark simulation
+
 ```
 miroshark_simulate scenario: "How would markets react if the Fed cuts rates 100bps?"
 ```
 
-**Humanize AI text:**
+Returns a multi-agent social simulation with belief propagation and behavioral analysis.
+
+### Humanize AI-generated text
+
 ```
 humanize_text text: "In conclusion, it is important to note that..."
 ```
 
+Strips AI writing patterns using MiniMax-M2.7. Requires `MINIMAX_API_KEY` env var.
+
 ---
 
-## Key Pages (Platform UI)
+## Step 4 — Connect Telegram (Optional)
 
-| Page | Path | What It Does |
-|------|------|-------------|
-| Dashboard | `/` | Overview, quick stats |
-| Chat | `/chat` | Talk to any agent |
-| Brain | `/brain` | Research activity log |
-| Automations | `/automations` | Enable/configure skills |
-| Arcade | `/arcade` | Play games, earn credits |
-| Wallet | `/wallet` | Manage tokens, send/swap |
-| Agent Hub | `/marketplace` | Browse 40+ agents |
-| Profile | `/profile` | Account settings, Telegram link |
-| Build | `/build` | AI app generator |
-| Swarm | `/swarm` | Multi-agent swarm dashboard |
+Receive trading signals, smart money alerts, and swarm events in Telegram.
+
+```
+set_telegram telegramBotToken: "your-bot-token" telegramChatId: "your-chat-id"
+```
+
+To get credentials:
+1. Open Telegram → search **@BotFather** → `/newbot` → copy the token
+2. Start a chat with your new bot
+3. Visit `https://api.telegram.org/bot<TOKEN>/getUpdates` → copy the `chat.id` value
+
+Signals arrive daily at 08:00 UTC. Smart money alerts fire hourly for Base micro-caps under $100k mcap.
+
+---
+
+## What's Next
+
+- [Full setup guides for all clients](setup.md)
+- [Complete MCP tool reference](mcp-server.md)
+- [Swarm, vault, and framework docs](agents.md)
+- [MiroShark simulation](miroshark.md)
+- [Aeon integration](aeon.md)

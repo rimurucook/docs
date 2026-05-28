@@ -1,6 +1,6 @@
 # Tool Pricing
 
-Prices are set in `app/convex/x402Mcp.ts` in the `TOOL_PRICES` map. Free tools pass through unconditionally. Paid tools require either a session token or a USDC micropayment on Base mainnet.
+Prices are set in `app/convex/x402Mcp.ts` in the `TOOL_PRICES` map. Free tools pass through unconditionally. Paid tools require either a Noelclaw session token or a USDC micropayment on Base mainnet.
 
 ---
 
@@ -11,16 +11,13 @@ No auth required. Always return results.
 | Tool | Description |
 |------|-------------|
 | `get_market_data` | Live top-20 coins by market cap, trending tokens, BTC/ETH/SOL prices |
-| `get_latest_signal` | Latest BTC and/or ETH 4H trading signals — entry, TP targets, stop loss, confidence score |
-| `get_signal_history` | Signal history with win/loss record and winrate stats |
-| `get_smart_money_alerts` | Smart money and insider wallet movements for micro-cap tokens on Base chain |
-| `get_daily_recap` | Today's trading performance recap with winrate, PnL stats, and AI review |
+| `get_token_data` | Price, 24h change, market cap, and volume for any specific token |
 
 ---
 
 ## Paid Tools
 
-Require a Noelclaw session token (`NOELCLAW_SESSION_TOKEN`) or a per-call USDC payment. See the [Integration Guide](x402-integration.md) for how to authenticate.
+Require a Noelclaw session token (`NOELCLAW_API_KEY`) or a per-call USDC payment. See the [Integration Guide](x402-integration.md) for how to authenticate.
 
 ### $0.25 USDC
 
@@ -33,16 +30,17 @@ Require a Noelclaw session token (`NOELCLAW_SESSION_TOKEN`) or a per-call USDC p
 
 | Tool | Description |
 |------|-------------|
-| `research` | On-demand crypto research — web-search backed analysis with overview, key findings, market impact, affected tokens, sentiment, and what to watch |
 | `ask_noel` | Chat with Noel AI — DeFi analysis, trade ideas, market outlook with live context |
-| `start_swarm` | Start the multi-agent swarm for autonomous market monitoring, sentiment tracking, and workflow execution |
+| `get_insight` | On-demand crypto + macro briefing via Grok — BTC/ETH action, narratives, what's moving on X |
+| `start_swarm` | Start the multi-agent swarm for autonomous market monitoring and workflow execution |
+| `miroshark_simulate` | Run a multi-agent social simulation for any scenario |
 
 ### $0.05 USDC
 
 | Tool | Description |
 |------|-------------|
-| `get_token_data` | Price, 24h change, market cap, and volume for any specific token |
-| `create_automation` | Create an automation in plain English — DCA, price alerts, conditional buys/sells, recurring updates |
+| `create_automation` | Create a DCA, price alert, or conditional buy/sell in plain English |
+| `vault_save` | Save or update an artifact to persistent vault memory |
 
 ### $0.01 USDC
 
@@ -51,20 +49,23 @@ Require a Noelclaw session token (`NOELCLAW_SESSION_TOKEN`) or a per-call USDC p
 | `list_automations` | List all automations with status, run counts, and next scheduled run |
 | `pause_automation` | Pause or resume an automation by ID |
 | `delete_automation` | Permanently delete an automation |
-| `set_telegram` | Configure personal Telegram bot for signals, whale alerts, research reports, and market data |
 | `stop_swarm` | Stop the active swarm session |
-| `get_swarm_status` | Active agents, shared memory snapshot, execution scores, and recent runs |
-| `write_swarm_memory` | Write a key-value entry to the swarm's shared memory |
-| `get_swarm_memory` | Read a value from the swarm's shared memory by key |
-| `get_execution_scores` | Self-improvement scores — success rate, win/loss, avg duration per skill |
+| `get_swarm_status` | Active agents, shared memory snapshot, execution scores |
+| `write_swarm_memory` | Write a key-value entry to swarm's shared memory |
+| `get_swarm_memory` | Read a value from swarm's shared memory by key |
+| `get_execution_scores` | Skill success rates, win/loss counts, avg duration |
+| `set_telegram` | Connect Telegram for push notifications |
+| `vault_read` | Read a vault entry by key |
+| `vault_list` | List vault entries |
+| `vault_search` | Full-text search across the vault |
+| `miroshark_status` | Poll simulation status |
 
 ---
 
 ## Notes
 
 - Prices are in USDC on Base mainnet (chain ID 8453)
-- Noelclaw account holders never pay x402 — their credit balance is debited instead
-- USDC must be the official contract: `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`
+- Noelclaw account holders (`NOELCLAW_API_KEY`) never pay x402 — their session is used directly
+- USDC contract: `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`
 - Each tool call requires a separate payment and unique `requestId`
-- Heavy swarm users can enable BYOK in noelclaw.com → Settings to route Bankr LLM calls to their own API key
-- Prices are subject to change as Noelclaw exits the promotional period
+- Heavy users can enable BYOK in noelclaw.com → Settings to route LLM calls to your own API key

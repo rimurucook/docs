@@ -2,6 +2,8 @@
 
 Install the Noelclaw MCP skill in Claude Code or Claude Desktop. No build step â€” runs via `npx`.
 
+**Requirement:** Node.js >= 18.
+
 ---
 
 ## Claude Code
@@ -10,11 +12,14 @@ Install the Noelclaw MCP skill in Claude Code or Claude Desktop. No build step â
 claude mcp add noelclaw -- npx @noelclaw/mcp
 ```
 
-Verify:
+Verify it's registered:
+
 ```bash
 claude mcp list
 # noelclaw   npx @noelclaw/mcp
 ```
+
+All 36 tools are now available in every Claude Code session.
 
 ---
 
@@ -35,11 +40,13 @@ claude mcp list
 }
 ```
 
-Save the file, then **restart Claude Desktop**. Tools appear automatically.
+Save the file, then **restart Claude Desktop**. All 36 tools appear automatically in the tool list.
 
 ---
 
-## Optional: With Custom Backend
+## Optional: With Environment Variables
+
+Add any env vars you need directly in the config:
 
 ```json
 {
@@ -48,21 +55,39 @@ Save the file, then **restart Claude Desktop**. Tools appear automatically.
       "command": "npx",
       "args": ["@noelclaw/mcp"],
       "env": {
-        "NOELCLAW_CONVEX_URL": "https://your-deployment.convex.site"
+        "MINIMAX_API_KEY": "your-minimax-key",
+        "AYRSHARE_API_KEY": "your-ayrshare-key",
+        "GROK_API_KEY": "your-grok-key"
       }
     }
   }
 }
 ```
 
+See [Environment Variables](env-vars.md) for the full list.
+
 ---
 
-## First Things to Try
+## First Steps
+
+After install, try these in any Claude session:
 
 ```
 get_market_data
+```
+
+```
 get_insight
-ask_noel: "What's the market doing right now?"
-vault_save key: "my-note" content: "..." type: "note"
-miroshark_simulate scenario: "What happens if BTC hits $200k?"
+```
+
+```
+ask_noel question: "What's the market doing right now?"
+```
+
+```
+vault_save key: "my-note" content: "Testing noelclaw vault" type: "note"
+```
+
+```
+miroshark_simulate scenario: "What happens if BTC hits $200k this cycle?"
 ```

@@ -1,8 +1,10 @@
 ﻿# Add to Hermes
 
-Add Noelclaw as an MCP skill in Hermes. Once connected, all 37 Noel tools are available directly in your agent conversations.
+Add Noelclaw as an MCP skill in Hermes. Once connected, all 36 tools are available directly in your agent conversations.
 
 No build step needed — runs via `npx @noelclaw/mcp`.
+
+**Requirement:** Node.js >= 18.
 
 ---
 
@@ -12,7 +14,8 @@ No build step needed — runs via `npx @noelclaw/mcp`.
 hermes mcp add noelclaw --command npx --args @noelclaw/mcp
 ```
 
-Reload without restarting:
+Reload without restarting Hermes:
+
 ```
 /reload-mcp
 ```
@@ -33,7 +36,7 @@ mcp_servers:
     connect_timeout: 10
 ```
 
-Run `/reload-mcp` in any Hermes session.
+Then run `/reload-mcp` in any Hermes session.
 
 ---
 
@@ -43,40 +46,51 @@ Run `/reload-mcp` in any Hermes session.
 /list-tools
 ```
 
-You should see all 37 tools including `get_market_data`, `research`, `get_insight`, `swap_tokens`, `vault_save`, `miroshark_simulate`, and more.
+You should see all 36 tools including `get_market_data`, `get_insight`, `ask_noel`, `swap_tokens`, `vault_save`, `miroshark_simulate`, and more.
 
 ---
 
 ## Usage Examples
 
 **Live market data:**
+
 ```
 use get_market_data to check the current crypto market
 ```
 
-**Research a topic:**
+**Ask Noel for analysis:**
+
 ```
-research query "What is the latest on Solana ecosystem?"
+ask_noel question: "What is the latest narrative driving ETH?"
 ```
 
 **Save to vault:**
+
 ```
-vault_save key: "sol-thesis" content: "..." type: "research"
+vault_save key: "sol-thesis" content: "My thesis on SOL..." type: "note"
 ```
 
 **Run a simulation:**
+
 ```
 miroshark_simulate scenario: "What happens if ETH flips BTC in market cap?"
 ```
 
-**Set up Telegram:**
+**Set up Telegram notifications:**
+
 ```
-set_telegram telegramBotToken: "..." telegramChatId: "..."
+set_telegram telegramBotToken: "your-token" telegramChatId: "your-chat-id"
+```
+
+**Start a swarm:**
+
+```
+start_swarm
 ```
 
 ---
 
-## Optional: Custom Backend
+## Optional: With Environment Variables
 
 ```yaml
 mcp_servers:
@@ -85,17 +99,23 @@ mcp_servers:
     args:
       - "@noelclaw/mcp"
     env:
-      NOELCLAW_CONVEX_URL: https://your-deployment.convex.site
+      MINIMAX_API_KEY: your-minimax-key
+      AYRSHARE_API_KEY: your-ayrshare-key
+      GROK_API_KEY: your-grok-key
     timeout: 30
     connect_timeout: 10
 ```
+
+See [Environment Variables](env-vars.md) for the full list.
 
 ---
 
 ## Troubleshooting
 
 | Problem | Fix |
-|---------|-----|
+|---|---|
 | Tools not showing after `/reload-mcp` | Check Node.js 18+ is installed: `node --version` |
 | `connect_timeout` errors | Increase to `connect_timeout: 20` — first run downloads the package |
-| `npx: command not found` | Set full path: `command: /usr/local/bin/npx` — find with `which npx` |
+| `npx: command not found` | Set full path: `command: /usr/local/bin/npx` — find it with `which npx` |
+| `humanize_text` fails | Set `MINIMAX_API_KEY` in the env section |
+| `post_tweet` fails | Set `AYRSHARE_API_KEY` in the env section |

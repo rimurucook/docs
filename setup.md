@@ -1,6 +1,6 @@
-# Setup & Install
+﻿# Setup & Install
 
-The `@noelclaw/mcp` package runs via `npx` — no build step, no cloning, no local files needed. One command gives you all 36 tools in any MCP-compatible AI client.
+The `@noelclaw/mcp` package runs via `npx` — no build step, no cloning, no local files needed. One command gives you all 35 tools in any MCP-compatible AI client.
 
 **Requirement:** Node.js >= 18. Check with `node --version`. Download from [nodejs.org](https://nodejs.org) if needed.
 
@@ -44,7 +44,7 @@ get_market_data
 }
 ```
 
-Save the file, then **restart Claude Desktop**. All 36 tools appear automatically in the tool list.
+Save the file, then **restart Claude Desktop**. All 35 tools appear automatically in the tool list.
 
 ---
 
@@ -166,7 +166,7 @@ Ask your AI client:
 list all noelclaw tools
 ```
 
-You should see 36 tools.
+You should see 35 tools.
 
 ### 2. Pull live market data
 

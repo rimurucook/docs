@@ -1,4 +1,4 @@
-# Add to Claude
+﻿# Add to Claude
 
 Install the Noelclaw MCP skill in Claude Code or Claude Desktop. No build step — runs via `npx`.
 
@@ -19,7 +19,7 @@ claude mcp list
 # noelclaw   npx @noelclaw/mcp
 ```
 
-All 36 tools are now available in every Claude Code session.
+All 35 tools are now available in every Claude Code session.
 
 ---
 
@@ -40,7 +40,7 @@ All 36 tools are now available in every Claude Code session.
 }
 ```
 
-Save the file, then **restart Claude Desktop**. All 36 tools appear automatically in the tool list.
+Save the file, then **restart Claude Desktop**. All 35 tools appear automatically in the tool list.
 
 ---
 

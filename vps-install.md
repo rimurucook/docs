@@ -50,7 +50,7 @@ Quick test with a raw MCP call:
 echo '{"jsonrpc":"2.0","method":"tools/list","params":{},"id":1}' | node dist/index.js
 ```
 
-Should return the list of 7 tools in JSON.
+Should return the list of 35 tools in JSON.
 
 ---
 

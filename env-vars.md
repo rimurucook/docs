@@ -41,7 +41,7 @@ Or go to **Convex Dashboard → your deployment → Settings → Environment Var
 | `RESEND_API_KEY` | Email delivery for OTP verification | — |
 | `ALCHEMY_API_KEY` | Alchemy key for portfolio lookups and token balances | — |
 
-> **Wallet security:** `WALLET_ENCRYPTION_KEY` must be set before any user calls `get_portfolio`, `swap_tokens`, or `send_token`. Private keys are AES-256-CBC encrypted before storage — the plaintext key never touches the database.
+> **Wallet security:** `WALLET_ENCRYPTION_KEY` must be set before any user calls `swap_tokens` or `send_token`. Private keys are AES-256-CBC encrypted before storage — the plaintext key never touches the database.
 
 > **Per-user Telegram:** Users can set their own bot token and chat ID via `POST /user/telegram`. When set, their personal bot is used for research results and agent notifications instead of the system default.
 

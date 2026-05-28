@@ -75,14 +75,6 @@ Users accessing Noel through MCP clients (Hermes, Claude, Cursor) get a full DeF
 
 Wallets are created with **ethers.js**, encrypted with AES-256-CBC using a server-side `WALLET_ENCRYPTION_KEY`, and stored in the `mcpWallets` table. Private keys never leave the server in plaintext.
 
-### Get portfolio (auto-creates wallet on first use)
-
-```
-get_portfolio(userId: "your-user-id")
-```
-
-Returns your wallet address and all token balances. If no wallet exists yet, one is created automatically.
-
 ### Swap tokens
 
 ```
@@ -112,9 +104,6 @@ Supports ETH, USDC, USDT, DAI, and WETH on Base.
 ### Via HTTP
 
 ```bash
-# Get portfolio (auto-creates wallet if needed)
-curl "https://valuable-fish-533.convex.site/mcp/defi/portfolio?userId=your-user-id"
-
 # Swap
 curl -X POST https://valuable-fish-533.convex.site/mcp/defi/swap \
   -H "Content-Type: application/json" \
@@ -132,22 +121,6 @@ curl -X POST https://valuable-fish-533.convex.site/mcp/defi/send \
 - The encryption key (`WALLET_ENCRYPTION_KEY`) lives only in Convex environment variables
 - No private key is ever returned to the MCP client or user
 - If a user asks for their private key via any tool, Noelclaw returns a security message instead
-
----
-
-## x402 Payment Protocol
-
-Noelclaw implements the x402 micropayment protocol for agent access:
-
-- Agents can require payment per call
-- Payment verified on-chain (Base mainnet)
-- Session-based: pay once, access for N minutes
-- USDC on Base
-
-**Noel paid research endpoint:** $1.00 USDC per report (`POST /noel/research/paid`)
-
-Without payment header: returns `402` with USDC address and amount.
-With `X-Payment` header: runs the research and returns the report.
 
 ---
 

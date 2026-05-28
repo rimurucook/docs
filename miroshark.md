@@ -1,39 +1,39 @@
 # MiroShark
 
-MiroShark is a multi-agent social simulation engine. You describe a scenario in plain English, and MiroShark spins up a network of AI agents with distinct personas and belief systems, runs them through multiple rounds of interaction and belief propagation, and returns a behavioral analysis of how the scenario plays out across the agent population.
+MiroShark is a multi-agent social simulation engine. Describe any scenario in plain English — MiroShark spins up a network of AI agents with distinct personas and belief systems, runs them through multiple rounds of interaction and belief propagation, and returns a behavioral analysis of how the scenario plays out.
 
-Use it for: market narrative modeling, social dynamics simulation, policy impact analysis, community reaction forecasting.
+Use it for: market narrative modeling, social dynamics simulation, regulatory impact analysis, community reaction forecasting.
 
 ---
 
 ## How It Works
 
-MiroShark runs on Railway (Hobby plan, $5/mo, 8 GB RAM). The pipeline has four stages:
+MiroShark runs on Railway (8 GB RAM). The pipeline has four stages:
 
 ### 1. Knowledge Graph Construction
 
-MiroShark parses the scenario description and builds a knowledge graph — a structured representation of entities, relationships, and claims relevant to the scenario. This gives the agents shared factual grounding.
+MiroShark parses the scenario and builds a knowledge graph — a structured representation of entities, relationships, and claims. This gives all agents shared factual grounding.
 
 ### 2. Persona Generation
 
-N agent personas are generated with:
-- Role (trader, analyst, retail investor, whale, developer, media, etc.)
-- Initial belief state — how strongly they hold each claim in the knowledge graph
-- Influence weight — how much other agents are affected by this agent's assertions
-- Information access — which agents see which signals
+Agent personas are generated with:
+- **Role** — trader, analyst, retail investor, whale, developer, media, skeptic
+- **Initial belief state** — how strongly they hold each claim in the knowledge graph
+- **Influence weight** — how much other agents are affected by their assertions
+- **Information access** — which agents see which signals first
 
 ### 3. Belief Propagation
 
-Over M rounds, agents exchange signals, update their beliefs based on neighbor influence, and form or revise positions. This models how information spreads, narratives form, and consensus or dissent emerges.
+Over multiple rounds, agents exchange signals, update beliefs based on neighbor influence, and form or revise positions. This models how information spreads, narratives form, and consensus or dissent emerges — similar to real social dynamics.
 
 ### 4. Analysis Output
 
-After all rounds complete, MiroShark returns:
-- Consensus narrative — what the majority of agents converged on
+After rounds complete, MiroShark returns:
+- Consensus narrative — what the majority converged on
 - Dissent clusters — minority belief groups that held different views
 - Signal strength — how quickly and strongly beliefs propagated
 - Agent behavior summary — which persona types were most influential
-- Round-by-round belief evolution (if full trace requested)
+- Round-by-round action log (Twitter and Reddit simulated activity)
 
 ---
 
@@ -61,31 +61,20 @@ Railway — MiroShark backend
 
 ### `miroshark_simulate`
 
-Start a new simulation. Returns a `simulation_id` immediately — the simulation runs asynchronously.
+Start a new simulation. Returns a `simulation_id` — the simulation runs asynchronously in the backend.
 
 | Parameter | Type | Required | Description |
-|---|---|---|---|
-| `scenario` | string | yes | What to simulate — plain English description |
-| `num_agents` | number | no | Number of agents (default: 20, max: 100) |
-| `num_rounds` | number | no | Simulation rounds (default: 50) |
+|-----------|------|----------|-------------|
+| `scenario` | string | yes | What to simulate — plain English, any topic |
+
+Agent count and number of rounds are determined automatically by MiroShark based on scenario complexity. A 24-hour scenario generates ~48 rounds; a 7-day scenario generates ~168 rounds.
 
 **Example:**
-
 ```
-miroshark_simulate scenario: "How would crypto markets react if the US SEC approves all spot ETH ETF applications in a single day?" num_agents: 30 num_rounds: 60
+run a miroshark simulation: "Bitcoin breaks $125,000 — how does the crypto community react over 24 hours?"
 ```
 
-Returns:
-
-```json
-{
-  "simulation_id": "sim_abc123",
-  "status": "pending",
-  "scenario": "...",
-  "num_agents": 30,
-  "num_rounds": 60
-}
-```
+Returns a `simulation_id`. Pass it to `miroshark_status` to track progress.
 
 ---
 
@@ -94,93 +83,72 @@ Returns:
 Poll simulation progress and retrieve results when complete.
 
 | Parameter | Type | Required | Description |
-|---|---|---|---|
-| `simulation_id` | string | yes | ID returned from `miroshark_simulate` |
+|-----------|------|----------|-------------|
+| `simulation_id` | string | yes | ID from `miroshark_simulate` |
 
 **Status flow:**
-
 ```
-pending → preparing → running → complete
+preparing → running → complete
 ```
 
-- `pending` — queued, not started
-- `preparing` — building knowledge graph and personas
-- `running` — belief propagation rounds in progress
+- `preparing` — building knowledge graph and generating agent personas
+- `running` — belief propagation rounds in progress, actions firing
 - `complete` — full results available
 
-**Example:**
-
+When `running`, the response shows current round, total rounds, and action counts:
 ```
-miroshark_status simulation_id: "sim_abc123"
+Round: 18 / 48 (37.5%)
+Actions: 43 Twitter · 50 Reddit
 ```
 
-When complete, the response includes the full analysis.
+Poll every 30-60 seconds. Preparation typically takes 3-5 minutes before rounds start.
+
+---
+
+### `miroshark_stop`
+
+Stop a simulation that is currently preparing or running.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `simulation_id` | string | yes | Simulation ID to stop |
 
 ---
 
 ## Example Scenarios
 
-**Market reaction:**
+**BTC price milestone:**
 ```
-miroshark_simulate scenario: "Bitcoin hits $200,000 this cycle — how do different market participants react?"
+run a miroshark simulation: "Bitcoin breaks $125,000 for the first time — how does the crypto community react over 24 hours?"
 ```
 
-**Regulatory impact:**
+**Regulatory event:**
 ```
-miroshark_simulate scenario: "The EU bans self-custody wallets — how does the crypto community respond?"
+run a miroshark simulation: "The EU bans self-custody wallets — how does the crypto community respond?"
+```
+
+**Market crash:**
+```
+run a miroshark simulation: "ETH drops 40% in 24 hours following a major hack — what happens to DeFi protocols and community sentiment?"
 ```
 
 **Narrative spread:**
 ```
-miroshark_simulate scenario: "A new L2 on Ethereum launches with $500M in liquidity incentives — how does the DeFi community respond?"
+run a miroshark simulation: "A new L2 launches with $500M in liquidity incentives — how does the DeFi community respond?"
 ```
 
-**Social dynamics:**
+**Macro impact:**
 ```
-miroshark_simulate scenario: "A major crypto influencer with 5M followers claims ETH is going to zero — how does the community react?"
-```
-
-**Macro event:**
-```
-miroshark_simulate scenario: "The Federal Reserve cuts interest rates to 0% — how does crypto market sentiment shift over 30 days?"
-```
-
----
-
-## What the Output Looks Like
-
-A completed simulation returns a structured analysis:
-
-```
-Scenario: Bitcoin hits $200,000 this cycle
-
-Consensus Narrative:
-  68% of agents converged on "accumulation phase complete, distribution beginning"
-  Key drivers: whale wallet movements, exchange inflows, social sentiment shift
-
-Dissent Clusters:
-  Cluster A (18% of agents): "this is early in the bull run, further upside ahead"
-  Cluster B (14% of agents): "macro factors will cause reversal before $200k"
-
-Most Influential Personas:
-  1. Whale traders (high influence weight, early belief convergence)
-  2. Financial media (fast signal propagation)
-  3. Retail FOMO cohort (late adopters, amplify existing trends)
-
-Signal Strength: High — beliefs propagated to 85% of agents within 12 rounds
-
-Belief Evolution:
-  Rounds 1-10: Initial divergence, strong disagreement
-  Rounds 11-25: Whale/analyst cluster gains dominance
-  Rounds 26-50: Retail cluster catches up, final consensus forms
+run a miroshark simulation: "The Federal Reserve cuts rates to 0% — how does crypto market sentiment shift over 30 days?"
 ```
 
 ---
 
 ## Tips
 
-- More agents (50-100) and more rounds (100+) give richer, more stable results at the cost of longer run time
-- Specific scenarios give better results than vague ones — include numbers, entities, and timeframes
-- Use `miroshark_status` in a loop to poll until status is `complete`
-- Combine with `vault_save` to store simulation results for later reference
-- Combine with `ask_noel` to get Noel's interpretation of the simulation output
+- **Specific scenarios give better results** — include timeframes, numbers, and named entities
+- **Poll with patience** — agent preparation takes 3-5 minutes before `running` starts; first rounds can be slow to initialize
+- **You don't need to wait for completion** — Round 10-20 is usually enough for a meaningful snapshot
+- **Combine with vault** — use `vault_save` to store results for later reference or comparison
+- **Combine with ask_noel** — after getting results, ask Noel to interpret them in context of current market conditions
+- **Use miroshark_stop** if a simulation is taking too long or you want to start a new scenario

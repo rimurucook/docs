@@ -24,7 +24,7 @@
             ┌─────────────────────┐
             │   @noelclaw/mcp     │
             │   (Node.js, npx)    │
-            │   34 tools          │
+            │   35 tools          │
             └──────────┬──────────┘
                        │ HTTPS (retries on 429/5xx)
                        ▼

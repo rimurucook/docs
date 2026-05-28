@@ -1,8 +1,8 @@
 # MCP Server Reference
 
-`@noelclaw/mcp` is an MCP server that exposes all of Noelclaw's tools to any MCP-compatible AI client. Install once via `npx` — no build step, no config required.
+`@noelclaw/mcp` is an MCP server that exposes all Noelclaw tools to any MCP-compatible AI client. Install once via `npx` — no build step, no config required.
 
-**34 tools across 8 categories.** Market data, DeFi execution, multi-agent swarm, persistent vault, Noel Framework playbooks, MiroShark simulation, social, and humanizer.
+**35 tools across 8 categories.** Market data, DeFi execution, multi-agent swarm, persistent vault, Noel Framework playbooks, MiroShark simulation, social notifications, and humanizer.
 
 ---
 
@@ -12,15 +12,15 @@
 
 | Tool | Description |
 |------|-------------|
-| `get_market_data` | Live top-20 coins by market cap, trending, BTC/ETH/SOL prices |
-| `get_token_data` | Price, 24h change, market cap, and volume for any specific token |
-| `ask_noel` | Chat with Noel — DeFi AI with live market context |
+| `get_market_data` | Live top-20 coins by market cap, trending, BTC/ETH/SOL key prices — from CoinGecko, no API key needed |
+| `get_token_data` | Price, 24h change, market cap, volume, and ATH for any specific token |
+| `ask_noel` | Chat with Noel — crypto AI with live market context |
 
 ### Wallet & DeFi
 
 | Tool | Description |
 |------|-------------|
-| `get_wallet_address` | Your local Noelclaw wallet address — keys never leave your machine |
+| `get_wallet_address` | Your local Noelclaw wallet address — keys stored at `~/.noelclaw/wallet.json`, never leave your machine |
 | `swap_tokens` | Swap ETH/USDC/USDT/DAI/WETH on Base via 0x Permit2, signed locally |
 | `send_token` | Send ETH or ERC-20 to any address on Base mainnet |
 
@@ -37,12 +37,12 @@
 
 | Tool | Description |
 |------|-------------|
-| `start_swarm` | Start the multi-agent swarm — 5 coordinated agents |
+| `start_swarm` | Start the multi-agent swarm — auto-loads live BTC/ETH/SOL prices into shared memory |
 | `stop_swarm` | Stop the active swarm session |
-| `get_swarm_status` | Active agents, shared memory snapshot, execution scores, recent runs |
+| `get_swarm_status` | Active session, shared memory snapshot, and execution scores |
 | `write_swarm_memory` | Write a key-value entry to shared memory (optional TTL) |
 | `get_swarm_memory` | Read a shared memory entry by key |
-| `get_execution_scores` | Skill success rates, win/loss, avg duration, last adapted |
+| `get_execution_scores` | Skill success rates, win/loss counts, avg duration |
 
 ### Noel Framework
 
@@ -50,19 +50,19 @@
 |------|-------------|
 | `create_task_packet` | Define a scoped task with territory, permissions, and constraints |
 | `list_task_packets` | List all task packets — draft, active, completed, blocked |
-| `list_playbooks` | List available playbooks with step counts and usage |
+| `list_playbooks` | Available playbooks with step counts and usage |
 | `run_playbook` | Execute a playbook with Sentinel gating per step |
-| `get_noel_ledger` | Audit trail of Sentinel gate decisions — checks, duration, reason |
+| `get_noel_ledger` | Sentinel audit trail — every gate decision with check type, duration, reason |
 | `get_sentinel_rules` | Sentinel rules per agent/role — territory, permissions, caps |
 
 ### Noel Vault
 
 | Tool | Description |
 |------|-------------|
-| `vault_save` | Save or update an artifact with auto-versioning — notes, code, plans |
-| `vault_read` | Read a vault entry by key — full content, version, tags, links |
+| `vault_save` | Save or update an artifact with auto-versioning |
+| `vault_read` | Read a vault entry by key |
 | `vault_list` | List vault entries filtered by type, agent, or pinned status |
-| `vault_search` | Full-text search across the vault with ranking and previews |
+| `vault_search` | Full-text search across the vault |
 | `vault_history` | Full version history of a vault entry (git log style) |
 | `vault_diff` | Compare two versions of a vault entry (git diff style) |
 | `vault_export` | Export entire vault or specific type as a structured bundle |
@@ -72,20 +72,21 @@
 | Tool | Description |
 |------|-------------|
 | `miroshark_simulate` | Run a multi-agent social simulation for any scenario in plain English |
-| `miroshark_status` | Poll simulation status through prep, running, and completion phases |
+| `miroshark_status` | Poll simulation status — prep, running, and completion |
+| `miroshark_stop` | Stop a running simulation |
 
 ### Notifications & Social
 
 | Tool | Description |
 |------|-------------|
 | `set_telegram` | Connect Telegram for swarm events and automation alerts |
-| `post_tweet` | Post a tweet on X via Ayrshare API |
+| `post_tweet` | Post to X via Ayrshare API (requires `AYRSHARE_API_KEY`) |
 
 ### Humanizer
 
 | Tool | Description |
 |------|-------------|
-| `humanize_text` | Strip AI writing patterns — makes output sound natural and human |
+| `humanize_text` | Strip AI writing patterns — makes output sound natural (requires `MINIMAX_API_KEY`) |
 
 ---
 
@@ -96,26 +97,18 @@ AI Client (Claude / Cursor / Hermes / Windsurf / Aeon)
     │
     │  MCP protocol (stdio)
     ▼
-@noelclaw/mcp (Node.js via npx)
-    │
-    │  HTTPS — retries on 429/5xx
+@noelclaw/mcp (Node.js)
+    │  Market data → CoinGecko (free, no key)
+    │  Everything else → HTTPS with auto-retry on 429/5xx
     ▼
-https://api.noelclaw.com          ← Cloudflare Worker (rate limit + CORS)
+api.noelclaw.com  ← Cloudflare Worker (rate limit + CORS)
     │
-    ▼
-Convex backend
-    │
-    ├── /mcp/chat                → ask_noel
-    ├── /mcp/defi/swap           → swap_tokens
-    ├── /mcp/defi/send           → send_token
-    ├── /automations/*           → create/list/pause/delete
-    ├── /swarm/*                 → swarm tools (via Supabase)
-    ├── /vault/*                 → vault tools (via Supabase)
-    ├── /framework/*             → task packets, playbooks, ledger
-    └── /miroshark/*             → simulate, status (via Railway)
+    ├── Convex backend      → ask_noel, automations, framework, DeFi
+    ├── Supabase Edge       → swarm, vault
+    └── Railway             → MiroShark simulation engine
 ```
 
-Market data is fetched from CoinGecko. Wallet signing happens locally — Convex never holds your keys.
+Wallet signing happens locally in the MCP server via ethers.js. Convex never holds or sees your private key.
 
 ---
 
@@ -124,7 +117,7 @@ Market data is fetched from CoinGecko. Wallet signing happens locally — Convex
 ### Claude Code
 
 ```bash
-claude mcp add noelclaw -- npx @noelclaw/mcp
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp
 ```
 
 ### Claude Desktop
@@ -137,30 +130,26 @@ Windows: `%APPDATA%\Claude\claude_desktop_config.json`
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/mcp"]
+      "args": ["-y", "@noelclaw/mcp"]
     }
   }
 }
 ```
 
-### Cursor
+### Cursor / Windsurf
 
-Edit `~/.cursor/mcp.json`:
+Edit `~/.cursor/mcp.json` (Cursor) or `~/.windsurf/mcp_config.json` (Windsurf):
 
 ```json
 {
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/mcp"]
+      "args": ["-y", "@noelclaw/mcp"]
     }
   }
 }
 ```
-
-### Windsurf
-
-Edit `~/.windsurf/mcp_config.json` — same JSON format as above.
 
 ### Hermes
 
@@ -169,7 +158,21 @@ mcp_servers:
   noelclaw:
     command: npx
     args:
+      - "-y"
       - "@noelclaw/mcp"
+```
+
+### Aeon
+
+```yaml
+skills:
+  noelclaw:
+    mcp_server:
+      command: npx
+      args:
+        - "-y"
+        - "@noelclaw/mcp"
+    enabled: true
 ```
 
 ---
@@ -180,7 +183,9 @@ mcp_servers:
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `token` | string | no | Focus on a specific token, e.g. `"BTC"` |
+| `token` | string | no | Focus on a specific token, e.g. `"BTC"`, `"ETH"` |
+
+No parameters = returns top-20 by market cap + trending + BTC/ETH/SOL key prices.
 
 ---
 
@@ -188,7 +193,7 @@ mcp_servers:
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `question` | string | yes | Token name or query, e.g. `"show me ETH and SOL"` |
+| `question` | string | yes | Token name or query, e.g. `"show me ETH"`, `"PEPE price"` |
 
 ---
 
@@ -203,7 +208,7 @@ mcp_servers:
 
 ### `get_wallet_address`
 
-No parameters. Returns your local Noelclaw wallet address. Keys are stored at `~/.noelclaw/wallet.json` and never leave your device.
+No parameters. Returns your local Noelclaw wallet address. Keys stored at `~/.noelclaw/wallet.json` and never leave your device.
 
 ---
 
@@ -213,9 +218,9 @@ No parameters. Returns your local Noelclaw wallet address. Keys are stored at `~
 |-----------|------|----------|-------------|
 | `fromToken` | string | yes | Token to sell: `ETH`, `USDC`, `USDT`, `DAI`, `WETH` |
 | `toToken` | string | yes | Token to buy |
-| `amount` | string | yes | Human-readable amount or percentage, e.g. `"0.01"` or `"50%"` |
+| `amount` | string | yes | Amount, e.g. `"0.01"` or `"50%"` |
 
-Routes through 0x Permit2 on Base mainnet. Signed locally — not by Convex.
+Routes through 0x Permit2 on Base mainnet. Signed locally — Convex never sees your key.
 
 ---
 
@@ -225,7 +230,7 @@ Routes through 0x Permit2 on Base mainnet. Signed locally — not by Convex.
 |-----------|------|----------|-------------|
 | `token` | string | yes | `ETH`, `USDC`, `USDT`, `DAI`, or `WETH` |
 | `toAddress` | string | yes | Recipient address (`0x...`) |
-| `amount` | string | yes | Human-readable amount |
+| `amount` | string | yes | Human-readable amount, e.g. `"0.5"` |
 
 ---
 
@@ -236,9 +241,9 @@ Routes through 0x Permit2 on Base mainnet. Signed locally — not by Convex.
 | `rawInput` | string | yes | Plain English description |
 
 Examples:
-- `"Buy 50 USDC of ETH every day"`
+- `"Buy 50 USDC of ETH every day at 9am"`
 - `"Alert me when BTC hits $120,000"`
-- `"If ETH drops 5%, buy $100"`
+- `"If ETH drops 5% in 1 hour, buy $100 worth"`
 
 ---
 
@@ -268,9 +273,9 @@ No parameters. Returns all automations with status, run counts, and next schedul
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `config.enabledAgents` | string[] | no | Agent IDs (default: all 5) |
+| `config.enabledAgents` | string[] | no | Agent IDs to enable (default: all) |
 
-Available agents: `market-monitor`, `sentiment-tracker`, `workflow-executor`, `memory-manager`, `risk-verifier`
+On start, automatically fetches live BTC/ETH/SOL prices from CoinGecko and writes them to shared memory — no stale cached data.
 
 ---
 
@@ -292,7 +297,7 @@ No parameters. Returns active session, shared memory snapshot, and top execution
 |-----------|------|----------|-------------|
 | `agentId` | string | yes | ID of the writing agent |
 | `key` | string | yes | Memory key |
-| `value` | string | yes | Value (JSON-serializable string) |
+| `value` | string | yes | Value to store |
 | `ttlSeconds` | number | no | Auto-delete after N seconds |
 
 ---
@@ -307,7 +312,7 @@ No parameters. Returns active session, shared memory snapshot, and top execution
 
 ### `get_execution_scores`
 
-No parameters. All skill scores: success rate, win/loss counts, avg duration, last adapted.
+No parameters. All skill scores: success rate, win/loss, avg duration, last adapted timestamp.
 
 ---
 
@@ -371,7 +376,7 @@ No parameters. Sentinel rules per agent and role: territory, permissions, value 
 | `tags` | string[] | no | Tags for filtering |
 | `commitMsg` | string | no | Version message, e.g. `"initial draft"` |
 
-Auto-versions on every update — all previous versions are preserved.
+Auto-versions on every update — all previous versions are preserved and accessible via `vault_history`.
 
 ---
 
@@ -417,8 +422,8 @@ Auto-versions on every update — all previous versions are preserved.
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `key` | string | yes | Vault key |
-| `fromVersion` | number | yes | Earlier version |
-| `toVersion` | number | yes | Later version |
+| `fromVersion` | number | yes | Earlier version number |
+| `toVersion` | number | yes | Later version number |
 
 ---
 
@@ -426,7 +431,7 @@ Auto-versions on every update — all previous versions are preserved.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `type` | string | no | Export only this type (omit for full export) |
+| `type` | string | no | Export only this type (omit for full vault export) |
 
 ---
 
@@ -434,11 +439,9 @@ Auto-versions on every update — all previous versions are preserved.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `scenario` | string | yes | What to simulate in plain English |
-| `num_agents` | number | no | Number of agents (default: 20, max: 100) |
-| `num_rounds` | number | no | Simulation rounds (default: 50) |
+| `scenario` | string | yes | What to simulate — plain English, any topic |
 
-Builds a knowledge graph, generates personas, runs belief propagation, returns behavioral analysis.
+Automatically builds a knowledge graph, generates agent personas, runs belief propagation, and returns a `simulation_id`. Poll with `miroshark_status`. Agent count and rounds are determined by MiroShark based on scenario complexity.
 
 ---
 
@@ -448,7 +451,17 @@ Builds a knowledge graph, generates personas, runs belief propagation, returns b
 |-----------|------|----------|-------------|
 | `simulation_id` | string | yes | ID from `miroshark_simulate` |
 
-Poll through: `pending → preparing → running → complete`.
+Polls through: `preparing → running → complete`. Automatically starts the simulation when agent preparation finishes.
+
+---
+
+### `miroshark_stop`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `simulation_id` | string | yes | Simulation ID to stop |
+
+Stops a running or preparing simulation immediately.
 
 ---
 
@@ -457,7 +470,7 @@ Poll through: `pending → preparing → running → complete`.
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `telegramBotToken` | string | yes | Bot token from @BotFather |
-| `telegramChatId` | string | yes | Your chat ID |
+| `telegramChatId` | string | yes | Your Telegram chat ID |
 
 ---
 
@@ -465,9 +478,9 @@ Poll through: `pending → preparing → running → complete`.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `content` | string | yes | Tweet text |
+| `content` | string | yes | Tweet text (max 280 chars) |
 
-Requires `AYRSHARE_API_KEY` env var.
+Requires `AYRSHARE_API_KEY` in env.
 
 ---
 
@@ -477,21 +490,23 @@ Requires `AYRSHARE_API_KEY` env var.
 |-----------|------|----------|-------------|
 | `text` | string | yes | AI-generated text to rewrite |
 
-Strips AI patterns using MiniMax-M2.7. Requires `MINIMAX_API_KEY` env var.
+Strips AI patterns using MiniMax. Requires `MINIMAX_API_KEY` in env.
 
 ---
 
 ## Environment Variables
 
-| Var | Purpose |
-|-----|---------|
-| `NOELCLAW_API_KEY` | Link to your noelclaw.com account |
-| `ALCHEMY_API_KEY` | Faster swap quotes and Base balance lookups |
-| `BANKR_API_KEY` | Your own Bankr key for swarm agents (BYOK) |
-| `TELEGRAM_BOT_TOKEN` | Telegram bot token (from @BotFather) |
-| `TELEGRAM_CHAT_ID` | Your Telegram chat ID |
-| `MINIMAX_API_KEY` | Required for `humanize_text` |
-| `AYRSHARE_API_KEY` | Required for `post_tweet` |
+Set in your MCP client config under the `env` block:
+
+| Variable | Required | Purpose |
+|----------|----------|---------|
+| `NOELCLAW_API_KEY` | no | Links to your noelclaw.com account |
+| `ALCHEMY_API_KEY` | no | Faster swap quotes and Base balance lookups |
+| `BANKR_API_KEY` | no | BYOK — forwarded as your own Bankr key for swarm agents |
+| `TELEGRAM_BOT_TOKEN` | no | Telegram bot token (from @BotFather) |
+| `TELEGRAM_CHAT_ID` | no | Your Telegram chat ID |
+| `MINIMAX_API_KEY` | for `humanize_text` | MiniMax API key |
+| `AYRSHARE_API_KEY` | for `post_tweet` | Ayrshare API key |
 
 ---
 
@@ -499,10 +514,11 @@ Strips AI patterns using MiniMax-M2.7. Requires `MINIMAX_API_KEY` env var.
 
 | Error | Fix |
 |-------|-----|
-| Tools not appearing | Restart your MCP client |
-| Server starts but no response | Normal — waits for MCP stdin, not HTTP |
-| Swap fails | Check ETH balance and Base mainnet connectivity |
+| Tools not appearing | Restart your MCP client after adding the server |
+| `npx` hangs on first run | Use `-y` flag: `npx -y @noelclaw/mcp` |
+| Tools not found after restart | Run `npx clear-npx-cache` then restart |
 | `get_swarm_status` empty | Start swarm first with `start_swarm` |
-| Rate limit (429) | Auto-retries up to 3 times with backoff |
+| Swap fails | Check ETH balance and Base mainnet connectivity |
 | `humanize_text` fails | Set `MINIMAX_API_KEY` in env |
 | `post_tweet` fails | Set `AYRSHARE_API_KEY` in env |
+| Rate limit (429) | Auto-retries up to 3× with backoff — no action needed |

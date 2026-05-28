@@ -31,7 +31,6 @@ Require a Noelclaw session token (`NOELCLAW_API_KEY`) or a per-call USDC payment
 | Tool | Description |
 |------|-------------|
 | `ask_noel` | Chat with Noel AI — DeFi analysis, trade ideas, market outlook with live context |
-| `get_insight` | On-demand crypto + macro briefing via Grok — BTC/ETH action, narratives, what's moving on X |
 | `start_swarm` | Start the multi-agent swarm for autonomous market monitoring and workflow execution |
 | `miroshark_simulate` | Run a multi-agent social simulation for any scenario |
 

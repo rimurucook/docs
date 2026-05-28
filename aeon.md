@@ -1,6 +1,6 @@
 ﻿# Aeon Integration
 
-The noelclaw skill pack is live in the Aeon ecosystem (merged PR #253). Once added, all 35 Noelclaw tools are available in Hermes and the Aeon agent runtime.
+The noelclaw skill pack is live in the Aeon ecosystem (merged PR #253). Once added, all 34 Noelclaw tools are available in Hermes and the Aeon agent runtime.
 
 ---
 
@@ -48,7 +48,7 @@ In Hermes or any Aeon agent session:
 /list-tools
 ```
 
-You should see all 35 Noelclaw tools listed.
+You should see all 34 Noelclaw tools listed.
 
 ---
 
@@ -105,7 +105,6 @@ Feed live data into agent reasoning:
 ```
 get_market_data
 get_token_data question: "PEPE, WIF, DOGE"
-get_insight
 ask_noel question: "What narratives are gaining traction on Base?"
 ```
 
@@ -115,7 +114,7 @@ ask_noel question: "What narratives are gaining traction on Base?"
 
 A typical Aeon agent task using noelclaw tools:
 
-1. `get_insight` — pull current market briefing
+1. `ask_noel` — pull market analysis and current context
 2. `start_swarm` — start 5 coordinated agents
 3. `get_swarm_status` — check agent activity and shared memory
 4. `vault_save` — store the analysis output
@@ -126,7 +125,7 @@ A typical Aeon agent task using noelclaw tools:
 
 ## Notes
 
-- All 35 tools are available — no Aeon-specific limitations
+- All 34 tools are available — no Aeon-specific limitations
 - BYOK env vars (Grok, MiniMax, Ayrshare) work the same way as in other clients
 - See [Environment Variables](env-vars.md) for optional keys
 - See [MCP Server Reference](mcp-server.md) for full tool parameter docs

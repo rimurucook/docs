@@ -1,6 +1,6 @@
 ﻿# Add to Hermes
 
-Add Noelclaw as an MCP skill in Hermes. Once connected, all 35 tools are available directly in your agent conversations.
+Add Noelclaw as an MCP skill in Hermes. Once connected, all 34 tools are available directly in your agent conversations.
 
 No build step needed — runs via `npx @noelclaw/mcp`.
 
@@ -46,7 +46,7 @@ Then run `/reload-mcp` in any Hermes session.
 /list-tools
 ```
 
-You should see all 35 tools including `get_market_data`, `get_insight`, `ask_noel`, `swap_tokens`, `vault_save`, `miroshark_simulate`, and more.
+You should see all 34 tools including `get_market_data`, `ask_noel`, `swap_tokens`, `vault_save`, `miroshark_simulate`, and more.
 
 ---
 
@@ -101,7 +101,7 @@ mcp_servers:
     env:
       MINIMAX_API_KEY: your-minimax-key
       AYRSHARE_API_KEY: your-ayrshare-key
-      GROK_API_KEY: your-grok-key
+      BANKR_API_KEY: your-bankr-key
     timeout: 30
     connect_timeout: 10
 ```

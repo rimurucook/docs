@@ -1,12 +1,8 @@
-﻿# MCP Server — Noelclaw Skill
+# MCP Server Reference
 
-The `@noelclaw/mcp` package is a Model Context Protocol server that exposes all of Noelclaw's tools to any MCP-compatible AI client. Install once via `npx` — no build step, no config required.
+`@noelclaw/mcp` is an MCP server that exposes all of Noelclaw's tools to any MCP-compatible AI client. Install once via `npx` — no build step, no config required.
 
-```bash
-npx @noelclaw/mcp
-```
-
-**35 tools across 8 categories.** Market data, DeFi execution, multi-agent swarm, persistent vault memory, Noel Framework playbooks, MiroShark simulation, social, and humanizer.
+**34 tools across 8 categories.** Market data, DeFi execution, multi-agent swarm, persistent vault, Noel Framework playbooks, MiroShark simulation, social, and humanizer.
 
 ---
 
@@ -18,14 +14,13 @@ npx @noelclaw/mcp
 |------|-------------|
 | `get_market_data` | Live top-20 coins by market cap, trending, BTC/ETH/SOL prices |
 | `get_token_data` | Price, 24h change, market cap, and volume for any specific token |
-| `get_insight` | On-demand crypto + macro briefing powered by Grok — BTC/ETH action, narratives, what's moving on X |
 | `ask_noel` | Chat with Noel — DeFi AI with live market context |
 
 ### Wallet & DeFi
 
 | Tool | Description |
 |------|-------------|
-| `get_wallet_address` | Get your local Noelclaw wallet address — keys never leave your machine |
+| `get_wallet_address` | Your local Noelclaw wallet address — keys never leave your machine |
 | `swap_tokens` | Swap ETH/USDC/USDT/DAI/WETH on Base via 0x Permit2, signed locally |
 | `send_token` | Send ETH or ERC-20 to any address on Base mainnet |
 
@@ -97,7 +92,7 @@ npx @noelclaw/mcp
 ## How It Works
 
 ```
-AI Client (Claude / Cursor / Hermes / Windsurf)
+AI Client (Claude / Cursor / Hermes / Windsurf / Aeon)
     │
     │  MCP protocol (stdio)
     ▼
@@ -111,17 +106,16 @@ https://api.noelclaw.com          ← Cloudflare Worker (rate limit + CORS)
 Convex backend
     │
     ├── /mcp/chat                → ask_noel
-    ├── /mcp/insight             → get_insight
     ├── /mcp/defi/swap           → swap_tokens
     ├── /mcp/defi/send           → send_token
     ├── /automations/*           → create/list/pause/delete
-    ├── /swarm/*                 → swarm tools
-    ├── /vault/*                 → vault tools
+    ├── /swarm/*                 → swarm tools (via Supabase)
+    ├── /vault/*                 → vault tools (via Supabase)
     ├── /framework/*             → task packets, playbooks, ledger
-    └── /miroshark/*             → simulate, status
+    └── /miroshark/*             → simulate, status (via Railway)
 ```
 
-Market data is pulled from CoinGecko via the swarm's shared memory. Wallet signing happens locally — Convex never holds your keys.
+Market data is fetched from CoinGecko. Wallet signing happens locally — Convex never holds your keys.
 
 ---
 
@@ -135,7 +129,8 @@ claude mcp add noelclaw -- npx @noelclaw/mcp
 
 ### Claude Desktop
 
-Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (Mac) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+Mac: `~/Library/Application Support/Claude/claude_desktop_config.json`
+Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
@@ -148,7 +143,9 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (Mac) or 
 }
 ```
 
-### Cursor / Windsurf
+### Cursor
+
+Edit `~/.cursor/mcp.json`:
 
 ```json
 {
@@ -160,6 +157,10 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (Mac) or 
   }
 }
 ```
+
+### Windsurf
+
+Edit `~/.windsurf/mcp_config.json` — same JSON format as above.
 
 ### Hermes
 
@@ -191,12 +192,6 @@ mcp_servers:
 
 ---
 
-### `get_insight`
-
-No parameters. Returns an on-demand crypto + macro briefing powered by Grok: BTC/ETH price action, macro events, and trending narratives on X.
-
----
-
 ### `ask_noel`
 
 | Parameter | Type | Required | Description |
@@ -208,7 +203,7 @@ No parameters. Returns an on-demand crypto + macro briefing powered by Grok: BTC
 
 ### `get_wallet_address`
 
-No parameters. Returns your local Noelclaw wallet address. Keys are stored at `~/.noelclaw/wallet.json`, encrypted with a machine-derived key — never leave your device.
+No parameters. Returns your local Noelclaw wallet address. Keys are stored at `~/.noelclaw/wallet.json` and never leave your device.
 
 ---
 
@@ -218,7 +213,7 @@ No parameters. Returns your local Noelclaw wallet address. Keys are stored at `~
 |-----------|------|----------|-------------|
 | `fromToken` | string | yes | Token to sell: `ETH`, `USDC`, `USDT`, `DAI`, `WETH` |
 | `toToken` | string | yes | Token to buy |
-| `amount` | string | yes | Human-readable amount, e.g. `"0.01"` |
+| `amount` | string | yes | Human-readable amount or percentage, e.g. `"0.01"` or `"50%"` |
 
 Routes through 0x Permit2 on Base mainnet. Signed locally — not by Convex.
 
@@ -487,8 +482,7 @@ Strips AI patterns using MiniMax-M2.7. Requires `MINIMAX_API_KEY` env var.
 |-----|---------|
 | `NOELCLAW_API_KEY` | Link to your noelclaw.com account |
 | `ALCHEMY_API_KEY` | Faster swap quotes and Base balance lookups |
-| `GROK_API_KEY` | Your own X.AI key for `get_insight` |
-| `BANKR_API_KEY` | Your own Bankr key for swarm agents |
+| `BANKR_API_KEY` | Your own Bankr key for swarm agents (BYOK) |
 | `TELEGRAM_BOT_TOKEN` | Telegram bot token (from @BotFather) |
 | `TELEGRAM_CHAT_ID` | Your Telegram chat ID |
 | `MINIMAX_API_KEY` | Required for `humanize_text` |
@@ -505,3 +499,5 @@ Strips AI patterns using MiniMax-M2.7. Requires `MINIMAX_API_KEY` env var.
 | Swap fails | Check ETH balance and Base mainnet connectivity |
 | `get_swarm_status` empty | Start swarm first with `start_swarm` |
 | Rate limit (429) | Auto-retries up to 3 times with backoff |
+| `humanize_text` fails | Set `MINIMAX_API_KEY` in env |
+| `post_tweet` fails | Set `AYRSHARE_API_KEY` in env |

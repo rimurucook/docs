@@ -19,7 +19,7 @@ claude mcp list
 # noelclaw   npx @noelclaw/mcp
 ```
 
-All 35 tools are now available in every Claude Code session.
+All 34 tools are now available in every Claude Code session.
 
 ---
 
@@ -40,7 +40,7 @@ All 35 tools are now available in every Claude Code session.
 }
 ```
 
-Save the file, then **restart Claude Desktop**. All 35 tools appear automatically in the tool list.
+Save the file, then **restart Claude Desktop**. All 34 tools appear automatically in the tool list.
 
 ---
 
@@ -57,7 +57,7 @@ Add any env vars you need directly in the config:
       "env": {
         "MINIMAX_API_KEY": "your-minimax-key",
         "AYRSHARE_API_KEY": "your-ayrshare-key",
-        "GROK_API_KEY": "your-grok-key"
+        "BANKR_API_KEY": "your-bankr-key"
       }
     }
   }
@@ -74,10 +74,6 @@ After install, try these in any Claude session:
 
 ```
 get_market_data
-```
-
-```
-get_insight
 ```
 
 ```

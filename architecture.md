@@ -24,7 +24,7 @@
             ┌─────────────────────┐
             │   @noelclaw/mcp     │
             │   (Node.js, npx)    │
-            │   35 tools          │
+            │   34 tools          │
             └──────────┬──────────┘
                        │ HTTPS (retries on 429/5xx)
                        ▼
@@ -47,7 +47,6 @@
   │                   │
   │  Routes:          │
   │  /mcp/chat        │
-  │  /mcp/insight     │
   │  /mcp/defi/*      │
   │  /automations/*   │
   │  /framework/*     │
@@ -57,7 +56,6 @@
           ▼
   ┌───────────────────────────────────────────────────┐
   │              External Services                    │
-  │  Grok API (X.AI)     — get_insight               │
   │  0x Permit2 API      — swap_tokens               │
   │  Telegram Bot API    — set_telegram              │
   │  Ayrshare API        — post_tweet                │

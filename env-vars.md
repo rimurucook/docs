@@ -22,7 +22,6 @@ Or go to **Convex Dashboard → your deployment → Settings → Environment Var
 | `BANKR_API_KEY` | Bankr LLM and Agent API — powers ask_noel and swarm agents | bankr.bot dashboard |
 | `TELEGRAM_BOT_TOKEN` | Default bot token for swarm and automation notifications | @BotFather on Telegram |
 | `TELEGRAM_CHAT_ID` | Default chat ID for Telegram delivery | Your Telegram chat/group ID |
-| `GROK_API_KEY` | X.AI Grok API — powers get_insight | console.x.ai |
 | `WALLET_ENCRYPTION_KEY` | AES-256 key for encrypting user private keys in DB — never expose this | Generate a strong random string |
 | `ZX_API_KEY` | 0x API key for Permit2 swap quotes on Base mainnet | dashboard.0x.org |
 
@@ -58,7 +57,6 @@ The MCP server reads these from the local environment (set in your MCP client co
 | `NOELCLAW_CONVEX_URL` | Override API proxy URL | `https://api.noelclaw.com` |
 | `NOELCLAW_PAYMENT_HEADER` | x402 payment proof header (single-use) | — |
 | `ALCHEMY_API_KEY` | Faster swap quotes and portfolio queries | — |
-| `GROK_API_KEY` | BYOK — forwarded as `X-User-Grok-Key` | — |
 | `BANKR_API_KEY` | BYOK — forwarded as `X-User-Bankr-Key` | — |
 | `TELEGRAM_BOT_TOKEN` | BYOK — forwarded as `X-User-Telegram-Token` | — |
 | `TELEGRAM_CHAT_ID` | BYOK — forwarded as `X-User-Telegram-Chat` | — |
@@ -76,7 +74,7 @@ Example with all options in Claude Desktop config:
       "env": {
         "NOELCLAW_API_KEY": "noel_sk_xxx",
         "ALCHEMY_API_KEY": "your-alchemy-key",
-        "GROK_API_KEY": "xai-xxx"
+        "BANKR_API_KEY": "your-bankr-key"
       }
     }
   }

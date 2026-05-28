@@ -1,6 +1,6 @@
 ﻿# Setup & Install
 
-The `@noelclaw/mcp` package runs via `npx` — no build step, no cloning, no local files needed. One command gives you all 35 tools in any MCP-compatible AI client.
+The `@noelclaw/mcp` package runs via `npx` — no build step, no cloning, no local files needed. One command gives you all 34 tools in any MCP-compatible AI client.
 
 **Requirement:** Node.js >= 18. Check with `node --version`. Download from [nodejs.org](https://nodejs.org) if needed.
 
@@ -44,7 +44,7 @@ get_market_data
 }
 ```
 
-Save the file, then **restart Claude Desktop**. All 35 tools appear automatically in the tool list.
+Save the file, then **restart Claude Desktop**. All 34 tools appear automatically in the tool list.
 
 ---
 
@@ -166,7 +166,7 @@ Ask your AI client:
 list all noelclaw tools
 ```
 
-You should see 35 tools.
+You should see 34 tools.
 
 ### 2. Pull live market data
 
@@ -174,10 +174,10 @@ You should see 35 tools.
 get_market_data
 ```
 
-### 3. Get a briefing
+### 3. Ask Noel
 
 ```
-get_insight
+ask_noel question: "What's your read on BTC right now?"
 ```
 
 ### 4. Connect Telegram (optional)
@@ -212,7 +212,7 @@ Pass env vars to unlock extra tools or use your own API keys:
       "env": {
         "MINIMAX_API_KEY": "your-key",
         "AYRSHARE_API_KEY": "your-key",
-        "GROK_API_KEY": "your-key"
+        "BANKR_API_KEY": "your-key"
       }
     }
   }

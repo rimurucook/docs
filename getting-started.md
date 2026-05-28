@@ -1,18 +1,18 @@
-﻿# Getting Started
+# Getting Started
 
 ---
 
-## Step 1 — Sign Up on the Platform
+## Step 1 — Sign Up
 
-Go to [noelclaw.com](https://noelclaw.com) and create an account. The platform gives you access to the web UI for managing automations, viewing trading signals, and tracking your wallet.
+Go to [noelclaw.com](https://noelclaw.com) and create an account. This gives you access to the web UI for managing automations, monitoring your wallet, and chatting with Noel AI.
 
 ---
 
 ## Step 2 — Install the MCP Skill
 
-The MCP skill runs via `npx` — no install step, no files to clone.
+The skill runs via `npx` — no install, no cloning, nothing to maintain.
 
-**Requirement:** Node.js >= 18. Check with `node --version`.
+**Requirement:** Node.js >= 18. Check with `node --version`. Download from [nodejs.org](https://nodejs.org) if needed.
 
 ### Claude Code
 
@@ -20,9 +20,11 @@ The MCP skill runs via `npx` — no install step, no files to clone.
 claude mcp add noelclaw -- npx @noelclaw/mcp
 ```
 
-### Claude Desktop / Cursor / Windsurf
+### Claude Desktop
 
-Add to your MCP config file:
+Edit your config file:
+- **Mac:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
@@ -35,35 +37,40 @@ Add to your MCP config file:
 }
 ```
 
-Config file locations:
-- Claude Desktop (Mac): `~/Library/Application Support/Claude/claude_desktop_config.json`
-- Claude Desktop (Windows): `%APPDATA%\Claude\claude_desktop_config.json`
-- Cursor: `~/.cursor/mcp.json`
-- Windsurf: `~/.windsurf/mcp_config.json`
+Restart Claude Desktop after saving.
 
-Restart your client after saving.
+### Cursor
 
-For full setup guides including Hermes and Aeon, see [Setup & Install](setup.md).
+Edit `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "noelclaw": {
+      "command": "npx",
+      "args": ["@noelclaw/mcp"]
+    }
+  }
+}
+```
+
+### Windsurf
+
+Edit `~/.windsurf/mcp_config.json` — same JSON format as above.
+
+→ [Full setup guide for Hermes, Aeon, and more](setup.md)
 
 ---
 
-## Step 3 — First Things to Try
+## Step 3 — Try It Out
 
-### Get live market data
+### Pull live market data
 
 ```
 get_market_data
 ```
 
-Returns the top-20 coins by market cap, BTC/ETH/SOL prices, and trending tokens.
-
-### Get a crypto briefing
-
-```
-get_insight
-```
-
-On-demand analysis via Grok — BTC/ETH price action, macro context, and what's moving on X.
+Returns top-20 coins by market cap, BTC/ETH/SOL prices, and trending tokens.
 
 ### Ask Noel
 
@@ -71,15 +78,15 @@ On-demand analysis via Grok — BTC/ETH price action, macro context, and what's 
 ask_noel question: "What's your read on the ETH/BTC ratio right now?"
 ```
 
-Noel AI with live market context for DeFi analysis.
+Noel AI with live market context — DeFi analysis, trade ideas, market outlook.
 
-### Check your wallet address
+### Check your wallet
 
 ```
 get_wallet_address
 ```
 
-Returns your local wallet address. Keys are stored at `~/.noelclaw/wallet.json` and never leave your machine.
+Returns your local wallet address. Keys live at `~/.noelclaw/wallet.json` and never leave your machine.
 
 ### Swap tokens on Base
 
@@ -87,15 +94,15 @@ Returns your local wallet address. Keys are stored at `~/.noelclaw/wallet.json` 
 swap_tokens fromToken: "ETH" toToken: "USDC" amount: "0.01"
 ```
 
-Routes through 0x Permit2 on Base mainnet, signed locally.
+Routes through 0x Permit2 on Base mainnet, signed locally from your wallet.
 
-### Save something to the vault
+### Save to the vault
 
 ```
-vault_save key: "eth-thesis" content: "ETH is undervalued because..." type: "note"
+vault_save key: "my-thesis" content: "ETH is undervalued because..." type: "note"
 ```
 
-Auto-versioned persistent storage accessible across any MCP session.
+Persistent, auto-versioned storage accessible across any MCP session.
 
 ### Run a MiroShark simulation
 
@@ -103,7 +110,7 @@ Auto-versioned persistent storage accessible across any MCP session.
 miroshark_simulate scenario: "How would markets react if the Fed cuts rates 100bps?"
 ```
 
-Returns a multi-agent social simulation with belief propagation and behavioral analysis.
+Multi-agent social simulation — belief propagation, persona modeling, behavioral analysis.
 
 ### Humanize AI-generated text
 
@@ -111,13 +118,13 @@ Returns a multi-agent social simulation with belief propagation and behavioral a
 humanize_text text: "In conclusion, it is important to note that..."
 ```
 
-Strips AI writing patterns using MiniMax-M2.7. Requires `MINIMAX_API_KEY` env var.
+Strips AI writing patterns using MiniMax-M2.7. Requires `MINIMAX_API_KEY` in env.
 
 ---
 
 ## Step 4 — Connect Telegram (Optional)
 
-Receive swarm events and automation alerts in Telegram.
+Get swarm events and automation alerts pushed to Telegram.
 
 ```
 set_telegram telegramBotToken: "your-bot-token" telegramChatId: "your-chat-id"
@@ -128,14 +135,12 @@ To get credentials:
 2. Start a chat with your new bot
 3. Visit `https://api.telegram.org/bot<TOKEN>/getUpdates` → copy the `chat.id` value
 
-Signals arrive daily at 08:00 UTC. Smart money alerts fire hourly for Base micro-caps under $100k mcap.
-
 ---
 
 ## What's Next
 
-- [Full setup guides for all clients](setup.md)
-- [Complete MCP tool reference](mcp-server.md)
+- [Setup guide for all clients](setup.md)
+- [Complete tool reference](mcp-server.md)
 - [Swarm, vault, and framework docs](agents.md)
 - [MiroShark simulation](miroshark.md)
 - [Aeon integration](aeon.md)

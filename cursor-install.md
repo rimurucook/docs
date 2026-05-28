@@ -67,7 +67,7 @@ Restart Windsurf after saving.
       "env": {
         "MINIMAX_API_KEY": "your-minimax-key",
         "AYRSHARE_API_KEY": "your-ayrshare-key",
-        "GROK_API_KEY": "your-grok-key"
+        "BANKR_API_KEY": "your-bankr-key"
       }
     }
   }
@@ -87,7 +87,7 @@ get_market_data
 ```
 
 ```
-get_insight
+ask_noel question: "What's moving in crypto right now?"
 ```
 
 ```

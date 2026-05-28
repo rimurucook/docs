@@ -1,4 +1,4 @@
-# Getting Started
+﻿# Getting Started
 
 ---
 
@@ -117,7 +117,7 @@ Strips AI writing patterns using MiniMax-M2.7. Requires `MINIMAX_API_KEY` env va
 
 ## Step 4 — Connect Telegram (Optional)
 
-Receive trading signals, smart money alerts, and swarm events in Telegram.
+Receive swarm events and automation alerts in Telegram.
 
 ```
 set_telegram telegramBotToken: "your-bot-token" telegramChatId: "your-chat-id"

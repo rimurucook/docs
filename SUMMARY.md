@@ -18,8 +18,6 @@
 
 ## Platform Features
 * [AI Agents](agents.md)
-* [Trading Signals](signals.md)
-* [Whale & Smart Money Tracking](whale-tracking.md)
 * [Wallet & DeFi](wallet-defi.md)
 * [Automations](automations.md)
 * [Game to Earn](game-to-earn.md)

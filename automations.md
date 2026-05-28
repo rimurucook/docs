@@ -1,4 +1,4 @@
-# Automations
+﻿# Automations
 
 The Automations page lets users install agent skills, enable them, and configure run schedules. Skills run autonomously in the background.
 
@@ -79,9 +79,6 @@ Two background crons handle automatic execution:
 
 | Cron | Interval | Handler |
 |------|----------|---------|
-| `generate-signals` | Daily at 08:00 UTC | Generates BTC and ETH 4H trading signals |
-| `send-whale-alerts` | Every hour | Detects large on-chain movements and sends Telegram alerts |
-| `weekly-recap` | Sunday 23:55 UTC | Generates 7-day signal recap with AI review and Telegram delivery |
 
 ---
 

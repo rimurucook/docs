@@ -1,4 +1,4 @@
-# MCP Server — Noelclaw Skill
+﻿# MCP Server — Noelclaw Skill
 
 The `@noelclaw/mcp` package is a Model Context Protocol server that exposes all of Noelclaw's tools to any MCP-compatible AI client. Install once via `npx` — no build step, no config required.
 
@@ -6,7 +6,7 @@ The `@noelclaw/mcp` package is a Model Context Protocol server that exposes all 
 npx @noelclaw/mcp
 ```
 
-**36 tools across 8 categories.** Market data, DeFi execution, multi-agent swarm, persistent vault memory, Noel Framework playbooks, MiroShark simulation, social, and humanizer.
+**35 tools across 8 categories.** Market data, DeFi execution, multi-agent swarm, persistent vault memory, Noel Framework playbooks, MiroShark simulation, social, and humanizer.
 
 ---
 
@@ -28,7 +28,6 @@ npx @noelclaw/mcp
 | `get_wallet_address` | Get your local Noelclaw wallet address — keys never leave your machine |
 | `swap_tokens` | Swap ETH/USDC/USDT/DAI/WETH on Base via 0x Permit2, signed locally |
 | `send_token` | Send ETH or ERC-20 to any address on Base mainnet |
-| `claim_fees` | Claim accumulated ETH from Flaunch token swap fees |
 
 ### Automations
 
@@ -84,7 +83,7 @@ npx @noelclaw/mcp
 
 | Tool | Description |
 |------|-------------|
-| `set_telegram` | Connect Telegram for push notifications — signals, alerts, swarm events |
+| `set_telegram` | Connect Telegram for swarm events and automation alerts |
 | `post_tweet` | Post a tweet on X via Ayrshare API |
 
 ### Humanizer
@@ -115,7 +114,6 @@ Convex backend
     ├── /mcp/insight             → get_insight
     ├── /mcp/defi/swap           → swap_tokens
     ├── /mcp/defi/send           → send_token
-    ├── /mcp/token/claim         → claim_fees
     ├── /automations/*           → create/list/pause/delete
     ├── /swarm/*                 → swarm tools
     ├── /vault/*                 → vault tools
@@ -233,12 +231,6 @@ Routes through 0x Permit2 on Base mainnet. Signed locally — not by Convex.
 | `token` | string | yes | `ETH`, `USDC`, `USDT`, `DAI`, or `WETH` |
 | `toAddress` | string | yes | Recipient address (`0x...`) |
 | `amount` | string | yes | Human-readable amount |
-
----
-
-### `claim_fees`
-
-No parameters. Pulls all pending ETH from your deployed Flaunch tokens to your wallet.
 
 ---
 

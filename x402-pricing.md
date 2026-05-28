@@ -1,4 +1,4 @@
-# Tool Pricing
+﻿# Tool Pricing
 
 Prices are set in `app/convex/x402Mcp.ts` in the `TOOL_PRICES` map. Free tools pass through unconditionally. Paid tools require either a Noelclaw session token or a USDC micropayment on Base mainnet.
 

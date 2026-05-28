@@ -94,7 +94,7 @@ Convex is the main backend — database, serverless functions, real-time subscri
 |---|---|
 | Database | Document DB with real-time subscriptions |
 | Serverless | Actions (`"use node"`) for external API calls |
-| Scheduling | Cron jobs: signals (daily 08:00 UTC), whale alerts (hourly), weekly recap |
+| Scheduling | Cron jobs: automations, swarm heartbeat (5 min), scheduled tasks |
 | HTTP | `convex.site` endpoints for MCP, proxied via `api.noelclaw.com` |
 | Auth | Session token validation per request |
 
@@ -221,29 +221,6 @@ Keys at `~/.noelclaw/wallet.json` never leave the local machine. Convex never ho
 
 ---
 
-## Data Flow: Trading Signals (Daily)
-
-```
-Convex cron fires at 08:00 UTC
-      │
-      ▼
-Signal engine action
-  → sends 4H market analysis to Grok
-  → parses: signal direction, entry, TP1, TP2, SL, confidence
-  → saves to DB
-  → sends formatted signal card to Telegram
-      │
-      ▼ (cron, hourly)
-Outcome tracker
-  → fetches live price
-  → for each PENDING signal:
-       price >= TP1 → WIN
-       price <= SL  → LOSS
-       age > 6h     → EXPIRED
-  → updates record
-```
-
----
 
 ## Sentinel / Noel Framework
 

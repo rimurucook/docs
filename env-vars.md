@@ -19,10 +19,10 @@ Or go to **Convex Dashboard → your deployment → Settings → Environment Var
 
 | Variable | Purpose | Where to Get |
 |----------|---------|-------------|
-| `BANKR_API_KEY` | Bankr LLM and Agent API — agents, signals, research, whale tracking | bankr.bot dashboard |
-| `TELEGRAM_BOT_TOKEN` | Default bot token for signals, whale alerts, and research reports | @BotFather on Telegram |
+| `BANKR_API_KEY` | Bankr LLM and Agent API — powers ask_noel and swarm agents | bankr.bot dashboard |
+| `TELEGRAM_BOT_TOKEN` | Default bot token for swarm and automation notifications | @BotFather on Telegram |
 | `TELEGRAM_CHAT_ID` | Default chat ID for Telegram delivery | Your Telegram chat/group ID |
-| `GROK_API_KEY` | X.AI Grok API — `get_insight`, signal generation, X/Twitter sentiment | console.x.ai |
+| `GROK_API_KEY` | X.AI Grok API — powers get_insight | console.x.ai |
 | `WALLET_ENCRYPTION_KEY` | AES-256 key for encrypting user private keys in DB — never expose this | Generate a strong random string |
 | `ZX_API_KEY` | 0x API key for Permit2 swap quotes on Base mainnet | dashboard.0x.org |
 

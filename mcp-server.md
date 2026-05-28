@@ -362,11 +362,14 @@ No parameters. Sentinel rules per agent and role: territory, permissions, value 
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `key` | string | yes | Unique key for this artifact |
-| `content` | string | yes | Content to store |
-| `type` | string | no | `note`, `code`, `plan`, `signal`, etc. |
+| `type` | string | yes | `research`, `execution`, `workflow`, `prompt`, `file`, `memory` |
+| `title` | string | yes | Human-readable title |
+| `content` | string | yes | Content — markdown, JSON, code, or plain text |
+| `key` | string | no | Slug key, e.g. `research/btc-analysis` (auto-generated if omitted) |
+| `contentType` | string | no | `markdown`, `json`, `text`, `code` |
+| `agentId` | string | no | Agent ID writing this entry |
 | `tags` | string[] | no | Tags for filtering |
-| `links` | string[] | no | Related vault keys |
+| `commitMsg` | string | no | Version message, e.g. `"initial draft"` |
 
 Auto-versions on every update — all previous versions are preserved.
 
@@ -377,7 +380,6 @@ Auto-versions on every update — all previous versions are preserved.
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `key` | string | yes | Vault key |
-| `version` | number | no | Specific version (default: latest) |
 
 ---
 
@@ -387,7 +389,8 @@ Auto-versions on every update — all previous versions are preserved.
 |-----------|------|----------|-------------|
 | `type` | string | no | Filter by type |
 | `pinned` | boolean | no | Only pinned entries |
-| `agent` | string | no | Filter by writing agent |
+| `agentId` | string | no | Filter by writing agent |
+| `limit` | number | no | Max entries (default 50) |
 
 ---
 
@@ -396,6 +399,8 @@ Auto-versions on every update — all previous versions are preserved.
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `query` | string | yes | Full-text search query |
+| `type` | string | no | Filter by type |
+| `limit` | number | no | Max results (default 20) |
 
 ---
 

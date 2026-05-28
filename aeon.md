@@ -73,7 +73,7 @@ stop_swarm
 Vault is persistent across sessions — ideal for Aeon agents that need to store intermediate findings, plans, or outputs:
 
 ```
-vault_save key: "agent-output-001" content: "..." type: "plan"
+vault_save type: "execution" title: "Agent Output 001" content: "..." key: "agent-output-001"
 vault_search query: "BTC analysis"
 vault_history key: "agent-output-001"
 ```

@@ -81,7 +81,7 @@ ask_noel question: "What's the market doing right now?"
 ```
 
 ```
-vault_save key: "my-note" content: "Testing noelclaw vault" type: "note"
+vault_save type: "memory" title: "My Note" content: "Testing noelclaw vault"
 ```
 
 ```

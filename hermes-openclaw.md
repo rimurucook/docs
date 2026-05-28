@@ -67,7 +67,7 @@ ask_noel question: "What is the latest narrative driving ETH?"
 **Save to vault:**
 
 ```
-vault_save key: "sol-thesis" content: "My thesis on SOL..." type: "note"
+vault_save type: "research" title: "SOL Thesis" content: "My thesis on SOL..."
 ```
 
 **Run a simulation:**

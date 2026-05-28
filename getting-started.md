@@ -99,7 +99,7 @@ Routes through 0x Permit2 on Base mainnet, signed locally from your wallet.
 ### Save to the vault
 
 ```
-vault_save key: "my-thesis" content: "ETH is undervalued because..." type: "note"
+vault_save type: "research" title: "ETH Thesis" content: "ETH is undervalued because..."
 ```
 
 Persistent, auto-versioned storage accessible across any MCP session.

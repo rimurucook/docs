@@ -194,7 +194,7 @@ To get credentials:
 ### 5. Save something to vault
 
 ```
-vault_save key: "first-note" content: "Started using noelclaw" type: "note"
+vault_save type: "memory" title: "First Note" content: "Started using noelclaw"
 ```
 
 ---

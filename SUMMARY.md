@@ -14,7 +14,7 @@
 
 ## MCP Skill Reference
 
-* [All 35 Tools](mcp-server.md)
+* [All 61 Tools](mcp-server.md)
 * [MiroShark Simulation](miroshark.md)
 * [Wallet & DeFi](wallet-defi.md)
 * [Environment Variables](env-vars.md)

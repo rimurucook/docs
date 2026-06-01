@@ -4,7 +4,7 @@
 
 ## Step 1 — Sign Up
 
-Go to [noelclaw.com](https://noelclaw.com) and create an account. This gives you access to the web UI for managing automations, monitoring your wallet, and chatting with Noel AI.
+Go to [app.noelclaw.com](https://app.noelclaw.com) and create an account. This gives you access to the web UI for managing automations, monitoring your wallet, and chatting with Noel AI.
 
 ---
 
@@ -17,7 +17,7 @@ The skill runs via `npx` — no install, no cloning, nothing to maintain.
 ### Claude Code
 
 ```bash
-claude mcp add noelclaw -- npx @noelclaw/mcp
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp
 ```
 
 ### Claude Desktop
@@ -31,7 +31,7 @@ Edit your config file:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/mcp"]
+      "args": ["-y", "@noelclaw/mcp"]
     }
   }
 }
@@ -48,7 +48,7 @@ Edit `~/.cursor/mcp.json`:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/mcp"]
+      "args": ["-y", "@noelclaw/mcp"]
     }
   }
 }
@@ -80,13 +80,13 @@ ask_noel question: "What's your read on the ETH/BTC ratio right now?"
 
 Noel AI with live market context — DeFi analysis, trade ideas, market outlook.
 
-### Check your wallet
+### Check your portfolio
 
 ```
-get_wallet_address
+get_portfolio
 ```
 
-Returns your local wallet address. Keys live at `~/.noelclaw/wallet.json` and never leave your machine.
+Returns your Base wallet balances and total portfolio value in USD.
 
 ### Swap tokens on Base
 
@@ -104,6 +104,14 @@ vault_save type: "research" title: "ETH Thesis" content: "ETH is undervalued bec
 
 Persistent, auto-versioned storage accessible across any MCP session.
 
+### Scan for dip reversals
+
+```
+scan_dips
+```
+
+Scans live markets for tokens showing early reversal signals — buy pressure rising after a 1h dip.
+
 ### Run a MiroShark simulation
 
 ```
@@ -111,14 +119,6 @@ miroshark_simulate scenario: "How would markets react if the Fed cuts rates 100b
 ```
 
 Multi-agent social simulation — belief propagation, persona modeling, behavioral analysis.
-
-### Humanize AI-generated text
-
-```
-humanize_text text: "In conclusion, it is important to note that..."
-```
-
-Strips AI writing patterns using MiniMax-M2.7. Requires `MINIMAX_API_KEY` in env.
 
 ---
 
@@ -141,6 +141,5 @@ To get credentials:
 
 - [Setup guide for all clients](setup.md)
 - [Complete tool reference](mcp-server.md)
-- [Swarm, vault, and framework docs](agents.md)
 - [MiroShark simulation](miroshark.md)
 - [Aeon integration](aeon.md)

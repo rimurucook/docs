@@ -1,4 +1,4 @@
-﻿# Add to Claude
+# Add to Claude
 
 Install the Noelclaw MCP skill in Claude Code or Claude Desktop. No build step — runs via `npx`.
 
@@ -9,17 +9,17 @@ Install the Noelclaw MCP skill in Claude Code or Claude Desktop. No build step �
 ## Claude Code
 
 ```bash
-claude mcp add noelclaw -- npx @noelclaw/mcp
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp
 ```
 
 Verify it's registered:
 
 ```bash
 claude mcp list
-# noelclaw   npx @noelclaw/mcp
+# noelclaw   npx -y @noelclaw/mcp
 ```
 
-All 34 tools are now available in every Claude Code session.
+All 61 tools are now available in every Claude Code session.
 
 ---
 
@@ -34,13 +34,13 @@ All 34 tools are now available in every Claude Code session.
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/mcp"]
+      "args": ["-y", "@noelclaw/mcp"]
     }
   }
 }
 ```
 
-Save the file, then **restart Claude Desktop**. All 34 tools appear automatically in the tool list.
+Save the file, then **restart Claude Desktop**. All 61 tools appear automatically in the tool list.
 
 ---
 
@@ -53,10 +53,9 @@ Add any env vars you need directly in the config:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/mcp"],
+      "args": ["-y", "@noelclaw/mcp"],
       "env": {
         "MINIMAX_API_KEY": "your-minimax-key",
-        "AYRSHARE_API_KEY": "your-ayrshare-key",
         "BANKR_API_KEY": "your-bankr-key"
       }
     }
@@ -78,6 +77,10 @@ get_market_data
 
 ```
 ask_noel question: "What's the market doing right now?"
+```
+
+```
+get_portfolio
 ```
 
 ```

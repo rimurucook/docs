@@ -15,7 +15,7 @@ Install the Noelclaw MCP skill in Cursor or Windsurf. No build step — runs via
 3. Click **Add Server** and fill in:
    - Name: `noelclaw`
    - Command: `npx`
-   - Args: `@noelclaw/mcp`
+   - Args: `-y @noelclaw/mcp`
 4. Save and restart Cursor
 
 ### Via Config File
@@ -27,7 +27,7 @@ Edit `~/.cursor/mcp.json`:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/mcp"]
+      "args": ["-y", "@noelclaw/mcp"]
     }
   }
 }
@@ -46,7 +46,7 @@ Edit `~/.windsurf/mcp_config.json`:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/mcp"]
+      "args": ["-y", "@noelclaw/mcp"]
     }
   }
 }
@@ -63,10 +63,9 @@ Restart Windsurf after saving.
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["@noelclaw/mcp"],
+      "args": ["-y", "@noelclaw/mcp"],
       "env": {
         "MINIMAX_API_KEY": "your-minimax-key",
-        "AYRSHARE_API_KEY": "your-ayrshare-key",
         "BANKR_API_KEY": "your-bankr-key"
       }
     }
@@ -88,6 +87,10 @@ get_market_data
 
 ```
 ask_noel question: "What's moving in crypto right now?"
+```
+
+```
+get_portfolio
 ```
 
 ```

@@ -46,74 +46,66 @@ Users can also connect external wallets via Privy (WalletConnect, MetaMask, Coin
 
 ---
 
-## Credits & Balance System
+## USDC Balance & AI Model Access
 
-Credits are the in-platform currency, separate from on-chain tokens.
+AI model access is pay-per-use via USDC on Base. Your custodial wallet is created automatically on signup — no separate setup needed.
 
-**Earning credits:**
-- Playing arcade games (`creditsEarned = levelReached × 100`)
-- USDC deposits (1 USDC = credits via Alchemy webhook)
+**Check balance:**
+- Balance is shown in the Models page header as a live USDC amount
+- Balance is read directly from Base mainnet (updates every 30 seconds)
 
-**Spending credits:**
-- Running AI agents (deducted per action)
-- Token-based agent access
+**Deposit USDC:**
+1. Go to Models → click **Deposit**
+2. Copy your wallet address
+3. Send USDC on the **Base network** from any exchange (Coinbase, Kraken, etc.)
+4. Balance updates automatically within ~30 seconds of on-chain confirmation
 
-**Database:** `transactions` table
-```
-type: "deposit" | "deduction" | "refund"
-amount: number (credits)
-model: which model was used
-tokensUsed: LLM token count
-agentId: which agent
-```
+> Send only on **Base (L2)**, not Ethereum mainnet. Gas fees are <$0.01 on Base.
+
+**How billing works:**
+- Each AI model call deducts a small amount of USDC based on tokens used
+- If your balance runs low mid-request, the system auto-retries the payment (x402 protocol) without interrupting your workflow
+- No prepaid bundles or credits — pure pay-as-you-go
 
 ---
 
 ## MCP Wallets (Agent / CLI Users)
 
-Users accessing Noel through MCP clients (Hermes, Claude, Cursor) get a full DeFi wallet on Base mainnet, managed entirely through MCP tools. No separate signup required.
+Users accessing Noel through MCP clients (Hermes, Claude, Cursor) get a full DeFi wallet on Base mainnet, managed entirely through MCP tools.
 
-Wallets are created with **ethers.js**, encrypted with AES-256-CBC using a server-side `WALLET_ENCRYPTION_KEY`, and stored in the `mcpWallets` table. Private keys never leave the server in plaintext.
+Wallets are created with **ethers.js**, encrypted with AES-256-CBC using a server-side `WALLET_ENCRYPTION_KEY`, and stored securely. Private keys never leave the server in plaintext.
+
+### Check your portfolio
+
+```
+get_portfolio
+```
+
+Returns all token balances and total USD value.
 
 ### Swap tokens
 
 ```
-swap_tokens(
-  userId: "your-user-id",
-  fromToken: "ETH",
-  toToken: "USDC",
-  amount: "100000000000000000"
-)
+swap_tokens fromToken: "ETH" toToken: "USDC" amount: "0.1"
 ```
 
-Routes through **0x Permit2** on Base mainnet. Token approval is handled automatically when needed.
+Routes through **0x Permit2** on Base mainnet. Amount is human-readable — no wei conversion needed. Token approval is handled automatically.
 
 ### Send tokens
 
 ```
-send_token(
-  userId: "your-user-id",
-  toAddress: "0xRecipient...",
-  token: "USDC",
-  amount: "10000000"
-)
+send_token token: "USDC" toAddress: "0xRecipient..." amount: "10"
 ```
 
 Supports ETH, USDC, USDT, DAI, and WETH on Base.
 
-### Via HTTP
+### Scan your wallet
 
-```bash
-# Swap
-curl -X POST https://valuable-fish-533.convex.site/mcp/defi/swap \
-  -H "Content-Type: application/json" \
-  -d '{"userId": "your-user-id", "fromToken": "ETH", "toToken": "USDC", "amount": "100000000000000000"}'
-
-# Send
-curl -X POST https://valuable-fish-533.convex.site/mcp/defi/send \
-  -H "Content-Type: application/json" \
-  -d '{"userId": "your-user-id", "token": "ETH", "toAddress": "0x...", "amount": "10000000000000000"}'
 ```
+scan_wallet
+```
+
+AI-powered portfolio analysis — concentration risk, volatility exposure, and a 3-step action plan.
 
 ### Security
 
@@ -124,24 +116,7 @@ curl -X POST https://valuable-fish-533.convex.site/mcp/defi/send \
 
 ---
 
-## Deposit via USDC (Alchemy Webhook)
-
-Noelclaw listens for USDC deposits via an Alchemy webhook:
-
-```
-Alchemy Webhook → POST /alchemy/deposit
-  → verifies USDC transfer to Noelclaw wallet
-  → matches sender address to user
-  → credits user balance
-```
-
-Setup requires:
-- `NOEL_WALLET_ADDRESS` in Convex env vars
-- Alchemy webhook configured for Base mainnet
-
----
-
-## Telegram Trading (via X/Telegram Bot)
+## Telegram Trading
 
 Users can link their Telegram account to their Noelclaw wallet and execute trades directly from Telegram messages.
 
@@ -151,8 +126,7 @@ Users can link their Telegram account to their Noelclaw wallet and execute trade
 3. Bot calls `POST /telegram/connect` with the code
 4. Wallet linked to Telegram ID
 
-**Telegram bot** (`noelclaw-tele`):
-- Separate repository: `C:\Users\sagir\noelclaw-tele`
+**Telegram bot:**
 - Reads trades from Telegram, posts to Convex
 - Stored in `trades` table with `source: "telegram"`
 

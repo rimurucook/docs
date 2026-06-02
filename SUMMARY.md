@@ -8,19 +8,20 @@
 ## Install by Client
 
 * [Claude Code / Claude Desktop](claude-install.md)
-* [Cursor / Windsurf](cursor-install.md)
 * [Hermes](hermes-openclaw.md)
+* [Cursor / Windsurf](cursor-install.md)
 * [Aeon](aeon.md)
 
-## MCP Skill Reference
+## Features
 
-* [All 61 Tools](mcp-server.md)
+* [Semantic Memory](memory.md)
+* [LLM Mart](llm-mart.md)
 * [MiroShark Simulation](miroshark.md)
 * [Wallet & DeFi](wallet-defi.md)
+
+## Reference
+
+* [All 68 Tools](mcp-server.md)
 * [Environment Variables](env-vars.md)
-
-## Architecture & Setup
-
-* [How It Works](architecture.md)
+* [Architecture](architecture.md)
 * [Noel Crew Desktop Companion](noel-crew.md)
-* [Noel Crew Install](INSTALL.md)

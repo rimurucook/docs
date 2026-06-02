@@ -1,30 +1,107 @@
 # Getting Started
 
----
-
-## Step 1 — Sign Up
-
-Go to [app.noelclaw.com](https://app.noelclaw.com) and create an account. This gives you access to the web UI for managing automations, monitoring your wallet, and chatting with Noel AI.
+New to Noelclaw? You'll be up and running in under 5 minutes.
 
 ---
 
-## Step 2 — Install the MCP Skill
+## What is Noelclaw?
 
-The skill runs via `npx` — no install, no cloning, nothing to maintain.
+Noelclaw is an MCP skill — a plugin for AI tools like Claude, Cursor, and Hermes. Once installed, your AI gets 68 new abilities: live crypto prices, DeFi swaps on Base, persistent memory that carries across every session, 30+ LLMs in one place, token scanning, multi-agent swarms, and more.
 
-**Requirement:** Node.js >= 18. Check with `node --version`. Download from [nodejs.org](https://nodejs.org) if needed.
+You talk to it naturally. No commands to memorize.
 
-### Claude Code
+---
+
+## Step 1 — Check Node.js
+
+Noelclaw requires Node.js 18 or newer. Check if you have it:
+
+```bash
+node --version
+```
+
+If you see `v18.x.x` or higher — you're good. If not, download it free from [nodejs.org](https://nodejs.org) (choose the LTS version).
+
+---
+
+## Step 2 — Sign Up
+
+Go to [noelclaw.com](https://noelclaw.com) and create a free account. This gives you access to the web dashboard for managing automations, LLM Mart credits, and your vault.
+
+---
+
+## Step 3 — Install the Skill
+
+Pick your client below. The skill downloads automatically on first use — nothing to clone or build.
+
+### Claude Desktop
+
+**Mac** — open this file in any text editor:
+```
+~/Library/Application Support/Claude/claude_desktop_config.json
+```
+
+**Windows** — open this file:
+```
+%APPDATA%\Claude\claude_desktop_config.json
+```
+
+Paste this (or add the `noelclaw` block if the file already exists):
+
+```json
+{
+  "mcpServers": {
+    "noelclaw": {
+      "command": "npx",
+      "args": ["-y", "@noelclaw/mcp"]
+    }
+  }
+}
+```
+
+Save the file. **Fully quit and restart Claude Desktop** — not just close the window.
+
+→ [Detailed Claude guide](claude-install.md)
+
+---
+
+### Claude Code (terminal)
 
 ```bash
 claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp
 ```
 
-### Claude Desktop
+That's it. Restart Claude Code and the tools are available.
 
-Edit your config file:
-- **Mac:** `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+---
+
+### Hermes
+
+```bash
+hermes mcp add noelclaw -- npx -y @noelclaw/mcp
+```
+
+Or add it to `~/.hermes/config.yaml`:
+
+```yaml
+mcp_servers:
+  noelclaw:
+    command: npx
+    args:
+      - -y
+      - "@noelclaw/mcp"
+    timeout: 30
+```
+
+Then type `/reload-mcp` in any Hermes session.
+
+→ [Detailed Hermes guide](hermes-openclaw.md)
+
+---
+
+### Cursor / Windsurf
+
+Edit `~/.cursor/mcp.json` (Cursor) or `~/.windsurf/mcp_config.json` (Windsurf):
 
 ```json
 {
@@ -37,109 +114,71 @@ Edit your config file:
 }
 ```
 
-Restart Claude Desktop after saving.
-
-### Cursor
-
-Edit `~/.cursor/mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "noelclaw": {
-      "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"]
-    }
-  }
-}
-```
-
-### Windsurf
-
-Edit `~/.windsurf/mcp_config.json` — same JSON format as above.
-
-→ [Full setup guide for Hermes, Aeon, and more](setup.md)
+→ [Detailed Cursor guide](cursor-install.md)
 
 ---
 
-## Step 3 — Try It Out
+## Step 4 — Try It Out
 
-### Pull live market data
+Once installed, just talk to your AI normally. No tool names needed — Noelclaw picks the right tool automatically.
 
-```
-get_market_data
-```
+**Check the market:**
+> "What's ETH doing right now?"
 
-Returns top-20 coins by market cap, BTC/ETH/SOL prices, and trending tokens.
+**Ask Noel for analysis:**
+> "Give me your read on Base DeFi yields this week"
 
-### Ask Noel
+**Check your portfolio:**
+> "Show me my wallet balance on Base"
 
-```
-ask_noel question: "What's your read on the ETH/BTC ratio right now?"
-```
+**Save something to memory:**
+> "Remember that I prefer low-risk DeFi and only trade on Base"
 
-Noel AI with live market context — DeFi analysis, trade ideas, market outlook.
+**Test memory recall in a new chat:**
+> "What do you know about my trading preferences?"
 
-### Check your portfolio
+**Scan for opportunities:**
+> "Are there any tokens showing dip reversals right now?"
 
-```
-get_portfolio
-```
-
-Returns your Base wallet balances and total portfolio value in USD.
-
-### Swap tokens on Base
-
-```
-swap_tokens fromToken: "ETH" toToken: "USDC" amount: "0.01"
-```
-
-Routes through 0x Permit2 on Base mainnet, signed locally from your wallet.
-
-### Save to the vault
-
-```
-vault_save type: "research" title: "ETH Thesis" content: "ETH is undervalued because..."
-```
-
-Persistent, auto-versioned storage accessible across any MCP session.
-
-### Scan for dip reversals
-
-```
-scan_dips
-```
-
-Scans live markets for tokens showing early reversal signals — buy pressure rising after a 1h dip.
-
-### Run a MiroShark simulation
-
-```
-miroshark_simulate scenario: "How would markets react if the Fed cuts rates 100bps?"
-```
-
-Multi-agent social simulation — belief propagation, persona modeling, behavioral analysis.
+**Run a simulation:**
+> "Simulate how markets would react if the Fed cuts rates 100bps"
 
 ---
 
-## Step 4 — Connect Telegram (Optional)
+## Step 5 — Semantic Memory (the best part)
 
-Get swarm events and automation alerts pushed to Telegram.
+Noelclaw remembers things you tell it — across sessions, across chats.
 
-```
-set_telegram telegramBotToken: "your-bot-token" telegramChatId: "your-chat-id"
-```
+Tell it once:
+> "I prefer Lido for staking and Aerodrome for LP. I avoid leverage and meme coins."
 
-To get credentials:
-1. Open Telegram → search **@BotFather** → `/newbot` → copy the token
-2. Start a chat with your new bot
-3. Visit `https://api.telegram.org/bot<TOKEN>/getUpdates` → copy the `chat.id` value
+Come back in a new chat tomorrow and ask:
+> "What yield strategies make sense for me?"
+
+It already knows. No need to repeat yourself every session.
+
+→ [Full memory guide](memory.md)
 
 ---
 
-## What's Next
+## Step 6 — LLM Mart (Optional)
 
-- [Setup guide for all clients](setup.md)
-- [Complete tool reference](mcp-server.md)
-- [MiroShark simulation](miroshark.md)
-- [Aeon integration](aeon.md)
+Access 30+ AI models from one place — Claude, GPT-4o, Grok, DeepSeek, Gemini, and Noel Crypto (a DeFi-native model built for Base).
+
+Go to [noelclaw.com](https://noelclaw.com) → LLM Mart. Add USDC credits and start chatting with any model.
+
+You also get an OpenAI-compatible API endpoint — works as a drop-in replacement for any code that uses the OpenAI SDK.
+
+→ [LLM Mart guide](llm-mart.md)
+
+---
+
+## Troubleshooting
+
+| Problem | Fix |
+|---------|-----|
+| Tools not showing in Claude Desktop | Make sure you fully quit and restarted (not just closed the window) |
+| `npx: command not found` | Node.js isn't installed — download from [nodejs.org](https://nodejs.org) |
+| First message is slow | Normal — first run downloads the package (~5 seconds). Fast after that. |
+| Tool call fails with auth error | Make sure you're signed in at [noelclaw.com](https://noelclaw.com) |
+| Vault tools return empty | Normal on first use — start by saving something with vault_remember |

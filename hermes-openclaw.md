@@ -1,17 +1,17 @@
-﻿# Add to Hermes
+# Install on Hermes
 
-Add Noelclaw as an MCP skill in Hermes. Once connected, all 34 tools are available directly in your agent conversations.
+Add Noelclaw as an MCP skill in Hermes. Once connected, all 68 tools are available directly in your agent conversations.
 
-No build step needed — runs via `npx @noelclaw/mcp`.
+No build step needed — runs via `npx`.
 
-**Requirement:** Node.js >= 18.
+**Requirement:** Node.js >= 18. Check with `node --version`. Download from [nodejs.org](https://nodejs.org) if needed.
 
 ---
 
 ## Method 1 — CLI (Fastest)
 
 ```bash
-hermes mcp add noelclaw --command npx --args @noelclaw/mcp
+hermes mcp add noelclaw -- npx -y @noelclaw/mcp
 ```
 
 Reload without restarting Hermes:
@@ -31,9 +31,10 @@ mcp_servers:
   noelclaw:
     command: npx
     args:
+      - -y
       - "@noelclaw/mcp"
     timeout: 30
-    connect_timeout: 10
+    connect_timeout: 15
 ```
 
 Then run `/reload-mcp` in any Hermes session.
@@ -46,76 +47,59 @@ Then run `/reload-mcp` in any Hermes session.
 /list-tools
 ```
 
-You should see all 34 tools including `get_market_data`, `ask_noel`, `swap_tokens`, `vault_save`, `miroshark_simulate`, and more.
+You should see all 68 tools listed — including `get_market_data`, `vault_remember`, `memory_search`, `swap_tokens`, `miroshark_simulate`, and more.
 
 ---
 
-## Usage Examples
+## Try It Out
+
+Just talk naturally — Hermes picks the right tool automatically.
 
 **Live market data:**
+> "What's the crypto market looking like right now?"
 
-```
-use get_market_data to check the current crypto market
-```
+**Save something to memory:**
+> "Remember that I prefer low-risk DeFi on Base — Lido and Aerodrome only"
+
+**Test memory recall in a new session:**
+> "What do you know about my trading preferences?"
 
 **Ask Noel for analysis:**
+> "What's your take on ETH liquid staking yields this week?"
 
-```
-ask_noel question: "What is the latest narrative driving ETH?"
-```
+**Swap on Base:**
+> "Swap 0.01 ETH to USDC on Base"
 
-**Save to vault:**
-
-```
-vault_save type: "research" title: "SOL Thesis" content: "My thesis on SOL..."
-```
+**Scan for opportunities:**
+> "Are there any tokens showing dip reversals right now?"
 
 **Run a simulation:**
-
-```
-miroshark_simulate scenario: "What happens if ETH flips BTC in market cap?"
-```
-
-**Set up Telegram notifications:**
-
-```
-set_telegram telegramBotToken: "your-token" telegramChatId: "your-chat-id"
-```
-
-**Start a swarm:**
-
-```
-start_swarm
-```
+> "How would markets react if a major stablecoin depegged?"
 
 ---
 
-## Optional: With Environment Variables
+## Semantic Memory
 
-```yaml
-mcp_servers:
-  noelclaw:
-    command: npx
-    args:
-      - "@noelclaw/mcp"
-    env:
-      MINIMAX_API_KEY: your-minimax-key
-      AYRSHARE_API_KEY: your-ayrshare-key
-      BANKR_API_KEY: your-bankr-key
-    timeout: 30
-    connect_timeout: 10
-```
+Noelclaw remembers things you tell it — across different sessions.
 
-See [Environment Variables](env-vars.md) for the full list.
+**Session 1:**
+> "Remember: I only trade on Base, I prefer Lido for staking, I avoid leverage"
+
+**New session later:**
+> "Should I bridge to Ethereum mainnet for some yields?"
+
+Hermes will answer based on your saved preferences — "probably not, your profile says Base-only" — without you repeating anything.
+
+→ [Full memory guide](memory.md)
 
 ---
 
 ## Troubleshooting
 
 | Problem | Fix |
-|---|---|
+|---------|-----|
 | Tools not showing after `/reload-mcp` | Check Node.js 18+ is installed: `node --version` |
 | `connect_timeout` errors | Increase to `connect_timeout: 20` — first run downloads the package |
 | `npx: command not found` | Set full path: `command: /usr/local/bin/npx` — find it with `which npx` |
-| `humanize_text` fails | Set `MINIMAX_API_KEY` in the env section |
-| `post_tweet` fails | Set `AYRSHARE_API_KEY` in the env section |
+| Auth error on tool calls | Sign in at [noelclaw.com](https://noelclaw.com) first |
+| Slow first response | Normal — first run downloads `@noelclaw/mcp` (~5 seconds). Fast after. |

@@ -6,7 +6,7 @@ New to Noelclaw? You'll be up and running in under 5 minutes.
 
 ## What is Noelclaw?
 
-Noelclaw is an MCP skill — a plugin for AI tools like Claude, Cursor, and Hermes. Once installed, your AI gets 68 new abilities: live crypto prices, DeFi swaps on Base, persistent memory that carries across every session, 30+ LLMs in one place, token scanning, multi-agent swarms, and more.
+Noelclaw is an MCP skill — a plugin for AI tools like Claude, Cursor, Bankr, Aeon, and Hermes. Once installed, your AI gets 74 new abilities: persistent memory that carries across every session, autonomous automations, live crypto prices, DeFi swaps on Base, token scanning, multi-agent swarms, code generation, and more.
 
 You talk to it naturally. No commands to memorize.
 

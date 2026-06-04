@@ -1,10 +1,11 @@
 # Noelclaw
 
-**Noelclaw** is a crypto AI platform with a 68-tool MCP skill (`@noelclaw/mcp`) that plugs directly into Claude, Cursor, Windsurf, Hermes, and any MCP-compatible client — giving AI agents live market data, DeFi execution, semantic memory, LLM Mart, multi-agent swarms, token scanning, AI-assisted code generation, MiroShark social simulation, and Sentinel-gated playbooks, all from natural language.
+**Noelclaw** is a persistent AI layer with a 74-tool MCP skill (`@noelclaw/mcp`) that plugs directly into Claude, Cursor, Windsurf, Hermes, Bankr, Aeon, and any MCP-compatible client — giving your AI persistent memory across sessions, autonomous automations, live market data, DeFi execution on Base, multi-agent swarms, AI-assisted code generation, and MiroShark simulation, all from natural language.
 
-- Website: [noelclaw.com](https://noelclaw.com)
+- Website: [noelclaw.fun](https://noelclaw.fun)
+- App: [app.noelclaw.com](https://app.noelclaw.com)
 - npm: [@noelclaw/mcp](https://www.npmjs.com/package/@noelclaw/mcp)
-- Version: `2.3.1`
+- Version: `3.0.0`
 
 ---
 
@@ -49,35 +50,37 @@ No build step. No config required. Runs on first use.
 
 ---
 
-## 68 Tools Across 15 Categories
+## 74 Tools Across 15 Categories
+
+Three pillars: **Remember · Act · Know**
 
 | Category | Tools | What It Does |
 |----------|-------|-------------|
-| Market & Intel | 2 | Live top-20, token prices, 24h changes |
-| AI Assistant | 1 | Chat with Noel — crypto AI with live market context |
-| DeFi & Portfolio | 5 | Portfolio balance, swap preview, token swaps, send, AI wallet scan |
-| Automations | 5 | DCA, price alerts, conditional buy/sell, execution history |
-| Swarm | 9 | Multi-agent coordination with shared memory + execution scores |
-| Noel Framework | 6 | Sentinel-gated task packets, playbooks, audit ledger |
-| Vault | 14 | Persistent memory with semantic search, versioning, diff, export, connectors |
-| Semantic Memory | 5 | Vector search, cross-session recall, URL ingestion, memory profile |
-| LLM Mart | — | 30+ models in one place — Claude, GPT, Grok, DeepSeek, Noel Crypto |
+| Vault | 12 | Persistent notes with versioning, search, diff, export, credentials |
+| Semantic Memory | 7 | Vector search, cross-session recall, URL ingestion, memory profile |
+| Session OS | 3 | Boot, status dashboard, shutdown with session summary |
+| Automations | 6 | DCA, price alerts, conditional buy/sell, execution history |
+| DeFi Execution | 6 | Portfolio, swap via 0x, send tokens, wallet analysis, yields |
+| Base Chain | 4 | Morpho vaults, Moonwell markets, deposit prep, chain stats |
 | Wallet & Notifications | 2 | Local wallet address, Telegram alerts |
-| MiroShark | 3 | Multi-agent social simulation for any scenario |
-| Agents | 2 | Hire specialist agents (analyst, researcher, executor, scout) |
-| Token Scanner | 3 | Score tokens, check safety, scan for dip reversals |
-| Coder | 6 | Scaffold projects, generate components/contracts, audit, explain, review code |
-| Base & Chain | 4 | Morpho vaults, Moonwell markets, deposit prep, chain stats |
+| Playbooks | 3 | Browse and run playbooks, audit ledger |
+| Market & Intel | 5 | Live prices, token data, comparison, overview, OHLC history |
+| Token Scanner | 4 | Score tokens, safety check, dip scan, momentum scan |
+| Research & Insight | 3 | AI analyst, market thesis, trade plan |
+| Agent Network | 8 | Multi-agent swarm, parallel research, briefing, hire specialists |
+| Coder | 5 | Generate contracts, audit, explain, review, MCP skill builder |
+| Content & Humanizer | 3 | Humanize text, write threads and posts |
+| MiroShark | 3 | Multi-agent market simulation |
 
 ---
 
-## What's New in v2.3
+## What's New in v3.0
 
-**Semantic Memory** — Noelclaw now remembers by meaning, not keywords. Every vault entry is automatically indexed as a vector. Ask "what's my risk profile?" in a fresh chat and it finds "user prefers low-risk DeFi, Base only" — even if you never used those exact words.
+**General positioning** — Noelclaw is now a persistent AI layer for any client, not just crypto. Crypto is a powerful use case, but the core value is memory + automation that works in Claude, Bankr, Aeon, Hermes, Cursor, and any MCP-compatible client.
 
-**LLM Mart** — 30+ models accessible from one credit balance. Includes Noel Crypto, a DeFi-native AI built specifically for Base ecosystem research.
+**74 tools (trimmed from 90)** — Removed internal/redundant tools. Leaner toolset, clearer purpose. Every remaining tool is user-facing and genuinely useful.
 
-**OpenAI-compatible API** — Drop-in replacement for the OpenAI SDK. Replace `openai.com` with your Noelclaw endpoint and your existing code works instantly.
+**Bankr & Aeon integration** — Officially available as a skill in Aeon. Bankr integration in review (PR open). Install once, works everywhere.
 
 ---
 

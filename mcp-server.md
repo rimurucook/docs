@@ -2,7 +2,7 @@
 
 `@noelclaw/mcp` is an MCP server that exposes all Noelclaw tools to any MCP-compatible AI client. Install once via `npx` — no build step, no config required.
 
-**61 tools across 14 categories.** Market data, DeFi execution, portfolio scanning, token safety scoring, multi-agent swarm, persistent vault, Noel Framework playbooks, MiroShark simulation, AI code generation, and more.
+**74 tools across 15 categories.** Persistent vault, semantic memory, automations, DeFi execution, token scanning, multi-agent swarm, research & insight, AI code generation, MiroShark simulation, and more.
 
 ---
 
@@ -29,7 +29,7 @@
 | `estimate_swap` | Preview a swap — expected output and price impact, without executing |
 | `swap_tokens` | Swap tokens on Base via 0x Permit2 (ETH, USDC, USDT, DAI, WETH). Signed locally |
 | `send_token` | Send ETH or ERC-20 tokens to any address on Base mainnet |
-| `scan_wallet` | AI-powered portfolio scan — concentration risk, volatility exposure, and a 3-step action plan |
+| `analyze_wallet` | AI-powered deep analysis of any public wallet — holdings, risk signals, patterns |
 
 ### Automations
 
@@ -48,20 +48,17 @@
 | `start_swarm` | Start the multi-agent swarm — auto-loads live BTC/ETH/SOL prices into shared memory |
 | `stop_swarm` | Stop the active swarm session |
 | `get_swarm_status` | Active session, shared memory snapshot, and execution scores |
-| `write_swarm_memory` | Write a key-value entry to shared memory (optional TTL) |
-| `get_swarm_memory` | Read a shared memory entry by key |
-| `get_execution_scores` | Skill success rates, win/loss counts, avg duration |
+| `swarm_research` | Multi-agent research on a topic — auto-saves findings to vault |
+| `swarm_brief` | Summary of everything the swarm found |
+| `trigger_agent` | Run a specific agent now |
 
 ### Noel Framework
 
 | Tool | Description |
 |------|-------------|
-| `create_task_packet` | Define a scoped task with territory, permissions, and constraints |
-| `list_task_packets` | List all task packets — draft, active, completed, blocked |
 | `list_playbooks` | Available playbooks with step counts and usage |
-| `run_playbook` | Execute a playbook with Sentinel gating per step |
-| `get_noel_ledger` | Sentinel audit trail — every gate decision with check type, duration, reason |
-| `get_sentinel_rules` | Sentinel rules per agent/role — territory, permissions, caps |
+| `run_playbook` | Execute a playbook by ID |
+| `get_noel_ledger` | Credits and full audit trail |
 
 ### Noel Vault
 
@@ -78,8 +75,9 @@
 | `vault_context` | Load relevant vault entries as formatted context for prompt injection |
 | `vault_store_credential` | Securely store an API key or secret in the vault |
 | `vault_get_credential` | Retrieve a stored credential by name |
-| `vault_publish` | Publish an entry to the community vault so other users can discover it |
-| `vault_explore` | Browse the community vault — public entries shared by all Noelclaw users |
+| `vault_pin` | Pin an important entry |
+| `vault_delete` | Delete an entry |
+| `vault_tag` | Add or update tags |
 
 ### Wallet & Notifications
 
@@ -117,8 +115,6 @@
 
 | Tool | Description |
 |------|-------------|
-| `scaffold_project` | Generate a full project scaffold (file tree + key files) for Solidity, MCP skills, React dApps, Convex backends, or CLI tools |
-| `generate_component` | Generate a production-ready React/TypeScript component with Tailwind CSS |
 | `generate_contract` | Generate a Solidity smart contract (ERC-20, ERC-721, DeFi hooks, Uniswap v3/v4) with NatSpec |
 | `audit_contract` | AI code review of a Solidity contract — reentrancy, access control, overflow, gas issues |
 | `explain_code` | Plain-English explanation of any code snippet — Solidity, TypeScript, or config |
@@ -299,12 +295,6 @@ Routes through 0x Permit2 on Base mainnet. Signed locally — Convex never sees 
 
 ---
 
-### `scan_wallet`
-
-No parameters. AI-powered portfolio analysis: concentration risk, volatility exposure, Base ecosystem opportunities, and a concrete 3-step action plan.
-
----
-
 ### `create_automation`
 
 | Parameter | Type | Required | Description |
@@ -373,49 +363,6 @@ No parameters. Returns active session, shared memory snapshot, and top execution
 
 ---
 
-### `write_swarm_memory`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `agentId` | string | yes | ID of the writing agent |
-| `key` | string | yes | Memory key |
-| `value` | string | yes | Value to store |
-| `ttlSeconds` | number | no | Auto-delete after N seconds |
-
----
-
-### `get_swarm_memory`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `key` | string | yes | Memory key to read |
-
----
-
-### `get_execution_scores`
-
-No parameters. All skill scores: success rate, win/loss, avg duration, last adapted timestamp.
-
----
-
-### `create_task_packet`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Task name |
-| `description` | string | yes | What the task does |
-| `territory` | string[] | yes | Allowed action domains |
-| `permissions` | string[] | yes | Allowed operations |
-| `constraints` | object | no | Value limits, rate limits |
-
----
-
-### `list_task_packets`
-
-No parameters. Returns all task packets with status and Sentinel outcomes.
-
----
-
 ### `list_playbooks`
 
 No parameters. Returns available playbooks with step counts and last run.
@@ -436,12 +383,6 @@ Each step passes through Sentinel gating. Blocked steps halt the run and log to 
 ### `get_noel_ledger`
 
 No parameters. Sentinel audit trail — every gate decision with check type, duration, and reason.
-
----
-
-### `get_sentinel_rules`
-
-No parameters. Sentinel rules per agent and role: territory, permissions, value caps, rate limits.
 
 ---
 
@@ -606,29 +547,6 @@ Safety check — honeypot detection, liquidity depth, sell-side risk flags.
 | `limit` | number | no | Max results (default 10) |
 
 Scans live markets for tokens showing buy-pressure reversal after a 1h dip. Returns scored candidates sorted by opportunity quality.
-
----
-
-### `scaffold_project`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `description` | string | yes | What to build — tech stack, purpose, target chain, key features |
-| `stack` | string | no | `solidity`, `mcp-skill`, `react-dapp`, `convex-backend`, `node-cli`, `auto` |
-| `extras` | string | no | Extra requirements or constraints |
-
-Requires `BANKR_API_KEY`.
-
----
-
-### `generate_component`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `description` | string | yes | What the component does and how it looks |
-| `context` | string | no | Surrounding code or design system context |
-
-Generates a production-ready React/TypeScript component with Tailwind CSS. Requires `BANKR_API_KEY`.
 
 ---
 

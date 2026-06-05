@@ -1,6 +1,6 @@
 # Install on Hermes
 
-Add Noelclaw as an MCP skill in Hermes. Once connected, all 68 tools are available directly in your agent conversations.
+Add Noelclaw as an MCP skill in Hermes. Once connected, all 76 tools are available directly in your agent conversations.
 
 No build step needed — runs via `npx`.
 
@@ -47,7 +47,7 @@ Then run `/reload-mcp` in any Hermes session.
 /list-tools
 ```
 
-You should see all 68 tools listed — including `get_market_data`, `vault_remember`, `memory_search`, `swap_tokens`, `miroshark_simulate`, and more.
+You should see all 76 tools listed — including `get_market_data`, `memory_search`, `swap_tokens`, `noel_boot`, `miroshark_simulate`, and more.
 
 ---
 
@@ -101,5 +101,5 @@ Hermes will answer based on your saved preferences — "probably not, your profi
 | Tools not showing after `/reload-mcp` | Check Node.js 18+ is installed: `node --version` |
 | `connect_timeout` errors | Increase to `connect_timeout: 20` — first run downloads the package |
 | `npx: command not found` | Set full path: `command: /usr/local/bin/npx` — find it with `which npx` |
-| Auth error on tool calls | Sign in at [noelclaw.com](https://noelclaw.com) first |
+| Auth error on tool calls | Wallet auto-generates on first use — no sign-in needed. Try restarting Hermes. |
 | Slow first response | Normal — first run downloads `@noelclaw/mcp` (~5 seconds). Fast after. |

@@ -55,7 +55,7 @@ If the file already has other MCP servers, just add the `"noelclaw"` block insid
 
 **Fully quit the app** — don't just close the window. On Mac: right-click the dock icon → Quit. On Windows: close all windows then check the system tray.
 
-Reopen Claude Desktop. All 68 tools are now available.
+Reopen Claude Desktop. All 76 tools are now available.
 
 ### 4. Verify it works
 
@@ -80,7 +80,7 @@ claude mcp list
 # noelclaw   npx -y @noelclaw/mcp
 ```
 
-All 68 tools are now available in every Claude Code session.
+All 76 tools are now available in every Claude Code session.
 
 ---
 
@@ -105,7 +105,7 @@ Claude will pull from vault memory and answer accurately — even though this is
 | Tools don't appear | You restarted Claude but tools aren't showing — try fully quitting from the dock/taskbar |
 | First message is slow (~5 sec) | Normal — first run downloads `@noelclaw/mcp` from npm. Fast after that. |
 | `command not found: npx` | Node.js not installed — get it at [nodejs.org](https://nodejs.org) |
-| Auth error on tool calls | Sign in at [noelclaw.com](https://noelclaw.com) first |
+| Auth error on tool calls | Wallet auto-generates on first use — no sign-in needed. Try restarting the client. |
 
 ---
 

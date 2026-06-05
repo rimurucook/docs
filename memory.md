@@ -52,15 +52,16 @@ These tools are available directly if you want more control:
 
 | Tool | What It Does |
 |------|-------------|
-| `vault_remember` | Quick-save anything to memory. Just describe what you want remembered. |
-| `vault_search` | Search your memory by meaning — finds relevant entries even without exact keywords. |
-| `vault_context` | Load everything Noelclaw knows about a topic, formatted for AI context injection. |
-| `memory_add` | Add content to semantic memory with optional URL ingestion. |
-| `memory_search` | Pure semantic search across all your memories. |
-| `memory_context` | Get the most relevant memories for a topic as ready-to-use AI context. |
-| `memory_profile` | See your memory stats — total entries, your memory space, connected sources. |
-| `memory_connect` | Index any URL, GitHub repo, or Notion page into your memory. |
-| `vault_connect` | Connect a URL to both vault storage and semantic memory. |
+| `memory_add` | Add content to semantic memory — text, notes, or auto-fetch a URL. |
+| `memory_search` | Search by meaning — finds relevant entries even without exact keywords. |
+| `memory_context` | Load the most relevant memories for a topic as ready-to-use AI context. |
+| `memory_profile` | See your memory stats — total entries, recent activity, patterns. |
+| `memory_list` | List recent memory entries, optionally filtered by tag. |
+| `memory_delete` | Remove a specific memory entry by ID. |
+| `memory_insight` | AI-generated insights derived from patterns across your saved memories. |
+| `memory_extract` | Extract discrete facts from any block of text and save each individually. |
+| `memory_consolidate` | Merge overlapping memories on a topic into one clean summary. |
+| `vault_search` | Full-text keyword search across your structured vault. |
 
 ---
 
@@ -100,4 +101,4 @@ Expected response: Noelclaw immediately says no — referencing your Base-only p
 - **Be specific when saving** — "I prefer low-risk DeFi on Base, Lido and Aerodrome specifically" is better than "I like DeFi"
 - **Memory is per-user** — your memories are isolated. Other users can't see yours.
 - **No setup needed** — semantic memory is on by default for all Noelclaw users. No API key required.
-- **Vault and memory are linked** — `vault_save` and `vault_remember` automatically sync to semantic memory. You don't need to use both.
+- **Vault and memory are linked** — `vault_save` automatically syncs to semantic memory. You don't need to use both.

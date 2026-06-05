@@ -1,11 +1,11 @@
 # Noelclaw
 
-**Noelclaw** is a persistent AI layer with a 74-tool MCP skill (`@noelclaw/mcp`) that plugs directly into Claude, Cursor, Windsurf, Hermes, Bankr, Aeon, and any MCP-compatible client — giving your AI persistent memory across sessions, autonomous automations, live market data, DeFi execution on Base, multi-agent swarms, AI-assisted code generation, and MiroShark simulation, all from natural language.
+**Noelclaw** is a persistent AI layer with a 76-tool MCP skill (`@noelclaw/mcp`) that plugs directly into Claude, Cursor, Windsurf, Hermes, Bankr, Aeon, and any MCP-compatible client — giving your AI persistent memory across sessions, autonomous automations, live market data, DeFi execution on Base, multi-agent swarms, AI-assisted code generation, and MiroShark simulation, all from natural language.
 
 - Website: [noelclaw.fun](https://noelclaw.fun)
 - App: [app.noelclaw.com](https://app.noelclaw.com)
 - npm: [@noelclaw/mcp](https://www.npmjs.com/package/@noelclaw/mcp)
-- Version: `3.0.0`
+- Version: `3.2.1`
 
 ---
 
@@ -50,14 +50,14 @@ No build step. No config required. Runs on first use.
 
 ---
 
-## 74 Tools Across 15 Categories
+## 76 Tools Across 16 Categories
 
 Three pillars: **Remember · Act · Know**
 
 | Category | Tools | What It Does |
 |----------|-------|-------------|
 | Vault | 12 | Persistent notes with versioning, search, diff, export, credentials |
-| Semantic Memory | 7 | Vector search, cross-session recall, URL ingestion, memory profile |
+| Semantic Memory | 9 | Vector search, cross-session recall, URL ingestion, extract facts, consolidate |
 | Session OS | 3 | Boot, status dashboard, shutdown with session summary |
 | Automations | 6 | DCA, price alerts, conditional buy/sell, execution history |
 | DeFi Execution | 6 | Portfolio, swap via 0x, send tokens, wallet analysis, yields |
@@ -74,13 +74,13 @@ Three pillars: **Remember · Act · Know**
 
 ---
 
-## What's New in v3.0
+## What's New in v3.2.1
 
-**General positioning** — Noelclaw is now a persistent AI layer for any client, not just crypto. Crypto is a powerful use case, but the core value is memory + automation that works in Claude, Bankr, Aeon, Hermes, Cursor, and any MCP-compatible client.
+**memory_extract & memory_consolidate** — Two new semantic memory tools. Extract discrete facts from any block of text, or merge overlapping memories on a topic into one clean summary.
 
-**74 tools (trimmed from 90)** — Removed internal/redundant tools. Leaner toolset, clearer purpose. Every remaining tool is user-facing and genuinely useful.
+**Zero-friction setup** — No account, no API key, no website required. A local wallet auto-generates at `~/.noelclaw/wallet.json` on first use and signs every request transparently.
 
-**Bankr & Aeon integration** — Officially available as a skill in Aeon. Bankr integration in review (PR open). Install once, works everywhere.
+**Bankr & Aeon integration** — Officially available as a skill in Aeon (merged). Bankr integration in review (PR open). Install once, works everywhere.
 
 ---
 

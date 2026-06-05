@@ -8,15 +8,14 @@ The MCP server reads these from your local environment — set them in your MCP 
 
 | Variable | Required | Purpose |
 |----------|----------|---------|
-| `NOELCLAW_API_KEY` | no | Links MCP sessions to your noelclaw.com account |
-| `NOELCLAW_SESSION_TOKEN` | no | Alternative to API key for auth |
+| `ANTHROPIC_API_KEY` | no | Use your own Anthropic key for the CLI agent. Without it, calls proxy through the Noelclaw platform automatically |
+| `BANKR_API_KEY` | no | Use Bankr (Grok-3) for the CLI agent instead of Anthropic |
+| `ANTHROPIC_MODEL` | no | Override model for the CLI agent (default: `claude-haiku-4-5-20251001`) |
 | `NOELCLAW_CONVEX_URL` | no | Override API endpoint (default: `https://api.noelclaw.com`) |
 | `ALCHEMY_API_KEY` | no | Faster swap quotes and Base mainnet balance lookups |
-| `BANKR_API_KEY` | no | BYOK — forwarded as `X-User-Bankr-Key` for swarm agents |
-| `TELEGRAM_BOT_TOKEN` | no | BYOK — your own Telegram bot token for notifications |
-| `TELEGRAM_CHAT_ID` | no | BYOK — your Telegram chat ID for delivery |
+| `TELEGRAM_BOT_TOKEN` | no | Your own Telegram bot token for automation alerts |
+| `TELEGRAM_CHAT_ID` | no | Your Telegram chat ID for delivery |
 | `MINIMAX_API_KEY` | for `humanize_text` | MiniMax API key — required to use the humanizer tool |
-| `AYRSHARE_API_KEY` | for `post_tweet` | Ayrshare API key — required to post to X |
 
 > **Telegram** is only needed if you want push notifications outside your AI client. If you use Noelclaw through Claude, Cursor, Hermes, or Aeon, you already get all results inline.
 
@@ -39,8 +38,8 @@ Then edit `~/.claude.json` to add env vars under the server entry:
       "command": "npx",
       "args": ["-y", "@noelclaw/mcp"],
       "env": {
-        "MINIMAX_API_KEY": "your-key",
-        "AYRSHARE_API_KEY": "your-key"
+        "ANTHROPIC_API_KEY": "sk-ant-...",
+        "MINIMAX_API_KEY": "your-key"
       }
     }
   }
@@ -59,9 +58,8 @@ Windows: `%APPDATA%\Claude\claude_desktop_config.json`
       "command": "npx",
       "args": ["-y", "@noelclaw/mcp"],
       "env": {
-        "MINIMAX_API_KEY": "your-key",
-        "AYRSHARE_API_KEY": "your-key",
-        "BANKR_API_KEY": "your-key"
+        "ANTHROPIC_API_KEY": "sk-ant-...",
+        "MINIMAX_API_KEY": "your-key"
       }
     }
   }
@@ -79,7 +77,6 @@ mcp_servers:
       - "@noelclaw/mcp"
     env:
       MINIMAX_API_KEY: your-key
-      AYRSHARE_API_KEY: your-key
     timeout: 30
     connect_timeout: 10
 ```
@@ -88,14 +85,14 @@ mcp_servers:
 
 ## Which Variables Do You Actually Need?
 
-For most users, **no variables are required** — the core tools work without any keys:
+For most users, **no variables are required** — all 76 tools work out of the box:
 
-- `get_market_data`, `get_token_data` — CoinGecko free API, no key needed
-- `ask_noel` — works without any env var
-- `start_swarm`, `vault_save`, `miroshark_simulate` — work without any env var
-- `swap_tokens`, `send_token` — need a funded local wallet (generated automatically on first use)
+- A local wallet auto-generates at `~/.noelclaw/wallet.json` on first use
+- Market data, vault, memory, swarm, MiroShark — no keys needed
+- `swap_tokens`, `send_token` — just need a funded local wallet
 
-Add keys only if you use:
+Add keys only if you want:
+- Your own Anthropic account for the CLI agent → `ANTHROPIC_API_KEY`
+- Bankr/Grok-3 for the CLI agent → `BANKR_API_KEY`
 - `humanize_text` → `MINIMAX_API_KEY`
-- `post_tweet` → `AYRSHARE_API_KEY`
 - Telegram notifications → `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID`

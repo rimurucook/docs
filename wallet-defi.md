@@ -73,7 +73,7 @@ AI model access is pay-per-use via USDC on Base. Your custodial wallet is create
 
 Users accessing Noel through MCP clients (Hermes, Claude, Cursor) get a full DeFi wallet on Base mainnet, managed entirely through MCP tools.
 
-Wallets are created with **ethers.js**, encrypted with AES-256-CBC using a server-side `WALLET_ENCRYPTION_KEY`, and stored securely. Private keys never leave the server in plaintext.
+Wallets are created with **ethers.js** and stored **locally** at `~/.noelclaw/wallet.json`. The private key never leaves your machine — Noelclaw's backend only receives routing calldata (0x), not your key. Non-custodial by design.
 
 ### Check your portfolio
 
@@ -89,7 +89,7 @@ Returns all token balances and total USD value.
 swap_tokens fromToken: "ETH" toToken: "USDC" amount: "0.1"
 ```
 
-Routes through **0x Permit2** on Base mainnet. Amount is human-readable — no wei conversion needed. Token approval is handled automatically.
+Routes through **0x Permit2** on Base mainnet. Signed locally, broadcast directly to Base. Amount is human-readable — no wei conversion needed.
 
 ### Send tokens
 
@@ -99,20 +99,20 @@ send_token token: "USDC" toAddress: "0xRecipient..." amount: "10"
 
 Supports ETH, USDC, USDT, DAI, and WETH on Base.
 
-### Scan your wallet
+### Analyze any wallet
 
 ```
-scan_wallet
+analyze_wallet address: "0xAnyPublicAddress"
 ```
 
-AI-powered portfolio analysis — concentration risk, volatility exposure, and a 3-step action plan.
+AI-powered analysis of any public wallet — holdings, portfolio value, behavioral profile.
 
 ### Security
 
-- Private keys are encrypted with AES-256-CBC before storage
-- The encryption key (`WALLET_ENCRYPTION_KEY`) lives only in Convex environment variables
-- No private key is ever returned to the MCP client or user
-- If a user asks for their private key via any tool, Noelclaw returns a security message instead
+- Private key lives at `~/.noelclaw/wallet.json` — local only, never transmitted
+- All transactions are signed client-side before broadcast
+- The Noelclaw backend provides routing (0x calldata) but never holds or sees your private key
+- Non-custodial — you own your funds
 
 ---
 

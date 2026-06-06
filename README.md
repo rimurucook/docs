@@ -1,11 +1,11 @@
 # Noelclaw
 
-**Noelclaw** is a persistent AI layer with a 76-tool MCP skill (`@noelclaw/mcp`) that plugs directly into Claude, Cursor, Windsurf, Hermes, Bankr, Aeon, and any MCP-compatible client — giving your AI persistent memory across sessions, autonomous automations, live market data, DeFi execution on Base, multi-agent swarms, AI-assisted code generation, and MiroShark simulation, all from natural language.
+**Noelclaw** is a persistent AI layer with an 81-tool MCP skill (`@noelclaw/mcp`) that plugs directly into Claude, Cursor, Windsurf, Hermes, Bankr, Aeon, and any MCP-compatible client — giving your AI persistent memory across sessions, autonomous research monitors, live market data, DeFi execution on Base, multi-agent swarms, web research, AI-assisted code generation, and MiroShark simulation, all from natural language.
 
-- Website: [noelclaw.fun](https://noelclaw.fun)
+- Website: [noelclaw.com](https://noelclaw.com)
 - App: [app.noelclaw.com](https://app.noelclaw.com)
 - npm: [@noelclaw/mcp](https://www.npmjs.com/package/@noelclaw/mcp)
-- Version: `3.2.1`
+- Version: `3.3.0`
 
 ---
 
@@ -50,7 +50,7 @@ No build step. No config required. Runs on first use.
 
 ---
 
-## 76 Tools Across 16 Categories
+## 81 Tools Across 18 Categories
 
 Three pillars: **Remember · Act · Know**
 
@@ -67,6 +67,8 @@ Three pillars: **Remember · Act · Know**
 | Market & Intel | 5 | Live prices, token data, comparison, overview, OHLC history |
 | Token Scanner | 4 | Score tokens, safety check, dip scan, momentum scan |
 | Research & Insight | 3 | AI analyst, market thesis, trade plan |
+| Web Research | 2 | Live web search, scrape any URL |
+| Autonomous Monitor | 3 | Schedule daily research runs, get Telegram briefings, manage monitors |
 | Agent Network | 8 | Multi-agent swarm, parallel research, briefing, hire specialists |
 | Coder | 5 | Generate contracts, audit, explain, review, MCP skill builder |
 | Content & Humanizer | 3 | Humanize text, write threads and posts |
@@ -74,13 +76,15 @@ Three pillars: **Remember · Act · Know**
 
 ---
 
-## What's New in v3.2.1
+## What's New in v3.3.0
 
-**memory_extract & memory_consolidate** — Two new semantic memory tools. Extract discrete facts from any block of text, or merge overlapping memories on a topic into one clean summary.
+**Autonomous Monitors** — Set up a recurring research agent with `create_monitor`. It runs on a schedule (daily, weekly, or any cron), searches the web, saves findings to your vault, and sends a Telegram briefing. Compares each run to the previous one — highlights what changed, not just what happened.
 
-**Zero-friction setup** — No account, no API key, no website required. A local wallet auto-generates at `~/.noelclaw/wallet.json` on first use and signs every request transparently.
+**Live Web Research** — `web_search` searches the web in real time. `web_scrape` reads any URL and returns the full content. Feed the results into `market_thesis` or `trade_plan` for analysis grounded in today's news.
 
-**Bankr & Aeon integration** — Officially available as a skill in Aeon (merged). Bankr integration in review (PR open). Install once, works everywhere.
+**Smart urgency system** — Monitor notifications scale by urgency (1–5). Routine days get a quiet summary. Breaking news gets a loud alert with the headline surfaced immediately.
+
+**Auto-save on insight tools** — `market_thesis` and `trade_plan` automatically save outputs to vault. Your research history builds up over time without any extra steps.
 
 ---
 

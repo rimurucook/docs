@@ -6,7 +6,7 @@ New to Noelclaw? You'll be up and running in under 5 minutes.
 
 ## What is Noelclaw?
 
-Noelclaw is an MCP skill — a plugin for AI tools like Claude, Cursor, Bankr, Aeon, and Hermes. Once installed, your AI gets 76 tools: persistent memory that carries across every session, autonomous automations, live crypto prices, DeFi swaps on Base, token scanning, multi-agent swarms, code generation, and more.
+Noelclaw is an MCP skill — a plugin for AI tools like Claude, Cursor, Bankr, Aeon, and Hermes. Once installed, your AI gets 81 tools: persistent memory that carries across every session, autonomous research monitors, live market data, DeFi execution on Base, web research, token scanning, multi-agent swarms, code generation, and more.
 
 You talk to it naturally. No commands to memorize.
 
@@ -112,18 +112,24 @@ Edit `~/.cursor/mcp.json` (Cursor) or `~/.windsurf/mcp_config.json` (Windsurf):
 
 ---
 
-## Step 4 — Try It Out
+## Step 3 — Try It Out
 
 Once installed, just talk to your AI normally. No tool names needed — Noelclaw picks the right tool automatically.
+
+**Search the web in real time:**
+> "Find the latest news about AI agents today"
 
 **Check the market:**
 > "What's ETH doing right now?"
 
-**Ask Noel for analysis:**
-> "Give me your read on Base DeFi yields this week"
+**Ask for analysis:**
+> "Give me a full bull vs bear thesis on ETH"
 
-**Check your portfolio:**
-> "Show me my wallet balance on Base"
+**Set up an autonomous monitor:**
+> "Monitor AI agents and automation news every morning at 8am"
+
+**Check your vault:**
+> "Show me my recent research"
 
 **Save something to memory:**
 > "Remember that I prefer low-risk DeFi and only trade on Base"
@@ -139,7 +145,31 @@ Once installed, just talk to your AI normally. No tool names needed — Noelclaw
 
 ---
 
-## Step 5 — Semantic Memory (the best part)
+## Step 4 — Autonomous Monitors (the best part)
+
+Noelclaw can run research automatically on a schedule — no prompting needed.
+
+```
+"Monitor AI agents and automation news every morning at 8am"
+```
+
+What happens next:
+- A scheduled job is registered at `daily-8am`
+- Every morning, Noelclaw searches the web for your topic
+- Summarizes the findings with an urgency score (1–5)
+- Saves the full report to your vault
+- Sends a Telegram briefing — quiet on routine days, loud on breaking news
+- Compares each run to the previous one, highlighting what changed
+
+To manage monitors:
+> "What monitors do I have running?"
+> "Cancel my morning brief monitor"
+
+To get Telegram delivery, run `node worker/scripts/setup-telegram.mjs` once to connect your bot.
+
+---
+
+## Step 5 — Semantic Memory
 
 Noelclaw remembers things you tell it — across sessions, across chats.
 
@@ -157,7 +187,7 @@ It already knows. No need to repeat yourself every session.
 
 ## Step 6 — LLM Mart (Optional)
 
-Access 30+ AI models from one place — Claude, GPT-4o, Grok, DeepSeek, Gemini, and Noel Crypto (a DeFi-native model built for Base).
+Access 30+ AI models from one place — Claude, GPT-4o, Grok, DeepSeek, Gemini, and more.
 
 Go to [noelclaw.com](https://noelclaw.com) → LLM Mart. Add USDC credits and start chatting with any model.
 
@@ -175,4 +205,6 @@ You also get an OpenAI-compatible API endpoint — works as a drop-in replacemen
 | `npx: command not found` | Node.js isn't installed — download from [nodejs.org](https://nodejs.org) |
 | First message is slow | Normal — first run downloads the package (~5 seconds). Fast after that. |
 | Tool call fails with auth error | Make sure you're signed in at [noelclaw.com](https://noelclaw.com) |
-| Vault tools return empty | Normal on first use — start by saving something with vault_remember |
+| Vault tools return empty | Normal on first use — start by saving something with `vault_save` |
+| `create_monitor` not working | Add `TRIGGER_SECRET_KEY` to your MCP config env block |
+| Monitor runs but no Telegram | Add `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` to your MCP config env |

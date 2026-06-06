@@ -2,7 +2,7 @@
 
 `@noelclaw/mcp` is an MCP server that exposes all Noelclaw tools to any MCP-compatible AI client. Install once via `npx` — no build step, no account, no config required.
 
-**76 tools across 16 categories.** Persistent vault, semantic memory, automations, DeFi execution, token scanning, multi-agent swarm, research & insight, AI code generation, MiroShark simulation, and more.
+**81 tools across 18 categories.** Persistent vault, semantic memory, automations, DeFi execution, token scanning, multi-agent swarm, live web research, autonomous monitors, AI code generation, MiroShark simulation, and more.
 
 ---
 
@@ -159,6 +159,23 @@
 | `memory_insight` | AI insights derived from your memory patterns |
 | `memory_extract` | Auto-extract discrete facts from any text and save each individually |
 | `memory_consolidate` | Merge overlapping memories on a topic into one clean summary |
+
+### Web Research (2)
+
+| Tool | Description |
+|------|-------------|
+| `web_search` | Search the web in real time — returns top results with titles, URLs, and summaries |
+| `web_scrape` | Read any URL and return its full content — articles, docs, pages |
+
+### Autonomous Monitor (3)
+
+> Runs research on a schedule — no chat needed. Saves findings to vault and sends Telegram briefings.
+
+| Tool | Description |
+|------|-------------|
+| `create_monitor` | Set up a recurring research agent for any topic — daily, weekly, or custom cron |
+| `list_monitors` | List all active monitors with topic, schedule, and next run time |
+| `cancel_monitor` | Stop and delete a monitor by ID |
 
 ### Session OS (3)
 
@@ -911,6 +928,53 @@ Splits a block of text into discrete facts and saves each as a separate memory e
 | `n` | number | no | Max memories to search and merge (default 20) |
 
 Finds overlapping memories on a topic, merges them into one clean summary, saves it back.
+
+---
+
+### `web_search`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | yes | What to search for |
+| `limit` | number | no | Max results to return (default 5) |
+
+Searches the web in real time via Firecrawl. Requires `FIRECRAWL_API_KEY` in env.
+
+---
+
+### `web_scrape`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `url` | string | yes | URL to read |
+
+Returns the full text content of any web page. Requires `FIRECRAWL_API_KEY` in env.
+
+---
+
+### `create_monitor`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `topic` | string | yes | What to research — topic, keyword, or question |
+| `schedule` | string | yes | Cron preset or expression. Presets: `daily-8am`, `daily-6pm`, `weekly-monday`, `hourly`. Or raw cron: `0 8 * * *` |
+| `label` | string | no | Short label to identify this monitor, e.g. `"morning brief"` |
+
+Creates a scheduled job that automatically researches the topic, saves findings to vault, and sends a Telegram notification. Requires `TRIGGER_SECRET_KEY` in env.
+
+---
+
+### `list_monitors`
+
+No parameters. Returns all active monitors with their topic, schedule, next run time, and ID.
+
+---
+
+### `cancel_monitor`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `id` | string | yes | Monitor ID from `list_monitors` |
 
 ---
 

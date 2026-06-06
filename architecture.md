@@ -1,247 +1,157 @@
-﻿# Architecture Overview
+# Architecture Overview
 
-## Infrastructure Components
+## How It Works
 
-| Component | What It Is | What It Does |
-|---|---|---|
-| **Cloudflare Worker** | `api.noelclaw.com` | Rate limiting, CORS, header proxy |
-| **Convex** | Main backend | DB, serverless actions, cron scheduling, real-time |
-| **Supabase Edge Functions** | Supabase-hosted functions | Swarm (`/swarm/*`) and vault (`/vault/*`) |
-| **Railway** | Hobby plan, $5/mo, 8 GB RAM | MiroShark multi-agent simulation backend |
-
----
-
-## Full System Diagram
+Noelclaw is a local MCP server (`@noelclaw/mcp`) that runs as a Node.js process on your machine. When you ask your AI a question, the MCP server handles it — some requests are answered directly from local data, others call the Noelclaw API.
 
 ```
   AI Clients
-  ┌───────────────────────────────────────────────────┐
-  │  Claude Code / Claude Desktop / Cursor / Windsurf │
-  │  Hermes / Aeon                                    │
-  └────────────────────┬──────────────────────────────┘
-                       │ MCP protocol (stdio)
-                       ▼
-            ┌─────────────────────┐
-            │   @noelclaw/mcp     │
-            │   (Node.js, npx)    │
-            │   35 tools          │
-            └──────────┬──────────┘
-                       │ HTTPS (retries on 429/5xx)
-                       ▼
-  ┌────────────────────────────────────────────────────┐
-  │        Cloudflare Worker — api.noelclaw.com        │
-  │  Rate limit: 100 req/min/IP  |  CORS  |  Headers  │
-  └────────────────────┬───────────────────────────────┘
-                       │
-          ┌────────────┴─────────────┐
-          │                          │
-          ▼                          ▼
-  ┌───────────────────┐    ┌──────────────────────┐
-  │  Convex Backend   │    │ Supabase Edge Funcs   │
-  │                   │    │                       │
-  │  - Queries        │    │  /swarm/*             │
-  │  - Mutations      │    │  /vault/*             │
-  │  - Actions        │    │                       │
-  │  - Cron jobs      │    └──────────────────────┘
-  │  - HTTP router    │
-  │                   │
-  │  Routes:          │
-  │  /mcp/chat        │
-  │  /mcp/defi/*      │
-  │  /automations/*   │
-  │  /framework/*     │
-  │  /miroshark/*     │
-  └───────────────────┘
-          │
-          ▼
-  ┌───────────────────────────────────────────────────┐
-  │              External Services                    │
-  │  0x Permit2 API      — swap_tokens               │
-  │  Telegram Bot API    — set_telegram              │
-  │  Ayrshare API        — post_tweet                │
-  │  MiniMax M2.7        — humanize_text             │
-  └───────────────────────────────────────────────────┘
-
-  ┌───────────────────────────────────────────────────┐
-  │         Railway — MiroShark Backend               │
-  │  Hobby plan, $5/mo, 8 GB RAM                      │
-  │  miroshark_simulate → miroshark_status            │
-  │  Knowledge graph, agent personas, belief prop     │
-  └───────────────────────────────────────────────────┘
+  ┌──────────────────────────────────────────────┐
+  │  Claude Desktop / Claude Code / Cursor       │
+  │  Windsurf / Hermes / Aeon / Bankr            │
+  └─────────────────┬────────────────────────────┘
+                    │ MCP protocol (stdio)
+                    ▼
+         ┌─────────────────────┐
+         │   @noelclaw/mcp     │
+         │   Node.js, local    │
+         │   81 tools          │
+         └──────────┬──────────┘
+                    │
+       ┌────────────┼────────────────┐
+       │            │                │
+       ▼            ▼                ▼
+  CoinGecko   DeFiLlama       api.noelclaw.com
+  (prices)    (yields)        (vault, memory,
+  free, no    free, no         automations,
+  key needed  key needed       swarm, AI, etc.)
 ```
 
 ---
 
-## Cloudflare Worker
+## What Runs Where
 
-`api.noelclaw.com` is a Cloudflare Worker that proxies all MCP and platform API traffic to Convex.
-
-- **Rate limiting:** 100 requests/min per IP using KV-based fixed-window counters
-- **CORS:** correct headers returned for browser clients
-- **Header forwarding:** passes all `X-User-*` BYOK headers through to Convex (Grok key, Bankr key, Telegram token/chat ID)
-- **Error handling:** 503 if Convex is unreachable, 429 with `Retry-After` header on rate limit
-- **Routes:** `/miroshark/*` proxied with prefix stripped and admin token injected
-
----
-
-## Convex Backend
-
-Convex is the main backend — database, serverless functions, real-time subscriptions, and HTTP router.
-
-| Layer | Details |
-|---|---|
-| Database | Document DB with real-time subscriptions |
-| Serverless | Actions (`"use node"`) for external API calls |
-| Scheduling | Cron jobs: automations, swarm heartbeat (5 min), scheduled tasks |
-| HTTP | `convex.site` endpoints for MCP, proxied via `api.noelclaw.com` |
-| Auth | Session token validation per request |
+| Category | Where | Details |
+|---|---|---|
+| Market prices | CoinGecko (direct) | Free, no API key needed |
+| DeFi yields | DeFiLlama (direct) | Free, no API key needed |
+| Token swap quotes | 0x Protocol (direct) | Free routing API |
+| Vault, memory, automations | `api.noelclaw.com` | Persisted to your account |
+| AI analysis (ask_noel, thesis, trade plan) | `api.noelclaw.com` | Proxied to Claude or Grok |
+| Swarm, monitors, OS tools | `api.noelclaw.com` | Noelclaw backend |
+| Wallet signing | Local only | Never leaves your machine |
 
 ---
 
-## Supabase Edge Functions
+## API — api.noelclaw.com
 
-Supabase hosts the swarm and vault backends.
+All cloud tools go through `api.noelclaw.com`. This endpoint handles:
 
-- `/swarm/*` — all swarm tool operations (start, stop, status, memory read/write, execution scores)
-- `/vault/*` — all vault operations (save, read, list, search, history, diff, export)
-
-Traffic flows: MCP client → `@noelclaw/mcp` → `api.noelclaw.com` (Cloudflare) → Supabase Edge Functions.
-
----
-
-## Railway — MiroShark
-
-MiroShark runs on a Railway Hobby plan ($5/mo, 8 GB RAM). It is a multi-agent social simulation engine.
-
-- Builds a knowledge graph from the scenario description
-- Generates agent personas with initial belief states
-- Runs belief propagation across N rounds
-- Returns behavioral analysis: consensus, dissent, signal strength per narrative
-
-The `/miroshark/*` proxy on `api.noelclaw.com` strips the prefix and injects the admin token before forwarding to the Railway service.
+- **Auth** — every request is authenticated by a wallet signature (generated automatically) or a session token
+- **Rate limiting** — 100 requests/min per IP
+- **BYOK header forwarding** — your own API keys (`X-User-*` headers) are forwarded to the right backend
+- **Retry handling** — auto-retry on 429 and 5xx responses
 
 ---
 
-## Data Flow: MCP Tool Call
+## Authentication
+
+Noelclaw uses wallet-based auth by default — no account or login required.
 
 ```
-User prompts AI client
+First run:
+  ~/.noelclaw/wallet.json is created
+  → contains a local Ethereum keypair (Base mainnet)
+  → address is derived from the private key
+
+Per request:
+  MCP server signs: "noelclaw:{toolName}:{timestamp}"
+  → sends X-Wallet-Address + X-Wallet-Signature + X-Wallet-Timestamp
+  → API verifies the signature
+  → request is authorized
+```
+
+Your private key never leaves your machine. The API only sees the wallet address and the signature — never the key itself.
+
+If you have a session token (`NOELCLAW_SESSION_TOKEN`), it's used instead of wallet signing — simpler, and unlocks full tool access without a funded wallet.
+
+---
+
+## Data Flow: Tool Call
+
+```
+User prompts AI
       │
-      ▼ MCP protocol (stdio)
+      ▼  MCP protocol (stdio)
 @noelclaw/mcp — validates input with Zod
       │
-      ▼ HTTPS POST
-api.noelclaw.com (Cloudflare Worker)
-  → rate limit check
-  → CORS headers
-  → forward BYOK headers
+      ├── Market/yield tools → direct to CoinGecko / DeFiLlama
       │
-      ▼
-Convex / Supabase / Railway (depending on tool)
-      │
-      ▼
-Response returned to MCP server
-      │
-      ▼ MCP protocol
-AI client renders result
+      └── Everything else → HTTPS POST to api.noelclaw.com
+            → auth header (wallet sig or session token)
+            → BYOK headers forwarded if set
+            → response returned to MCP server
+                  │
+                  ▼  MCP protocol
+            AI client renders result
 ```
 
 ---
 
-## Data Flow: Swarm Execution
+## Data Flow: Autonomous Monitor
 
 ```
-start_swarm called
+create_monitor called
       │
       ▼
-POST /swarm/start (Supabase Edge Function)
-  → creates session record
-  → initializes 5 agent contexts:
-      market-monitor, sentiment-tracker,
-      workflow-executor, memory-manager, risk-verifier
-  → each agent reads/writes shared memory via KV
+1. Schedule registered on Trigger.dev (via api.noelclaw.com)
+2. Monitor config (topic, label, cron) saved to vault
+      │
+At scheduled time (e.g. 8am daily):
+      ▼
+3. Trigger.dev fires the worker
+4. Worker calls Firecrawl to search the web for the topic
+5. LLM summarizes findings, assigns urgency 1–5
+6. Summary saved to vault (versioned history)
+7. Telegram notification sent (if configured)
       │
       ▼
-get_swarm_status polls session state
-write_swarm_memory / get_swarm_memory operate on shared KV
-get_execution_scores returns per-skill metrics
-      │
-      ▼
-stop_swarm terminates session
-```
-
----
-
-## Data Flow: MiroShark Simulation
-
-```
-miroshark_simulate called with scenario string
-      │
-      ▼
-POST /miroshark/simulate (Railway backend)
-  → returns simulation_id immediately
-  → async pipeline starts:
-      1. Build knowledge graph from scenario
-      2. Generate N agent personas
-      3. Initialize belief states
-      4. Run M rounds of belief propagation
-      5. Compute consensus metrics
-      │
-      ▼
-miroshark_status polls with simulation_id
-  → states: pending → preparing → running → complete
-  → complete response includes full analysis
+Next run: compares new findings to previous briefing
+→ highlights what changed since last time
 ```
 
 ---
 
-## Data Flow: DeFi Wallet (MCP)
+## Data Flow: Wallet Transactions
 
 ```
 swap_tokens / send_token called
       │
       ▼
 @noelclaw/mcp:
-  swap_tokens:
-    POST api.noelclaw.com/mcp/defi/swap
-    → Convex fetches 0x Permit2 quote
-    → returns quote + tx params to MCP server
-    → MCP server signs tx locally (ethers.js)
-    → MCP server broadcasts to Base mainnet
-
-  send_token:
-    POST api.noelclaw.com/mcp/defi/send
-    → Convex builds tx params
-    → MCP server signs + broadcasts locally
+  → fetches quote / tx params from api.noelclaw.com
+  → MCP server signs the transaction locally (ethers.js)
+  → MCP server broadcasts signed tx to Base mainnet directly
 ```
 
-Keys at `~/.noelclaw/wallet.json` never leave the local machine. Convex never holds or sees private keys for MCP users.
+The private key is at `~/.noelclaw/wallet.json` and never leaves the local machine. The API helps build the transaction but never holds or sees your key.
 
 ---
 
-
-## Sentinel / Noel Framework
-
-Every action in the Noel Framework passes through the Sentinel gate before execution.
+## Data Flow: Swarm Research
 
 ```
-Action requested
+swarm_research called
       │
       ▼
-Sentinel checks (in order):
-  1. DoNotDo list — blocked keywords per agent
-  2. Territory check — action must be in agent's allowed domain
-  3. Value limit — reject if USD value exceeds per-agent cap
-  4. Grudge book — block repeated offenders (per-user, per-agent)
-  5. Rate limit — max N actions per agent per 60s window
-      │
-      ▼
-Decision: approved | warned | blocked
-  blocked → error thrown, logged to ledger
-  approved/warned → execution continues
+POST api.noelclaw.com/swarm/research
+  → 5 agents run in parallel:
+      market-monitor, sentiment-tracker,
+      workflow-executor, memory-manager, risk-verifier
+  → agents share findings via common memory
+  → results merged into one summary
+  → auto-saved to vault
 ```
-
-Ledger accessible via `get_noel_ledger`. Rules accessible via `get_sentinel_rules`.
 
 ---
 
@@ -249,8 +159,25 @@ Ledger accessible via `get_noel_ledger`. Rules accessible via `get_sentinel_rule
 
 | Concern | How It's Handled |
 |---|---|
-| Convex URL hidden | All traffic goes through `api.noelclaw.com` — raw Convex URL is never exposed |
-| Rate limiting | 100 req/min/IP at the Cloudflare layer |
-| Wallet keys (MCP) | Stored locally at `~/.noelclaw/wallet.json`, encrypted with a machine-derived key, never leave the device |
-| API keys | Stored as server-side env vars, never in the MCP package or client bundle |
-| Agent actions | Sentinel gates all Framework actions before execution |
+| Private key | Stored at `~/.noelclaw/wallet.json`, never sent anywhere |
+| API keys | Set as env vars in your MCP config, forwarded as `X-User-*` headers, never logged |
+| Auth | Wallet signature per request — or session token from noelclaw.com |
+| Rate limiting | 100 req/min per IP at the API layer |
+| Agent safety | Sentinel gates all Framework actions before execution |
+
+---
+
+## Environment Variables
+
+All optional. Set in the `env` block of your MCP config.
+
+| Variable | What It Does |
+|---|---|
+| `NOELCLAW_SESSION_TOKEN` | Session token from noelclaw.com — simplest auth, recommended |
+| `ANTHROPIC_API_KEY` | Use your own Claude quota instead of the platform |
+| `BANKR_API_KEY` | Use Bankr/Grok instead of Anthropic |
+| `FIRECRAWL_API_KEY` | Required for web_search and web_scrape |
+| `TRIGGER_SECRET_KEY` | Required for create_monitor (Trigger.dev) |
+| `TELEGRAM_BOT_TOKEN` | Your Telegram bot token — for monitor notifications |
+| `TELEGRAM_CHAT_ID` | Your Telegram chat ID — for monitor delivery |
+| `ALCHEMY_API_KEY` | Faster swap quotes and Base balance lookups |

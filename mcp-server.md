@@ -201,10 +201,10 @@ AI Client (Claude / Cursor / Hermes / Windsurf / Aeon)
     │  Swap routing → 0x Protocol v2
     │  Everything else → HTTPS with auto-retry on 429/5xx
     ▼
-api.noelclaw.com  ← Cloudflare Worker (rate limit + CORS)
+api.noelclaw.com  ← rate limit + CORS + auth
     │
-    ├── Convex backend   → vault, memory, automations, swarm, DeFi, OS
-    └── Railway          → MiroShark simulation engine
+    ├── Noelclaw backend  → vault, memory, automations, swarm, DeFi, OS, monitors
+    └── MiroShark backend → multi-agent simulation engine
 ```
 
 Wallet signing happens locally via ethers.js. The private key lives at `~/.noelclaw/wallet.json` and never leaves your machine.

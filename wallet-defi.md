@@ -8,7 +8,7 @@ Noelclaw includes a built-in crypto wallet and DeFi execution layer, tightly int
 
 Every registered user gets an embedded wallet automatically:
 - **Chain:** Base mainnet
-- **Key storage:** Private key encrypted and stored in Convex DB
+- **Key storage:** Private key encrypted and stored securely on the server
 - **Wallet address:** Visible in the Wallet page and Profile
 
 Users can also connect external wallets via Privy (WalletConnect, MetaMask, Coinbase Wallet).
@@ -127,7 +127,7 @@ Users can link their Telegram account to their Noelclaw wallet and execute trade
 4. Wallet linked to Telegram ID
 
 **Telegram bot:**
-- Reads trades from Telegram, posts to Convex
+- Reads trades from Telegram, posts to Noelclaw backend
 - Stored in `trades` table with `source: "telegram"`
 
 ---

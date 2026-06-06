@@ -21,7 +21,7 @@
 
 ## Reference
 
-* [All 76 Tools](mcp-server.md)
+* [All 81 Tools](mcp-server.md)
 * [Environment Variables](env-vars.md)
 * [Architecture](architecture.md)
 * [Noel Crew Desktop Companion](noel-crew.md)

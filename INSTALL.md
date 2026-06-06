@@ -39,7 +39,7 @@ Your pet now lives in the corner of your screen! 🐾
 
 ## Step 3 — Connect to Your AI Agent
 
-See [HOOKS.md](./HOOKS.md) for full connection guide.
+See the [Claude Code hooks docs](https://docs.anthropic.com/en/docs/claude-code/hooks) for the full connection guide.
 
 **Quick setup for Claude Code:**
 

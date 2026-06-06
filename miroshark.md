@@ -8,7 +8,7 @@ Use it for: market narrative modeling, social dynamics simulation, regulatory im
 
 ## How It Works
 
-MiroShark runs on Railway (8 GB RAM). The pipeline has four stages:
+MiroShark runs on a dedicated high-memory backend. The pipeline has four stages:
 
 ### 1. Knowledge Graph Construction
 
@@ -43,12 +43,11 @@ After rounds complete, MiroShark returns:
 @noelclaw/mcp
       │
       ▼
-api.noelclaw.com (Cloudflare Worker)
-  → strips /miroshark/* prefix
-  → injects admin token
+api.noelclaw.com
+  → routes to MiroShark backend
       │
       ▼
-Railway — MiroShark backend
+MiroShark backend (8 GB RAM)
   Knowledge graph builder
   Persona generator
   Belief propagation engine

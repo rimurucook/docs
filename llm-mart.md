@@ -57,7 +57,7 @@ Use it when you want concise, actionable crypto answers without having to prompt
 
 Noelclaw provides an OpenAI-compatible endpoint. If you have code that uses the OpenAI SDK, you can point it at Noelclaw instead — same interface, Noelclaw models and credits.
 
-**Base URL:** `https://valuable-fish-533.convex.site/v1`
+**Base URL:** `https://api.noelclaw.com/v1`
 
 ### Using the OpenAI SDK (Python)
 
@@ -66,7 +66,7 @@ from openai import OpenAI
 
 client = OpenAI(
     api_key="noel_sk_your_key_here",
-    base_url="https://valuable-fish-533.convex.site/v1"
+    base_url="https://api.noelclaw.com/v1"
 )
 
 response = client.chat.completions.create(
@@ -82,7 +82,7 @@ print(response.choices[0].message.content)
 ### Using curl
 
 ```bash
-curl https://valuable-fish-533.convex.site/v1/chat/completions \
+curl https://api.noelclaw.com/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer noel_sk_your_key_here" \
   -d '{
@@ -100,7 +100,7 @@ curl https://valuable-fish-533.convex.site/v1/chat/completions \
 ### List available models
 
 ```bash
-curl https://valuable-fish-533.convex.site/v1/models \
+curl https://api.noelclaw.com/v1/models \
   -H "Authorization: Bearer noel_sk_your_key_here"
 ```
 

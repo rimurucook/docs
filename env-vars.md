@@ -11,9 +11,10 @@ The MCP server reads these from your local environment — set them in your MCP 
 | `ANTHROPIC_API_KEY` | no | Use your own Anthropic key for the CLI agent. Without it, calls proxy through the Noelclaw platform automatically |
 | `BANKR_API_KEY` | no | Use Bankr (Grok-3) for the CLI agent instead of Anthropic |
 | `ANTHROPIC_MODEL` | no | Override model for the CLI agent (default: `claude-haiku-4-5-20251001`) |
-| `NOELCLAW_CONVEX_URL` | no | Override API endpoint (default: `https://api.noelclaw.com`) |
+| `FIRECRAWL_API_KEY` | for `web_search`, `web_scrape` | Required for live web research tools |
+| `TRIGGER_SECRET_KEY` | for `create_monitor` | Required for autonomous scheduled monitors |
 | `ALCHEMY_API_KEY` | no | Faster swap quotes and Base mainnet balance lookups |
-| `TELEGRAM_BOT_TOKEN` | no | Your own Telegram bot token for automation alerts |
+| `TELEGRAM_BOT_TOKEN` | no | Your Telegram bot token — for monitor and automation notifications |
 | `TELEGRAM_CHAT_ID` | no | Your Telegram chat ID for delivery |
 | `MINIMAX_API_KEY` | for `humanize_text` | MiniMax API key — required to use the humanizer tool |
 
@@ -85,7 +86,7 @@ mcp_servers:
 
 ## Which Variables Do You Actually Need?
 
-For most users, **no variables are required** — all 76 tools work out of the box:
+For most users, **no variables are required** — all 81 tools work out of the box:
 
 - A local wallet auto-generates at `~/.noelclaw/wallet.json` on first use
 - Market data, vault, memory, swarm, MiroShark — no keys needed

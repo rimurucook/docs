@@ -10,7 +10,7 @@ This isn't just chat history. It's a vector knowledge base: your preferences, re
 
 Every time you save something to the vault or tell Noelclaw to remember something, it gets stored in two places:
 
-1. **Vault (Convex)** — structured, versioned, searchable by keyword
+1. **Vault** — structured, versioned, searchable by keyword
 2. **Semantic memory (vector index)** — indexed by meaning, searchable by intent
 
 When you ask a question, Noelclaw searches semantic memory first. If it finds relevant entries, it uses those to answer. If not, it falls back to keyword search.

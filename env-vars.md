@@ -17,6 +17,7 @@ The MCP server reads these from your local environment — set them in your MCP 
 | `TELEGRAM_BOT_TOKEN` | no | Your Telegram bot token — for monitor and automation notifications |
 | `TELEGRAM_CHAT_ID` | no | Your Telegram chat ID for delivery |
 | `MINIMAX_API_KEY` | for `humanize_text` | MiniMax API key — required to use the humanizer tool |
+| `GITHUB_TOKEN` | no | GitHub personal access token — required for private repos and higher API rate limits. Public repos work without it |
 
 > **Telegram** is only needed if you want push notifications outside your AI client. If you use Noelclaw through Claude, Cursor, Hermes, or Aeon, you already get all results inline.
 
@@ -86,7 +87,7 @@ mcp_servers:
 
 ## Which Variables Do You Actually Need?
 
-For most users, **no variables are required** — all 81 tools work out of the box:
+For most users, **no variables are required** — all 95 tools work out of the box:
 
 - A local wallet auto-generates at `~/.noelclaw/wallet.json` on first use
 - Market data, vault, memory, swarm, MiroShark — no keys needed
@@ -97,3 +98,4 @@ Add keys only if you want:
 - Bankr/Grok-3 for the CLI agent → `BANKR_API_KEY`
 - `humanize_text` → `MINIMAX_API_KEY`
 - Telegram notifications → `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID`
+- GitHub private repos + higher rate limits → `GITHUB_TOKEN`

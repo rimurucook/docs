@@ -1,11 +1,11 @@
 # Noelclaw
 
-**Noelclaw** is a persistent AI layer with an 87-tool MCP skill (`@noelclaw/mcp`) that plugs directly into Claude, Cursor, Windsurf, Hermes, Bankr, Aeon, and any MCP-compatible client — giving your AI persistent memory across sessions, autonomous research monitors, live market data, DeFi execution on Base, multi-agent swarms, web research, AI-assisted code generation, and MiroShark simulation, all from natural language.
+**Noelclaw** is a persistent AI layer with a 95-tool MCP skill (`@noelclaw/mcp`) that plugs directly into Claude, Cursor, Windsurf, Hermes, Bankr, Aeon, and any MCP-compatible client — giving your AI persistent memory across sessions, autonomous research monitors, live market data, DeFi execution on Base, multi-agent swarms, web research, GitHub integration, AI-assisted code generation, and MiroShark simulation, all from natural language.
 
 - Website: [noelclaw.com](https://noelclaw.com)
 - App: [app.noelclaw.com](https://app.noelclaw.com)
 - npm: [@noelclaw/mcp](https://www.npmjs.com/package/@noelclaw/mcp)
-- Version: `3.3.0`
+- Version: `3.5.0`
 
 ---
 
@@ -50,7 +50,7 @@ No build step. No config required. Runs on first use.
 
 ---
 
-## 81 Tools Across 18 Categories
+## 95 Tools Across 19 Categories
 
 Three pillars: **Remember · Act · Know**
 
@@ -73,6 +73,21 @@ Three pillars: **Remember · Act · Know**
 | Coder | 5 | Generate contracts, audit, explain, review, MCP skill builder |
 | Content & Humanizer | 3 | Humanize text, write threads and posts |
 | MiroShark | 3 | Multi-agent market simulation |
+| GitHub | 8 | List repos/PRs/issues, read files, get commits, search code |
+
+---
+
+## What's New in v3.5.0
+
+**GitHub Integration** — 8 new tools: `github_list_repos`, `github_list_prs`, `github_get_pr`, `github_list_issues`, `github_get_issue`, `github_get_file`, `github_get_commits`, `github_search_code`. Read repos, PRs, issues, and files directly from your AI client. Set `GITHUB_TOKEN` for private repos and higher rate limits — public repos work without it.
+
+---
+
+## What's New in v3.4.0
+
+**Vault Knowledge Graph** — `vault_link` + `vault_related`. Connect vault entries with typed relations and traverse them in both directions.
+
+**Persistent Agents** — `agent_spawn`, `agent_recall`, `agent_update`. Named agents that survive across sessions, state versioned in vault.
 
 ---
 

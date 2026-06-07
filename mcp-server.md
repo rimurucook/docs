@@ -2,7 +2,7 @@
 
 `@noelclaw/mcp` is an MCP server that exposes all Noelclaw tools to any MCP-compatible AI client. Install once via `npx` — no build step, no account, no config required.
 
-**81 tools across 18 categories.** Persistent vault, semantic memory, automations, DeFi execution, token scanning, multi-agent swarm, live web research, autonomous monitors, AI code generation, MiroShark simulation, and more.
+**95 tools across 19 categories.** Persistent vault, semantic memory, automations, DeFi execution, token scanning, multi-agent swarm, live web research, autonomous monitors, GitHub integration, AI code generation, MiroShark simulation, and more.
 
 ---
 
@@ -71,7 +71,7 @@
 | `run_playbook` | Execute a playbook with Sentinel gating per step |
 | `get_noel_ledger` | Sentinel audit trail — every gate decision with check type, duration, and reason |
 
-### Noel Vault (12)
+### Noel Vault (14)
 
 | Tool | Description |
 |------|-------------|
@@ -87,6 +87,8 @@
 | `vault_pin` | Pin an important entry |
 | `vault_delete` | Delete a vault entry permanently |
 | `vault_tag` | Add or update tags on an entry |
+| `vault_link` | Create a semantic relationship between two vault entries — build a knowledge graph |
+| `vault_related` | Traverse the knowledge graph — see all entries linked to a given key |
 
 ### Wallet & Notifications (2)
 
@@ -103,12 +105,15 @@
 | `miroshark_status` | Poll simulation status — prep, running, and completion with AI brief |
 | `miroshark_stop` | Stop a running simulation |
 
-### Agents (2)
+### Agents (5)
 
 | Tool | Description |
 |------|-------------|
 | `list_agents` | List all available specialist agents — built-in experts plus community-published agents |
 | `hire_agent` | Hire a specialist agent (analyst, risk-manager, researcher, executor, scout) to run a task |
+| `agent_spawn` | Create a persistent named agent with a goal — survives across sessions, state saved to vault |
+| `agent_recall` | Recall a persistent agent — loads goal, status, progress history, and next step |
+| `agent_update` | Log progress and findings to a persistent agent — creates a new vault version automatically |
 
 ### Token Scanner (4)
 
@@ -636,6 +641,58 @@ Auto-versions on every update — all previous versions accessible via `vault_hi
 
 ---
 
+### `vault_link`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `fromKey` | string | yes | Source vault entry key |
+| `toKey` | string | yes | Target vault entry key |
+| `relation` | string | yes | How `fromKey` relates to `toKey` — see relation types below |
+
+Creates a directed edge between two vault entries, building a knowledge graph over time. Both entries must already exist in your vault. Duplicate links are updated in-place instead of creating duplicates.
+
+**Relation types:**
+
+| Relation | Meaning |
+|----------|---------|
+| `references` | This entry cites or uses information from the target |
+| `derived_from` | This entry was built from or synthesizes the target |
+| `supersedes` | This entry replaces or improves on the target |
+| `related` | General association — thematically connected |
+| `continues` | This entry is a follow-on to the target (e.g. part 2 of a thread) |
+
+**Example:**
+```
+vault_link fromKey="research/eth-analysis" toKey="research/btc-analysis" relation="related"
+vault_link fromKey="research/q2-synthesis" toKey="research/eth-analysis" relation="derived_from"
+vault_link fromKey="agent/market-researcher" toKey="research/q2-synthesis" relation="references"
+```
+
+---
+
+### `vault_related`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `key` | string | yes | Vault key to find connections for |
+| `relation` | string | no | Filter to only this relation type (omit to return all) |
+
+Traverses the knowledge graph from a given entry. Returns both **outbound** links (entries this entry references) and **inbound** links (entries that reference this one), so you see the full network around any entry.
+
+Each result includes `key`, `title`, `type`, `relation`, and `direction` (`outbound` or `inbound`).
+
+**Example output:**
+```
+Related entries for `agent/market-researcher` (2)
+
+- BTC Analysis Q2 (research/btc-analysis) [research] — outbound references
+- ETH Momentum Thesis (research/eth-analysis) [research] — outbound related
+```
+
+**How the graph builds over time:** As you save research, link entries together, and spawn agents that reference vault content, the graph accumulates context automatically. `vault_related` is how you see that accumulated structure — what an agent is drawing on, what a synthesis was built from, how findings chain together.
+
+---
+
 ### `get_wallet_address`
 
 No parameters. Returns your local wallet address. Keys stored at `~/.noelclaw/wallet.json` and never leave your device.
@@ -692,6 +749,77 @@ No parameters. Returns all specialist agents with name, ID, description, and pri
 | `agentId` | string | yes | Agent ID from `list_agents`. Built-in: `analyst`, `risk-manager`, `researcher`, `executor`, `scout` |
 | `task` | string | yes | The task or question — be specific |
 | `maxTokens` | number | no | Max response tokens (default 800) |
+
+---
+
+### `agent_spawn`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | yes | Unique agent name — lowercase alphanumeric with hyphens (e.g. `market-researcher`, `base-tracker`) |
+| `goal` | string | yes | What this agent is trying to accomplish |
+| `context` | string | no | Starting context, data, or notes the agent should carry |
+
+Creates a persistent named agent and saves its initial state to vault at key `agent/{name}`. The agent starts with a goal, a status of `active`, and an empty update log. It survives indefinitely across sessions — recall it anytime with `agent_recall`.
+
+**How it works:** Agent state is stored as a versioned vault entry (type `memory`). Every `agent_update` creates a new vault version, so the full history of an agent's work is preserved and diffable.
+
+```
+agent_spawn name="base-tracker" goal="monitor emerging Base chain protocols weekly"
+→ Agent base-tracker spawned. Recall with agent_recall.
+```
+
+---
+
+### `agent_recall`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | yes | Agent name as used in `agent_spawn` |
+
+Loads a persistent agent's full state from vault — goal, current status, vault version, last updated timestamp, and the 3 most recent progress updates with findings and next steps.
+
+Use this at the start of a session to pick up where you left off, or to check what an agent last did before continuing its work.
+
+```
+agent_recall name="base-tracker"
+→ Goal: monitor emerging Base chain protocols weekly
+→ Status: active — v4
+→ Last progress: found 3 new protocols — Morpho, Aerodrome v2, Seamless
+→ Next: check TVL trends for each
+```
+
+---
+
+### `agent_update`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | yes | Agent name |
+| `progress` | string | yes | What was accomplished in this update |
+| `findings` | string | no | Key findings, data, or outputs from this step |
+| `status` | string | no | `active` (default) \| `blocked` \| `complete` |
+| `nextStep` | string | no | What should happen next — helps on the next recall |
+
+Appends a progress entry to the agent's update log and saves a new vault version. The log keeps the last 20 updates — older entries are trimmed automatically. `nextStep` is surfaced prominently on `agent_recall` so the agent always knows where to continue.
+
+**Status values:**
+- `active` — ongoing, will continue
+- `blocked` — stuck, needs input or a different approach
+- `complete` — goal achieved
+
+```
+agent_update name="base-tracker" progress="analyzed Morpho TVL trend" findings="TVL up 40% in 30d, protocol is gaining traction" status="active" nextStep="check Aerodrome v2 next"
+→ Agent base-tracker updated (v5)
+```
+
+**Typical session pattern:**
+```
+agent_recall name="base-tracker"        ← resume from last state
+[do the work]
+agent_update name="base-tracker" ...    ← save progress
+agent_update name="base-tracker" ...    ← save more progress
+```
 
 ---
 
@@ -1009,6 +1137,24 @@ Set in your MCP client config under the `env` block. All optional.
 | `TELEGRAM_BOT_TOKEN` | Your Telegram bot token for automation alerts |
 | `TELEGRAM_CHAT_ID` | Your Telegram chat ID for delivery |
 | `MINIMAX_API_KEY` | Required for `humanize_text` |
+| `GITHUB_TOKEN` | Personal access token — required for private repos, recommended for higher rate limits |
+
+---
+
+### GitHub (8)
+
+> Read repos, PRs, issues, files, and commits from any GitHub repository. Set `GITHUB_TOKEN` for private repos — public repos work without a token.
+
+| Tool | Description |
+|------|-------------|
+| `github_list_repos` | List repos for a user or org. Leave username empty to list your own (requires token) |
+| `github_list_prs` | List pull requests for a repo — open, closed, or all |
+| `github_get_pr` | Full PR details: body, changed files with diffs, reviews, and comments |
+| `github_list_issues` | List issues for a repo — filter by state and label |
+| `github_get_issue` | Full issue details with all comments |
+| `github_get_file` | Read any file from a repo — decoded content up to 10k chars |
+| `github_get_commits` | Recent commits for a repo, branch, or specific file |
+| `github_search_code` | Search code on GitHub with qualifiers (repo:, language:, path:, filename:) |
 
 ---
 
@@ -1023,3 +1169,5 @@ Set in your MCP client config under the `env` block. All optional.
 | Swap fails | Check balance with `get_portfolio`, confirm Base mainnet connectivity |
 | `humanize_text` fails | Set `MINIMAX_API_KEY` in env |
 | Rate limit (429) | Auto-retries up to 3× with backoff — no action needed |
+| GitHub 401 | Set `GITHUB_TOKEN` in env — required for private repos |
+| GitHub 403 rate limit | Add `GITHUB_TOKEN` — unauthenticated requests have lower limits |

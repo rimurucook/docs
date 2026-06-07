@@ -15,13 +15,11 @@
 ## Features
 
 * [Semantic Memory](memory.md)
-* [LLM Mart](llm-mart.md)
 * [MiroShark Simulation](miroshark.md)
 * [Wallet & DeFi](wallet-defi.md)
 
 ## Reference
 
-* [All 81 Tools](mcp-server.md)
+* [All 87 Tools](mcp-server.md)
 * [Environment Variables](env-vars.md)
 * [Architecture](architecture.md)
-* [Noel Crew Desktop Companion](noel-crew.md)

@@ -1,6 +1,6 @@
 # Noelclaw
 
-**Noelclaw** is a persistent AI layer with an 81-tool MCP skill (`@noelclaw/mcp`) that plugs directly into Claude, Cursor, Windsurf, Hermes, Bankr, Aeon, and any MCP-compatible client — giving your AI persistent memory across sessions, autonomous research monitors, live market data, DeFi execution on Base, multi-agent swarms, web research, AI-assisted code generation, and MiroShark simulation, all from natural language.
+**Noelclaw** is a persistent AI layer with an 87-tool MCP skill (`@noelclaw/mcp`) that plugs directly into Claude, Cursor, Windsurf, Hermes, Bankr, Aeon, and any MCP-compatible client — giving your AI persistent memory across sessions, autonomous research monitors, live market data, DeFi execution on Base, multi-agent swarms, web research, AI-assisted code generation, and MiroShark simulation, all from natural language.
 
 - Website: [noelclaw.com](https://noelclaw.com)
 - App: [app.noelclaw.com](https://app.noelclaw.com)
@@ -56,7 +56,7 @@ Three pillars: **Remember · Act · Know**
 
 | Category | Tools | What It Does |
 |----------|-------|-------------|
-| Vault | 12 | Persistent notes with versioning, search, diff, export, credentials |
+| Vault | 14 | Persistent notes with versioning, search, diff, export, credentials, knowledge graph |
 | Semantic Memory | 9 | Vector search, cross-session recall, URL ingestion, extract facts, consolidate |
 | Session OS | 3 | Boot, status dashboard, shutdown with session summary |
 | Automations | 6 | DCA, price alerts, conditional buy/sell, execution history |
@@ -69,7 +69,7 @@ Three pillars: **Remember · Act · Know**
 | Research & Insight | 3 | AI analyst, market thesis, trade plan |
 | Web Research | 2 | Live web search, scrape any URL |
 | Autonomous Monitor | 3 | Schedule daily research runs, get Telegram briefings, manage monitors |
-| Agent Network | 8 | Multi-agent swarm, parallel research, briefing, hire specialists |
+| Agent Network | 11 | Multi-agent swarm, parallel research, briefing, hire specialists, persistent agents |
 | Coder | 5 | Generate contracts, audit, explain, review, MCP skill builder |
 | Content & Humanizer | 3 | Humanize text, write threads and posts |
 | MiroShark | 3 | Multi-agent market simulation |
@@ -77,6 +77,10 @@ Three pillars: **Remember · Act · Know**
 ---
 
 ## What's New in v3.3.0
+
+**Persistent Agents** — `agent_spawn`, `agent_recall`, `agent_update`. Create a named agent with a goal, log progress and findings across sessions, and pick up exactly where you left off. State is versioned in vault — every update is a new version with full history. Use `vault_link` to wire an agent's vault into the broader knowledge graph.
+
+**Knowledge Graph** — `vault_link` + `vault_related`. Connect any two vault entries with a typed relation (`references`, `derived_from`, `supersedes`, `related`, `continues`). `vault_related` traverses the graph in both directions — outbound (what this entry references) and inbound (what references this entry). Context accumulates over time instead of getting buried.
 
 **Autonomous Monitors** — Set up a recurring research agent with `create_monitor`. It runs on a schedule (daily, weekly, or any cron), searches the web, saves findings to your vault, and sends a Telegram briefing. Compares each run to the previous one — highlights what changed, not just what happened.
 
@@ -95,7 +99,6 @@ Three pillars: **Remember · Act · Know**
 - [Install on Hermes](hermes-openclaw.md)
 - [Install on Cursor / Windsurf](cursor-install.md)
 - [Semantic Memory Guide](memory.md)
-- [LLM Mart Guide](llm-mart.md)
 - [Full MCP Tool Reference](mcp-server.md)
 - [MiroShark Simulation](miroshark.md)
 - [Wallet & DeFi](wallet-defi.md)

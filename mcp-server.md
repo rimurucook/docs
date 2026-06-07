@@ -2,7 +2,7 @@
 
 `@noelclaw/mcp` is an MCP server that exposes all Noelclaw tools to any MCP-compatible AI client. Install once via `npx` — no build step, no account, no config required.
 
-**95 tools across 19 categories.** Persistent vault, semantic memory, automations, DeFi execution, token scanning, multi-agent swarm, live web research, autonomous monitors, GitHub integration, AI code generation, MiroShark simulation, and more.
+**90 tools across 19 categories.** Persistent vault, semantic memory, automations, DeFi execution, token scanning, multi-agent swarm, live web research, autonomous monitors, GitHub integration, AI code generation, MiroShark simulation, and more.
 
 ---
 
@@ -60,7 +60,7 @@
 | `stop_swarm` | Stop the active swarm session |
 | `get_swarm_status` | Active session, shared memory snapshot, and execution scores |
 | `swarm_research` | Multi-agent research on a topic — auto-saves findings to vault |
-| `swarm_brief` | Summary of everything the swarm found |
+| `swarm_synthesize` | Synthesize all swarm findings into one intelligence report |
 | `trigger_agent` | Run a specific agent now |
 
 ### Noel Framework (3)
@@ -115,14 +115,13 @@
 | `agent_recall` | Recall a persistent agent — loads goal, status, progress history, and next step |
 | `agent_update` | Log progress and findings to a persistent agent — creates a new vault version automatically |
 
-### Token Scanner (4)
+### Token Scanner (3)
 
 | Tool | Description |
 |------|-------------|
 | `score_token` | Score a specific token for dip-reversal potential — hard gates + weighted scoring |
 | `check_token` | Safety check a token address — honeypot detection, liquidity, sell-side risk |
-| `scan_dips` | Scan live markets for tokens showing early buy-pressure reversal signals |
-| `scan_momentum` | Scan for tokens breaking out upward with rising momentum |
+| `scan_market` | Scan live Base pools — `mode=dips` for reversal setups, `mode=momentum` for breakouts |
 
 ### Coder (5)
 
@@ -143,13 +142,12 @@
 | `base_prepare_deposit` | Get deposit instructions for a Morpho vault — address, APY, and step-by-step guide |
 | `base_chain_stats` | Real-time Base chain stats: ETH price, gas in gwei, and latest block info |
 
-### Content & Humanizer (3)
+### Content & Humanizer (2)
 
 | Tool | Description |
 |------|-------------|
 | `humanize_text` | Strip AI writing patterns — makes output sound natural (requires `MINIMAX_API_KEY`) |
-| `write_thread` | Write a Twitter/X thread on any topic |
-| `write_post` | Write a punchy social post |
+| `write_content` | Write a Twitter/X thread or single post — `format=thread` (default) or `format=post` |
 
 ### Semantic Memory (9)
 
@@ -182,13 +180,11 @@
 | `list_monitors` | List all active monitors with topic, schedule, and next run time |
 | `cancel_monitor` | Stop and delete a monitor by ID |
 
-### Session OS (3)
+### Session OS (1)
 
 | Tool | Description |
 |------|-------------|
-| `noel_boot` | Start a session — loads vault context, semantic memory, live market data, and active automations |
-| `noel_status` | Full dashboard — memory usage, swarm state, active automations |
-| `noel_shutdown` | End session — saves a summary to vault for context continuity next session |
+| `noel_status` | Full dashboard — memory usage, swarm health, active automations, recent research, execution scores |
 
 ---
 
@@ -489,12 +485,6 @@ No parameters. Returns active session, shared memory snapshot, and execution sco
 | `topic` | string | yes | Research topic, e.g. `"best DeFi yields on Base this month"` |
 
 Runs multi-agent research in parallel and auto-saves findings to vault.
-
----
-
-### `swarm_brief`
-
-No parameters. Returns a summary of everything the swarm has found and saved.
 
 ---
 
@@ -844,22 +834,14 @@ Honeypot detection, liquidity depth, and sell-side risk flags.
 
 ---
 
-### `scan_dips`
+### `scan_market`
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
+| `mode` | string | no | `"dips"` (default) for reversal setups, `"momentum"` for breakouts |
 | `minScore` | number | no | Minimum score (default 50) |
 | `minLiquidity` | number | no | Minimum liquidity in USD (default 50000) |
-| `limit` | number | no | Max results (default 10) |
-
----
-
-### `scan_momentum`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `minScore` | number | no | Minimum score (default 50) |
-| `limit` | number | no | Max results (default 10) |
+| `limit` | number | no | Max pools to scan (default 40) |
 
 ---
 
@@ -961,21 +943,16 @@ Strips AI patterns using MiniMax. Requires `MINIMAX_API_KEY` in env.
 
 ---
 
-### `write_thread`
+### `write_content`
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `topic` | string | yes | Topic or angle for the thread |
-| `tone` | string | no | `"alpha"`, `"educational"`, `"degen"` |
-
----
-
-### `write_post`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `topic` | string | yes | What the post is about |
-| `tone` | string | no | Tone or style guidance |
+| `topic` | string | yes | What to write about |
+| `format` | string | no | `"thread"` (default) for multi-tweet thread, `"post"` for single tweet |
+| `tone` | string | no | Thread: `"alpha"`, `"educational"`, `"opinion"`, `"story"`. Post: `"hook"`, `"hot-take"`, `"alpha"`, `"question"`, `"observation"` |
+| `tweets` | number | no | Number of tweets in a thread, 4–12 (default 7) |
+| `long` | boolean | no | Allow up to 500 chars for post format (default false = 280 chars) |
+| `voice_sample` | string | no | Your own tweets to match your voice |
 
 ---
 
@@ -1106,21 +1083,9 @@ No parameters. Returns all active monitors with their topic, schedule, next run 
 
 ---
 
-### `noel_boot`
-
-No parameters. Starts a session — loads vault context, semantic memory (recent + user preferences), live market data, and active automations. Run this at the start of every session.
-
----
-
 ### `noel_status`
 
-No parameters. Full dashboard — memory usage, swarm state, active automations, and wallet balance.
-
----
-
-### `noel_shutdown`
-
-No parameters. Ends the session and saves a summary to vault for context continuity next session.
+No parameters. Full dashboard — memory usage, swarm health, active automations, recent research, and execution scores.
 
 ---
 

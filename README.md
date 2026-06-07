@@ -50,7 +50,7 @@ No build step. No config required. Runs on first use.
 
 ---
 
-## 95 Tools Across 19 Categories
+## 90 Tools Across 19 Categories
 
 Three pillars: **Remember · Act · Know**
 
@@ -58,20 +58,20 @@ Three pillars: **Remember · Act · Know**
 |----------|-------|-------------|
 | Vault | 14 | Persistent notes with versioning, search, diff, export, credentials, knowledge graph |
 | Semantic Memory | 9 | Vector search, cross-session recall, URL ingestion, extract facts, consolidate |
-| Session OS | 3 | Boot, status dashboard, shutdown with session summary |
+| Session OS | 1 | System dashboard — memory, swarm, automations, research, scores |
 | Automations | 6 | DCA, price alerts, conditional buy/sell, execution history |
 | DeFi Execution | 6 | Portfolio, swap via 0x, send tokens, wallet analysis, yields |
 | Base Chain | 4 | Morpho vaults, Moonwell markets, deposit prep, chain stats |
 | Wallet & Notifications | 2 | Local wallet address, Telegram alerts |
 | Playbooks | 3 | Browse and run playbooks, audit ledger |
 | Market & Intel | 5 | Live prices, token data, comparison, overview, OHLC history |
-| Token Scanner | 4 | Score tokens, safety check, dip scan, momentum scan |
+| Token Scanner | 3 | Score tokens, safety check, scan for dips or momentum |
 | Research & Insight | 3 | AI analyst, market thesis, trade plan |
 | Web Research | 2 | Live web search, scrape any URL |
 | Autonomous Monitor | 3 | Schedule daily research runs, get Telegram briefings, manage monitors |
-| Agent Network | 11 | Multi-agent swarm, parallel research, briefing, hire specialists, persistent agents |
+| Agent Network | 10 | Multi-agent swarm, parallel research, hire specialists, persistent agents |
 | Coder | 5 | Generate contracts, audit, explain, review, MCP skill builder |
-| Content & Humanizer | 3 | Humanize text, write threads and posts |
+| Content & Humanizer | 2 | Humanize text, write threads and posts |
 | MiroShark | 3 | Multi-agent market simulation |
 | GitHub | 8 | List repos/PRs/issues, read files, get commits, search code |
 

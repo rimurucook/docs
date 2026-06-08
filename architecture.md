@@ -15,7 +15,7 @@ Noelclaw is a local MCP server (`@noelclaw/mcp`) that runs as a Node.js process 
          ┌─────────────────────┐
          │   @noelclaw/mcp     │
          │   Node.js, local    │
-         │   87 tools          │
+         │   90 tools          │
          └──────────┬──────────┘
                     │
        ┌────────────┼────────────────┐

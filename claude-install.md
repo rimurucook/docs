@@ -1,4 +1,4 @@
-# Install on Claude
+﻿# Install on Claude
 
 Add Noelclaw to Claude Desktop or Claude Code. No build step — runs via `npx`.
 
@@ -55,7 +55,7 @@ If the file already has other MCP servers, just add the `"noelclaw"` block insid
 
 **Fully quit the app** — don't just close the window. On Mac: right-click the dock icon → Quit. On Windows: close all windows then check the system tray.
 
-Reopen Claude Desktop. All 87 tools are now available.
+Reopen Claude Desktop. All 90 tools are now available.
 
 ### 4. Verify it works
 
@@ -80,7 +80,7 @@ claude mcp list
 # noelclaw   npx -y @noelclaw/mcp
 ```
 
-All 87 tools are now available in every Claude Code session.
+All 90 tools are now available in every Claude Code session.
 
 ---
 

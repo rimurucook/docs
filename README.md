@@ -1,6 +1,6 @@
-# Noelclaw
+﻿# Noelclaw
 
-**Noelclaw** is a persistent AI layer with a 95-tool MCP skill (`@noelclaw/mcp`) that plugs directly into Claude, Cursor, Windsurf, Hermes, Bankr, Aeon, and any MCP-compatible client — giving your AI persistent memory across sessions, autonomous research monitors, live market data, DeFi execution on Base, multi-agent swarms, web research, GitHub integration, AI-assisted code generation, and MiroShark simulation, all from natural language.
+**Noelclaw** is a persistent AI layer with a 90-tool MCP skill (`@noelclaw/mcp`) that plugs directly into Claude, Cursor, Windsurf, Hermes, Bankr, Aeon, and any MCP-compatible client — giving your AI persistent memory across sessions, autonomous research monitors, live market data, DeFi execution on Base, multi-agent swarms, web research, GitHub integration, AI-assisted code generation, and MiroShark simulation, all from natural language.
 
 - Website: [noelclaw.com](https://noelclaw.com)
 - App: [app.noelclaw.com](https://app.noelclaw.com)

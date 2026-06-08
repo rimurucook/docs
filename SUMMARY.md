@@ -1,4 +1,4 @@
-# Table of Contents
+﻿# Table of Contents
 
 ## Getting Started
 
@@ -20,6 +20,6 @@
 
 ## Reference
 
-* [All 87 Tools](mcp-server.md)
+* [All 90 Tools](mcp-server.md)
 * [Environment Variables](env-vars.md)
 * [Architecture](architecture.md)

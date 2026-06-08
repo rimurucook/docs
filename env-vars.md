@@ -1,4 +1,4 @@
-# Environment Variables
+﻿# Environment Variables
 
 The MCP server reads these from your local environment — set them in your MCP client config under the `env` block. All are optional unless noted.
 
@@ -87,7 +87,7 @@ mcp_servers:
 
 ## Which Variables Do You Actually Need?
 
-For most users, **no variables are required** — all 95 tools work out of the box:
+For most users, **no variables are required** — all 90 tools work out of the box:
 
 - A local wallet auto-generates at `~/.noelclaw/wallet.json` on first use
 - Market data, vault, memory, swarm, MiroShark — no keys needed

@@ -1,6 +1,6 @@
 ﻿# Aeon Integration
 
-The noelclaw skill pack is live in the Aeon ecosystem (merged PR #253). Once added, all 87 Noelclaw tools are available in Hermes and the Aeon agent runtime.
+The noelclaw skill pack is live in the Aeon ecosystem (merged PR #253). Once added, all 90 Noelclaw tools are available in Hermes and the Aeon agent runtime.
 
 ---
 
@@ -48,7 +48,7 @@ In Hermes or any Aeon agent session:
 /list-tools
 ```
 
-You should see all 87 Noelclaw tools listed.
+You should see all 90 Noelclaw tools listed.
 
 ---
 
@@ -61,10 +61,9 @@ Aeon agents are well-suited to longer autonomous tasks. These tool groups see th
 Aeon agents can start a full 5-agent swarm and use shared memory as a coordination layer:
 
 ```
-start_swarm
 swarm_research topic: "analyze BTC trend"
 get_swarm_status
-swarm_brief
+swarm_synthesize
 stop_swarm
 ```
 
@@ -124,7 +123,7 @@ A typical Aeon agent task using noelclaw tools:
 
 ## Notes
 
-- All 87 tools are available — no Aeon-specific limitations
+- All 90 tools are available — no Aeon-specific limitations
 - BYOK env vars (Grok, MiniMax, Ayrshare) work the same way as in other clients
 - See [Environment Variables](env-vars.md) for optional keys
 - See [MCP Server Reference](mcp-server.md) for full tool parameter docs

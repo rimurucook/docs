@@ -6,7 +6,7 @@ New to Noelclaw? You'll be up and running in under 5 minutes.
 
 ## What is Noelclaw?
 
-Noelclaw is an MCP skill — a plugin for AI tools like Claude, Cursor, Bankr, Aeon, and Hermes. Once installed, your AI gets 90 tools: persistent memory that carries across every session, autonomous research monitors, live market data, DeFi execution on Base, web research, token scanning, multi-agent swarms, code generation, and more.
+Noelclaw is an MCP skill — a plugin for AI tools like Claude, Cursor, Bankr, Aeon, and Hermes. Once installed, your AI gets 99 tools: persistent memory that carries across every session, autonomous research monitors, live market data, DeFi execution on Base, web research, GitHub integration, token scanning, multi-agent swarms, code generation, audit trails, workflow packets, and more.
 
 You talk to it naturally. No commands to memorize.
 
@@ -26,7 +26,17 @@ If you see `v18.x.x` or higher — you're good. If not, download it free from [n
 
 ## Step 2 — Install the Skill
 
-Pick your client below. The skill downloads automatically on first use — nothing to clone or build.
+### One-command setup (recommended)
+
+```bash
+npx -y @noelclaw/mcp install
+```
+
+This detects all MCP-compatible apps on your machine (Claude Desktop, Cursor, Windsurf, VS Code, Zed) and configures each one automatically. No JSON editing. Then restart your client.
+
+---
+
+### Manual setup — pick your client
 
 ### Claude Desktop
 

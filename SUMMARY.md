@@ -1,4 +1,4 @@
-﻿# Table of Contents
+# Table of Contents
 
 ## Getting Started
 
@@ -15,11 +15,13 @@
 ## Features
 
 * [Semantic Memory](memory.md)
+* [Chronicle (Audit Trail)](chronicle.md)
+* [Packets (Flows)](packets.md)
 * [MiroShark Simulation](miroshark.md)
 * [Wallet & DeFi](wallet-defi.md)
 
 ## Reference
 
-* [All 90 Tools](mcp-server.md)
+* [All 99 Tools](mcp-server.md)
 * [Environment Variables](env-vars.md)
 * [Architecture](architecture.md)

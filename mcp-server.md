@@ -2,7 +2,7 @@
 
 `@noelclaw/mcp` is an MCP server that exposes all Noelclaw tools to any MCP-compatible AI client. Install once via `npx` — no build step, no account, no config required.
 
-**90 tools across 19 categories.** Persistent vault, semantic memory, automations, DeFi execution, token scanning, multi-agent swarm, live web research, autonomous monitors, GitHub integration, AI code generation, MiroShark simulation, and more.
+**99 tools across 21 categories.** Persistent vault, semantic memory, automations, DeFi execution, token scanning, multi-agent swarm, live web research, autonomous monitors, GitHub integration, AI code generation, audit trail, workflow packets, MiroShark simulation, and more.
 
 ---
 
@@ -50,16 +50,15 @@
 | `get_automation_runs` | Execution history for an automation — status, tx hash, error per run |
 | `run_automation` | Trigger an automation manually right now |
 
-### Swarm (6)
+### Swarm (5)
 
 > Multiple AI agents research and monitor in parallel with shared memory.
 
 | Tool | Description |
 |------|-------------|
-| `start_swarm` | Start the multi-agent swarm — auto-loads live BTC/ETH/SOL prices into shared memory |
 | `stop_swarm` | Stop the active swarm session |
 | `get_swarm_status` | Active session, shared memory snapshot, and execution scores |
-| `swarm_research` | Multi-agent research on a topic — auto-saves findings to vault |
+| `swarm_research` | Launch parallel research agents on a topic — auto-saves findings to vault |
 | `swarm_synthesize` | Synthesize all swarm findings into one intelligence report |
 | `trigger_agent` | Run a specific agent now |
 
@@ -105,7 +104,7 @@
 | `miroshark_status` | Poll simulation status — prep, running, and completion with AI brief |
 | `miroshark_stop` | Stop a running simulation |
 
-### Agents (5)
+### Agents (7)
 
 | Tool | Description |
 |------|-------------|
@@ -114,6 +113,8 @@
 | `agent_spawn` | Create a persistent named agent with a goal — survives across sessions, state saved to vault |
 | `agent_recall` | Recall a persistent agent — loads goal, status, progress history, and next step |
 | `agent_update` | Log progress and findings to a persistent agent — creates a new vault version automatically |
+| `agent_identity` | Get or set the identity profile for a persistent agent |
+| `agent_ledger` | Full execution ledger for an agent — all updates, findings, and status changes |
 
 ### Token Scanner (3)
 
@@ -149,7 +150,7 @@
 | `humanize_text` | Strip AI writing patterns — makes output sound natural (requires `MINIMAX_API_KEY`) |
 | `write_content` | Write a Twitter/X thread or single post — `format=thread` (default) or `format=post` |
 
-### Semantic Memory (9)
+### Semantic Memory (10)
 
 | Tool | Description |
 |------|-------------|
@@ -162,6 +163,7 @@
 | `memory_insight` | AI insights derived from your memory patterns |
 | `memory_extract` | Auto-extract discrete facts from any text and save each individually |
 | `memory_consolidate` | Merge overlapping memories on a topic into one clean summary |
+| `memory_publish` | Publish a memory entry to the Memory Marketplace for others to discover |
 
 ### Web Research (2)
 
@@ -170,12 +172,13 @@
 | `web_search` | Search the web in real time — returns top results with titles, URLs, and summaries |
 | `web_scrape` | Read any URL and return its full content — articles, docs, pages |
 
-### Autonomous Monitor (3)
+### Autonomous Monitor (4)
 
 > Runs research on a schedule — no chat needed. Saves findings to vault and sends Telegram briefings.
 
 | Tool | Description |
 |------|-------------|
+| `schedule_research` | Schedule a recurring research topic with a preset (daily, weekly) and optional vault save |
 | `create_monitor` | Set up a recurring research agent for any topic — daily, weekly, or custom cron |
 | `list_monitors` | List all active monitors with topic, schedule, and next run time |
 | `cancel_monitor` | Stop and delete a monitor by ID |
@@ -453,16 +456,6 @@ Returns each run's status (success/failed/skipped), amount, tx hash, and error m
 | `automationId` | string | yes | ID from `list_automations` |
 
 Triggers the automation immediately, regardless of its schedule.
-
----
-
-### `start_swarm`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `config.enabledAgents` | string[] | no | Agent IDs to enable (default: all) |
-
-On start, fetches live BTC/ETH/SOL prices and writes them to shared swarm memory.
 
 ---
 
@@ -1097,7 +1090,7 @@ Set in your MCP client config under the `env` block. All optional.
 |----------|---------|
 | `ANTHROPIC_API_KEY` | Use your own Anthropic key for the CLI agent. Without it, calls proxy through the Noelclaw platform automatically |
 | `BANKR_API_KEY` | Use Bankr (Grok-3) for the CLI agent instead of Anthropic |
-| `ANTHROPIC_MODEL` | Override model (default: `claude-haiku-4-5-20251001`) |
+| `NOELCLAW_MODEL` | Override model across the full stack (default: `claude-haiku-4-5-20251001`) |
 | `ALCHEMY_API_KEY` | Faster swap quotes and Base balance lookups |
 | `TELEGRAM_BOT_TOKEN` | Your Telegram bot token for automation alerts |
 | `TELEGRAM_CHAT_ID` | Your Telegram chat ID for delivery |
@@ -1123,6 +1116,87 @@ Set in your MCP client config under the `env` block. All optional.
 
 ---
 
+### Chronicle (2)
+
+> Append-only audit trail. Entries are permanent — nothing is updated or deleted.
+
+| Tool | Description |
+|------|-------------|
+| `chronicle_add` | Add an entry to the audit trail — timestamped and permanent |
+| `chronicle_list` | Read the audit trail — filter by tag or date |
+
+---
+
+### Packets (4)
+
+> Reusable workflow flows. Define a sequence of steps once, run on demand, share with others.
+
+| Tool | Description |
+|------|-------------|
+| `packet_create` | Define a new workflow packet with a name and ordered steps |
+| `packet_run` | Execute a packet by name with optional runtime context |
+| `packet_list` | List all available packets — yours and shared |
+| `packet_share` | Share a packet — returns a shareable ID or URL |
+
+---
+
+### `chronicle_add`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `content` | string | yes | What to record |
+| `tags` | string[] | no | Tags for filtering |
+| `source` | string | no | e.g. `"swarm"`, `"manual"`, `"automation"` |
+
+---
+
+### `chronicle_list`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `limit` | number | no | Max entries (default 50) |
+| `tag` | string | no | Filter by tag |
+| `since` | string | no | ISO date — entries after this date only |
+
+---
+
+### `packet_create`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | yes | Slug name, e.g. `"morning-brief"` |
+| `description` | string | yes | What this packet does |
+| `steps` | string[] | yes | Ordered steps in plain English |
+| `tags` | string[] | no | Tags for discovery |
+
+---
+
+### `packet_run`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | yes | Packet name from `packet_list` |
+| `context` | object | no | Runtime variables injected into steps |
+
+---
+
+### `packet_list`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `tag` | string | no | Filter by tag |
+
+---
+
+### `packet_share`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | yes | Packet to share |
+| `public` | boolean | no | Make publicly discoverable (default false) |
+
+---
+
 ## Troubleshooting
 
 | Error | Fix |
@@ -1130,7 +1204,7 @@ Set in your MCP client config under the `env` block. All optional.
 | Tools not appearing | Restart your MCP client after adding the server |
 | `npx` hangs on first run | Use `-y` flag: `npx -y @noelclaw/mcp` |
 | Tools not found after restart | Run `npx clear-npx-cache` then restart |
-| `get_swarm_status` empty | Start swarm first with `start_swarm` |
+| `get_swarm_status` empty | Use `swarm_research` to start a research swarm first |
 | Swap fails | Check balance with `get_portfolio`, confirm Base mainnet connectivity |
 | `humanize_text` fails | Set `MINIMAX_API_KEY` in env |
 | Rate limit (429) | Auto-retries up to 3× with backoff — no action needed |

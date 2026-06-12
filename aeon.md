@@ -123,7 +123,7 @@ A typical Aeon agent task using noelclaw tools:
 
 ## Notes
 
-- All 90 tools are available — no Aeon-specific limitations
-- BYOK env vars (Grok, MiniMax, Ayrshare) work the same way as in other clients
+- All 102 tools are available — no Aeon-specific limitations
+- BYOK env vars (Grok, MiniMax) work the same way as in other clients
 - See [Environment Variables](env-vars.md) for optional keys
 - See [MCP Server Reference](mcp-server.md) for full tool parameter docs

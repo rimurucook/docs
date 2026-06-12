@@ -22,6 +22,6 @@
 
 ## Reference
 
-* [All 99 Tools](mcp-server.md)
+* [All 102 Tools](mcp-server.md)
 * [Environment Variables](env-vars.md)
 * [Architecture](architecture.md)

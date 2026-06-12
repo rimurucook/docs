@@ -52,7 +52,7 @@ No build step. No config required. Runs on first use.
 
 ---
 
-## 99 Tools Across 22 Categories
+## 102 Tools Across 22 Categories
 
 Three pillars: **Remember · Act · Know**
 

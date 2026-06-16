@@ -1,12 +1,12 @@
 ﻿# Aeon Integration
 
-The noelclaw skill pack is live in the Aeon ecosystem (merged PR #253). Once added, all 90 Noelclaw tools are available in Hermes and the Aeon agent runtime.
+The noelclaw skill pack is live in the Aeon ecosystem (merged PR #253). Once added, all 103 Noelclaw tools are available in Hermes and the Aeon agent runtime.
 
 ---
 
 ## What Aeon Is
 
-Aeon is an AI agent platform with its own skill registry. Skills are MCP-compatible tool bundles that agents can call during task execution. The noelclaw skill pack brings crypto intel, DeFi execution, swarm coordination, vault memory, MiroShark simulation, and the Noel Framework into Aeon.
+Aeon is an AI agent platform with its own skill registry. Skills are MCP-compatible tool bundles that agents can call during task execution. The noelclaw skill pack brings crypto intel, DeFi execution on Base, autonomous agents, vault memory, MiroShark simulation, and the Noel Framework into Aeon.
 
 ---
 
@@ -48,7 +48,7 @@ In Hermes or any Aeon agent session:
 /list-tools
 ```
 
-You should see all 90 Noelclaw tools listed.
+You should see all 103 Noelclaw tools listed.
 
 ---
 
@@ -56,15 +56,13 @@ You should see all 90 Noelclaw tools listed.
 
 Aeon agents are well-suited to longer autonomous tasks. These tool groups see the most usage in Aeon:
 
-### Swarm
+### Deep Research
 
-Aeon agents can start a full 5-agent swarm and use shared memory as a coordination layer:
+Aeon agents can run multi-stage research that plans, searches, scrapes, and synthesizes — saving results to vault automatically:
 
 ```
-swarm_research topic: "analyze BTC trend"
-get_swarm_status
-swarm_synthesize
-stop_swarm
+deep_research topic: "analyze BTC market structure"
+research_compare fromKey: "research/btc-q1" toKey: "research/btc-q2"
 ```
 
 ### Noel Vault
@@ -113,17 +111,17 @@ ask_noel question: "What narratives are gaining traction on Base?"
 A typical Aeon agent task using noelclaw tools:
 
 1. `ask_noel` — pull market analysis and current context
-2. `start_swarm` — start 5 coordinated agents
-3. `get_swarm_status` — check agent activity and shared memory
+2. `deep_research` — run multi-stage research, auto-saves to vault
+3. `agent_spawn` — create a persistent agent to track the topic
 4. `vault_save` — store the analysis output
-5. `create_automation` — set a price alert based on the analysis
-6. `stop_swarm` — end the session
+5. `create_automation` — set a recurring task based on the analysis
+6. `agent_schedule` — schedule the agent to run daily
 
 ---
 
 ## Notes
 
-- All 102 tools are available — no Aeon-specific limitations
+- All 103 tools are available — no Aeon-specific limitations
 - BYOK env vars (Grok, MiniMax) work the same way as in other clients
 - See [Environment Variables](env-vars.md) for optional keys
 - See [MCP Server Reference](mcp-server.md) for full tool parameter docs

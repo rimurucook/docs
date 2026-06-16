@@ -2,7 +2,7 @@
 
 `@noelclaw/mcp` is an MCP server that exposes all Noelclaw tools to any MCP-compatible AI client. Install once via `npx` — no build step, no account, no config required.
 
-**102 tools across 22 categories.** Persistent vault, semantic memory, automations, DeFi execution, token scanning, multi-agent swarm, live web research, autonomous monitors, GitHub integration, AI code generation, audit trail, workflow packets, MiroShark simulation, and more.
+**103 tools across 21 categories.** Persistent vault, semantic memory, autonomous agents, DeFi execution on Base, token scanning, deep research, live web research, autonomous monitors, GitHub integration, AI code generation, audit trail, workflow packets, MiroShark simulation, and more.
 
 ---
 
@@ -26,17 +26,19 @@
 | `market_thesis` | Bull/bear thesis for any token or sector |
 | `trade_plan` | Entry, exit, and risk levels for a trade setup |
 
-### DeFi & Portfolio (6)
+### DeFi & Base (8)
 
-> Transactions signed client-side — private key never leaves your machine.
+> Transactions signed client-side via ethers.js — private key never leaves your machine.
 
 | Tool | Description |
 |------|-------------|
-| `get_portfolio` | Current token balances and total USD value for your local wallet on Base |
-| `estimate_swap` | Preview a swap — expected output and price impact, without executing |
-| `swap_tokens` | Swap tokens on Base via 0x Permit2 (ETH, USDC, USDT, DAI, WETH). Signed locally |
-| `send_token` | Send ETH or ERC-20 tokens to any address on Base mainnet |
-| `analyze_wallet` | AI-powered deep analysis of any public wallet — holdings, risk signals, patterns |
+| `base_mcp_balance` | Current token balances for your local wallet on Base |
+| `base_mcp_estimate` | Preview a swap — expected output and price impact, without executing |
+| `base_mcp_swap` | Swap tokens on Base via 0x Permit2. Signed locally. Slippage capped 1%, price-impact guard 3% |
+| `base_mcp_send` | Send ETH or ERC-20 tokens to any address or ENS name on Base mainnet |
+| `base_mcp_status` | Check MCP wallet status and config |
+| `base_mcp_resolve` | Resolve an ENS name or address alias to a checksummed Base address |
+| `base_mcp_lend` | Step-by-step instructions to deposit into a Morpho vault — no auto-execution |
 | `get_defi_yields` | Top DeFi yield opportunities on Base — live APY and TVL from DeFiLlama |
 
 ### Automations (6)
@@ -49,18 +51,6 @@
 | `delete_automation` | Permanently delete an automation |
 | `get_automation_runs` | Execution history for an automation — status, tx hash, error per run |
 | `run_automation` | Trigger an automation manually right now |
-
-### Swarm (5)
-
-> Multiple AI agents research and monitor in parallel with shared memory.
-
-| Tool | Description |
-|------|-------------|
-| `stop_swarm` | Stop the active swarm session |
-| `get_swarm_status` | Active session, shared memory snapshot, and execution scores |
-| `swarm_research` | Launch parallel research agents on a topic — auto-saves findings to vault |
-| `swarm_synthesize` | Synthesize all swarm findings into one intelligence report |
-| `trigger_agent` | Run a specific agent now |
 
 ### Noel Framework (3)
 
@@ -89,12 +79,11 @@
 | `vault_link` | Create a semantic relationship between two vault entries — build a knowledge graph |
 | `vault_related` | Traverse the knowledge graph — see all entries linked to a given key |
 
-### Wallet & Notifications (2)
+### Wallet (1)
 
 | Tool | Description |
 |------|-------------|
 | `get_wallet_address` | Your local Noelclaw wallet address — keys stored at `~/.noelclaw/wallet.json`, never leave your machine |
-| `set_telegram` | Connect Telegram for swarm events and automation alerts |
 
 ### MiroShark (3)
 
@@ -104,7 +93,7 @@
 | `miroshark_status` | Poll simulation status — prep, running, and completion with AI brief |
 | `miroshark_stop` | Stop a running simulation |
 
-### Agents (7)
+### Agents (12)
 
 | Tool | Description |
 |------|-------------|
@@ -115,6 +104,11 @@
 | `agent_update` | Log progress and findings to a persistent agent — creates a new vault version automatically |
 | `agent_identity` | Get or set the identity profile for a persistent agent |
 | `agent_ledger` | Full execution ledger for an agent — all updates, findings, and status changes |
+| `agent_schedule` | Schedule an agent to run autonomously on a cron-like schedule (daily, weekly, or custom) |
+| `agent_unschedule` | Remove a schedule from an agent without deleting the agent |
+| `agent_pause` | Pause an autonomous agent — suspends the schedule without losing state |
+| `agent_resume` | Resume a paused agent from its last checkpoint |
+| `agent_runs` | View execution history for an autonomous agent — timestamps, outcomes, errors |
 
 ### Token Scanner (3)
 
@@ -187,7 +181,7 @@
 
 | Tool | Description |
 |------|-------------|
-| `noel_status` | Full dashboard — memory usage, swarm health, active automations, recent research, execution scores |
+| `noel_status` | Full dashboard — memory usage, active agents, active automations, recent research, execution scores |
 
 ---
 
@@ -207,7 +201,7 @@ AI Client (Claude / Cursor / Hermes / Windsurf / Aeon)
     ▼
 api.noelclaw.com  ← rate limit + CORS + auth
     │
-    ├── Noelclaw backend  → vault, memory, automations, swarm, DeFi, OS, monitors
+    ├── Noelclaw backend  → vault, memory, automations, agents, DeFi, OS, monitors
     └── MiroShark backend → multi-agent simulation engine
 ```
 
@@ -340,13 +334,13 @@ Returns entry, target, stop-loss, and position sizing guidance.
 
 ---
 
-### `get_portfolio`
+### `base_mcp_balance`
 
-No parameters. Returns token balances and total USD value for your local wallet on Base. Call before swapping to confirm balance.
+No parameters. Returns token balances for your local wallet on Base. Call before swapping to confirm balance.
 
 ---
 
-### `estimate_swap`
+### `base_mcp_estimate`
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -358,36 +352,26 @@ Returns expected output and price impact. Does not execute.
 
 ---
 
-### `swap_tokens`
+### `base_mcp_swap`
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `fromToken` | string | yes | Token to sell: `ETH`, `USDC`, `USDT`, `DAI`, `WETH` |
 | `toToken` | string | yes | Token to buy |
 | `amount` | string | yes | Human-readable amount, e.g. `"0.01"` or `"50%"` of balance |
+| `maxPriceImpactPct` | number | no | Abort if price impact exceeds this % (default 3) |
 
-Routes through 0x Permit2 on Base mainnet. Signed locally — private key never leaves your device.
+Routes through 0x Permit2 on Base mainnet. Signed locally — private key never leaves your device. Slippage capped at 1% by default.
 
 ---
 
-### `send_token`
+### `base_mcp_send`
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `token` | string | yes | `ETH`, `USDC`, `USDT`, `DAI`, or `WETH` |
-| `toAddress` | string | yes | Recipient address (`0x...`) |
+| `toAddress` | string | yes | Recipient address (`0x...`) or ENS name |
 | `amount` | string | yes | Human-readable amount, e.g. `"0.5"` |
-
----
-
-### `analyze_wallet`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `address` | string | yes | Any wallet address to analyze (`0x...`) |
-| `label` | string | no | Optional label, e.g. `"whale from Twitter"` |
-
-Returns holdings, portfolio value, behavioral profile (whale / degen / LP provider), and AI analysis.
 
 ---
 
@@ -456,36 +440,6 @@ Returns each run's status (success/failed/skipped), amount, tx hash, and error m
 | `automationId` | string | yes | ID from `list_automations` |
 
 Triggers the automation immediately, regardless of its schedule.
-
----
-
-### `stop_swarm`
-
-No parameters.
-
----
-
-### `get_swarm_status`
-
-No parameters. Returns active session, shared memory snapshot, and execution scores.
-
----
-
-### `swarm_research`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `topic` | string | yes | Research topic, e.g. `"best DeFi yields on Base this month"` |
-
-Runs multi-agent research in parallel and auto-saves findings to vault.
-
----
-
-### `trigger_agent`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `agentId` | string | yes | Agent ID to trigger |
 
 ---
 
@@ -682,15 +636,6 @@ No parameters. Returns your local wallet address. Keys stored at `~/.noelclaw/wa
 
 ---
 
-### `set_telegram`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `telegramBotToken` | string | yes | Bot token from @BotFather |
-| `telegramChatId` | string | yes | Your Telegram chat ID |
-
----
-
 ### `miroshark_simulate`
 
 | Parameter | Type | Required | Description |
@@ -803,6 +748,59 @@ agent_recall name="base-tracker"        ← resume from last state
 agent_update name="base-tracker" ...    ← save progress
 agent_update name="base-tracker" ...    ← save more progress
 ```
+
+---
+
+### `agent_schedule`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | yes | Agent name as used in `agent_spawn` |
+| `schedule` | string | yes | `"daily"`, `"weekly"`, or a cron expression |
+| `task` | string | yes | What to do on each run — plain English |
+
+Schedules an agent to run autonomously. Each firing loads the agent state, executes the task, and appends to the agent's update log.
+
+---
+
+### `agent_unschedule`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | yes | Agent name |
+
+Removes the schedule without deleting the agent or its state.
+
+---
+
+### `agent_pause`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | yes | Agent name |
+
+Suspends the schedule. The agent retains all state — resume anytime.
+
+---
+
+### `agent_resume`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | yes | Agent name |
+
+Reactivates a paused agent from its last checkpoint.
+
+---
+
+### `agent_runs`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | yes | Agent name |
+| `limit` | number | no | Max runs to return (default 20) |
+
+Returns execution history — timestamps, outcomes, and errors for each autonomous run.
 
 ---
 
@@ -1204,8 +1202,7 @@ Set in your MCP client config under the `env` block. All optional.
 | Tools not appearing | Restart your MCP client after adding the server |
 | `npx` hangs on first run | Use `-y` flag: `npx -y @noelclaw/mcp` |
 | Tools not found after restart | Run `npx clear-npx-cache` then restart |
-| `get_swarm_status` empty | Use `swarm_research` to start a research swarm first |
-| Swap fails | Check balance with `get_portfolio`, confirm Base mainnet connectivity |
+| Swap fails | Check balance with `base_mcp_balance`, confirm Base mainnet connectivity |
 | `humanize_text` fails | Set `MINIMAX_API_KEY` in env |
 | Rate limit (429) | Auto-retries up to 3× with backoff — no action needed |
 | GitHub 401 | Set `GITHUB_TOKEN` in env — required for private repos |

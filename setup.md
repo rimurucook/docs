@@ -187,18 +187,7 @@ get_portfolio
 ask_noel question: "What's your read on BTC right now?"
 ```
 
-### 5. Connect Telegram (optional)
-
-```
-set_telegram telegramBotToken: "your-bot-token" telegramChatId: "your-chat-id"
-```
-
-To get credentials:
-1. Open Telegram → search **@BotFather** → `/newbot` → copy the token
-2. Start a chat with your bot and send any message
-3. Visit `https://api.telegram.org/bot<TOKEN>/getUpdates` → copy the `chat.id`
-
-### 6. Save something to vault
+### 5. Save something to vault
 
 ```
 vault_save type: "memory" title: "First Note" content: "Started using noelclaw"

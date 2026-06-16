@@ -75,37 +75,29 @@ Users accessing Noel through MCP clients (Hermes, Claude, Cursor) get a full DeF
 
 Wallets are created with **ethers.js** and stored **locally** at `~/.noelclaw/wallet.json`. The private key never leaves your machine — Noelclaw's backend only receives routing calldata (0x), not your key. Non-custodial by design.
 
-### Check your portfolio
+### Check your balance
 
 ```
-get_portfolio
+base_mcp_balance
 ```
 
-Returns all token balances and total USD value.
+Returns all Base mainnet token balances.
 
 ### Swap tokens
 
 ```
-swap_tokens fromToken: "ETH" toToken: "USDC" amount: "0.1"
+base_mcp_swap fromToken: "ETH" toToken: "USDC" amount: "0.1"
 ```
 
-Routes through **0x Permit2** on Base mainnet. Signed locally, broadcast directly to Base. Amount is human-readable — no wei conversion needed.
+Routes through **0x Permit2** on Base mainnet. Signed locally with slippage capped at 1% and price-impact guard at 3%. Amount is human-readable — no wei conversion needed.
 
 ### Send tokens
 
 ```
-send_token token: "USDC" toAddress: "0xRecipient..." amount: "10"
+base_mcp_send token: "USDC" toAddress: "0xRecipient..." amount: "10"
 ```
 
-Supports ETH, USDC, USDT, DAI, and WETH on Base.
-
-### Analyze any wallet
-
-```
-analyze_wallet address: "0xAnyPublicAddress"
-```
-
-AI-powered analysis of any public wallet — holdings, portfolio value, behavioral profile.
+Supports ETH, USDC, USDT, DAI, and WETH on Base. Also accepts ENS names.
 
 ### Security
 

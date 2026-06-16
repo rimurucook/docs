@@ -8,7 +8,7 @@ Most AI assistants disappear when the conversation ends. Noelclaw gives them per
 
 Works in **Cursor, Windsurf, Claude Desktop, ChatGPT, Zed, Hermes, Bankr, Aeon**, and anywhere [MCP](https://modelcontextprotocol.io) runs.
 
-- Website: [noelclaw.com](https://noelclaw.fun)
+- Website: [noelclaw.fun](https://noelclaw.fun)
 - App: [app.noelclaw.com](https://noelclaw.com)
 - npm: [@noelclaw/mcp](https://www.npmjs.com/package/@noelclaw/mcp)
 - Version: `3.26.0`

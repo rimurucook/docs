@@ -1,14 +1,14 @@
 ﻿# Install on Hermes
 
-Add Noelclaw as an MCP skill in Hermes. Once connected, all 102 tools are available directly in your agent conversations.
+Add Noelclaw as an MCP skill in Hermes. Once connected, all 103 tools are available directly in your agent conversations.
 
-No build step needed — runs via `npx`.
+No build step needed - runs via `npx`.
 
 **Requirement:** Node.js >= 18. Check with `node --version`. Download from [nodejs.org](https://nodejs.org) if needed.
 
 ---
 
-## Method 1 — CLI (Fastest)
+## Method 1 - CLI (Fastest)
 
 ```bash
 hermes mcp add noelclaw -- npx -y @noelclaw/mcp
@@ -22,7 +22,7 @@ Reload without restarting Hermes:
 
 ---
 
-## Method 2 — Config File
+## Method 2 - Config File
 
 Edit `~/.hermes/config.yaml`:
 
@@ -47,19 +47,19 @@ Then run `/reload-mcp` in any Hermes session.
 /list-tools
 ```
 
-You should see all 102 tools listed — including `get_market_data`, `memory_search`, `swap_tokens`, `miroshark_simulate`, and more.
+You should see all 103 tools listed - including `get_market_data`, `memory_search`, `swap_tokens`, `miroshark_simulate`, and more.
 
 ---
 
 ## Try It Out
 
-Just talk naturally — Hermes picks the right tool automatically.
+Just talk naturally - Hermes picks the right tool automatically.
 
 **Live market data:**
 > "What's the crypto market looking like right now?"
 
 **Save something to memory:**
-> "Remember that I prefer low-risk DeFi on Base — Lido and Aerodrome only"
+> "Remember that I prefer low-risk DeFi on Base - Lido and Aerodrome only"
 
 **Test memory recall in a new session:**
 > "What do you know about my trading preferences?"
@@ -80,7 +80,7 @@ Just talk naturally — Hermes picks the right tool automatically.
 
 ## Semantic Memory
 
-Noelclaw remembers things you tell it — across different sessions.
+Noelclaw remembers things you tell it - across different sessions.
 
 **Session 1:**
 > "Remember: I only trade on Base, I prefer Lido for staking, I avoid leverage"
@@ -88,7 +88,7 @@ Noelclaw remembers things you tell it — across different sessions.
 **New session later:**
 > "Should I bridge to Ethereum mainnet for some yields?"
 
-Hermes will answer based on your saved preferences — "probably not, your profile says Base-only" — without you repeating anything.
+Hermes will answer based on your saved preferences - "probably not, your profile says Base-only" - without you repeating anything.
 
 → [Full memory guide](memory.md)
 
@@ -99,7 +99,7 @@ Hermes will answer based on your saved preferences — "probably not, your profi
 | Problem | Fix |
 |---------|-----|
 | Tools not showing after `/reload-mcp` | Check Node.js 18+ is installed: `node --version` |
-| `connect_timeout` errors | Increase to `connect_timeout: 20` — first run downloads the package |
-| `npx: command not found` | Set full path: `command: /usr/local/bin/npx` — find it with `which npx` |
-| Auth error on tool calls | Wallet auto-generates on first use — no sign-in needed. Try restarting Hermes. |
-| Slow first response | Normal — first run downloads `@noelclaw/mcp` (~5 seconds). Fast after. |
+| `connect_timeout` errors | Increase to `connect_timeout: 20` - first run downloads the package |
+| `npx: command not found` | Set full path: `command: /usr/local/bin/npx` - find it with `which npx` |
+| Auth error on tool calls | Wallet auto-generates on first use - no sign-in needed. Try restarting Hermes. |
+| Slow first response | Normal - first run downloads `@noelclaw/mcp` (~5 seconds). Fast after. |

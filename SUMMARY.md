@@ -19,9 +19,10 @@
 * [Packets (Flows)](packets.md)
 * [MiroShark Simulation](miroshark.md)
 * [Wallet & DeFi](wallet-defi.md)
+* [Noel Shell](noel-shell.md)
 
 ## Reference
 
-* [All 102 Tools](mcp-server.md)
+* [All 103 Tools](mcp-server.md)
 * [Environment Variables](env-vars.md)
 * [Architecture](architecture.md)

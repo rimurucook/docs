@@ -1,6 +1,6 @@
 # MCP Server Reference
 
-`@noelclaw/mcp` is an MCP server that exposes all Noelclaw tools to any MCP-compatible AI client. Install once via `npx` — no build step, no account, no config required.
+`@noelclaw/mcp` is an MCP server that exposes all Noelclaw tools to any MCP-compatible AI client. Install once via `npx` - no build step, no account, no config required.
 
 **103 tools across 21 categories.** Persistent vault, semantic memory, autonomous agents, DeFi execution on Base, token scanning, deep research, live web research, autonomous monitors, GitHub integration, AI code generation, audit trail, workflow packets, MiroShark simulation, and more.
 
@@ -12,9 +12,9 @@
 
 | Tool | Description |
 |------|-------------|
-| `get_market_data` | Live top-20 coins by market cap, trending, BTC/ETH/SOL key prices — from CoinGecko, no API key needed |
+| `get_market_data` | Live top-20 coins by market cap, trending, BTC/ETH/SOL key prices - from CoinGecko, no API key needed |
 | `get_token_data` | Price, 24h change, market cap, volume, and ATH for any specific token |
-| `compare_tokens` | Side-by-side comparison of two or more tokens — price, volume, market cap |
+| `compare_tokens` | Side-by-side comparison of two or more tokens - price, volume, market cap |
 | `market_overview` | Top movers, Fear & Greed index, BTC dominance |
 | `token_history` | Historical OHLC price data for any token |
 
@@ -22,24 +22,24 @@
 
 | Tool | Description |
 |------|-------------|
-| `ask_noel` | Chat with Noel — crypto AI with live market context, DeFi analysis, and trade ideas |
+| `ask_noel` | Chat with Noel - crypto AI with live market context, DeFi analysis, and trade ideas |
 | `market_thesis` | Bull/bear thesis for any token or sector |
 | `trade_plan` | Entry, exit, and risk levels for a trade setup |
 
 ### DeFi & Base (8)
 
-> Transactions signed client-side via ethers.js — private key never leaves your machine.
+> Transactions signed client-side via ethers.js - private key never leaves your machine.
 
 | Tool | Description |
 |------|-------------|
 | `base_mcp_balance` | Current token balances for your local wallet on Base |
-| `base_mcp_estimate` | Preview a swap — expected output and price impact, without executing |
+| `base_mcp_estimate` | Preview a swap - expected output and price impact, without executing |
 | `base_mcp_swap` | Swap tokens on Base via 0x Permit2. Signed locally. Slippage capped 1%, price-impact guard 3% |
 | `base_mcp_send` | Send ETH or ERC-20 tokens to any address or ENS name on Base mainnet |
 | `base_mcp_status` | Check MCP wallet status and config |
 | `base_mcp_resolve` | Resolve an ENS name or address alias to a checksummed Base address |
-| `base_mcp_lend` | Step-by-step instructions to deposit into a Morpho vault — no auto-execution |
-| `get_defi_yields` | Top DeFi yield opportunities on Base — live APY and TVL from DeFiLlama |
+| `base_mcp_lend` | Step-by-step instructions to deposit into a Morpho vault - no auto-execution |
+| `get_defi_yields` | Top DeFi yield opportunities on Base - live APY and TVL from DeFiLlama |
 
 ### Automations (6)
 
@@ -49,7 +49,7 @@
 | `list_automations` | All automations with status, run counts, and next run time |
 | `pause_automation` | Pause or resume an automation by ID |
 | `delete_automation` | Permanently delete an automation |
-| `get_automation_runs` | Execution history for an automation — status, tx hash, error per run |
+| `get_automation_runs` | Execution history for an automation - status, tx hash, error per run |
 | `run_automation` | Trigger an automation manually right now |
 
 ### Noel Framework (3)
@@ -58,7 +58,7 @@
 |------|-------------|
 | `list_playbooks` | Available playbooks with step counts and usage |
 | `run_playbook` | Execute a playbook with Sentinel gating per step |
-| `get_noel_ledger` | Sentinel audit trail — every gate decision with check type, duration, and reason |
+| `get_noel_ledger` | Sentinel audit trail - every gate decision with check type, duration, and reason |
 
 ### Noel Vault (14)
 
@@ -76,55 +76,55 @@
 | `vault_pin` | Pin an important entry |
 | `vault_delete` | Delete a vault entry permanently |
 | `vault_tag` | Add or update tags on an entry |
-| `vault_link` | Create a semantic relationship between two vault entries — build a knowledge graph |
-| `vault_related` | Traverse the knowledge graph — see all entries linked to a given key |
+| `vault_link` | Create a semantic relationship between two vault entries - build a knowledge graph |
+| `vault_related` | Traverse the knowledge graph - see all entries linked to a given key |
 
 ### Wallet (1)
 
 | Tool | Description |
 |------|-------------|
-| `get_wallet_address` | Your local Noelclaw wallet address — keys stored at `~/.noelclaw/wallet.json`, never leave your machine |
+| `get_wallet_address` | Your local Noelclaw wallet address - keys stored at `~/.noelclaw/wallet.json`, never leave your machine |
 
 ### MiroShark (3)
 
 | Tool | Description |
 |------|-------------|
 | `miroshark_simulate` | Run a multi-agent social simulation for any scenario in plain English |
-| `miroshark_status` | Poll simulation status — prep, running, and completion with AI brief |
+| `miroshark_status` | Poll simulation status - prep, running, and completion with AI brief |
 | `miroshark_stop` | Stop a running simulation |
 
 ### Agents (12)
 
 | Tool | Description |
 |------|-------------|
-| `list_agents` | List all available specialist agents — built-in experts plus community-published agents |
+| `list_agents` | List all available specialist agents - built-in experts plus community-published agents |
 | `hire_agent` | Hire a specialist agent (analyst, risk-manager, researcher, executor, scout) to run a task |
-| `agent_spawn` | Create a persistent named agent with a goal — survives across sessions, state saved to vault |
-| `agent_recall` | Recall a persistent agent — loads goal, status, progress history, and next step |
-| `agent_update` | Log progress and findings to a persistent agent — creates a new vault version automatically |
+| `agent_spawn` | Create a persistent named agent with a goal - survives across sessions, state saved to vault |
+| `agent_recall` | Recall a persistent agent - loads goal, status, progress history, and next step |
+| `agent_update` | Log progress and findings to a persistent agent - creates a new vault version automatically |
 | `agent_identity` | Get or set the identity profile for a persistent agent |
-| `agent_ledger` | Full execution ledger for an agent — all updates, findings, and status changes |
+| `agent_ledger` | Full execution ledger for an agent - all updates, findings, and status changes |
 | `agent_schedule` | Schedule an agent to run autonomously on a cron-like schedule (daily, weekly, or custom) |
 | `agent_unschedule` | Remove a schedule from an agent without deleting the agent |
-| `agent_pause` | Pause an autonomous agent — suspends the schedule without losing state |
+| `agent_pause` | Pause an autonomous agent - suspends the schedule without losing state |
 | `agent_resume` | Resume a paused agent from its last checkpoint |
-| `agent_runs` | View execution history for an autonomous agent — timestamps, outcomes, errors |
+| `agent_runs` | View execution history for an autonomous agent - timestamps, outcomes, errors |
 
 ### Token Scanner (3)
 
 | Tool | Description |
 |------|-------------|
-| `score_token` | Score a specific token for dip-reversal potential — hard gates + weighted scoring |
-| `check_token` | Safety check a token address — honeypot detection, liquidity, sell-side risk |
-| `scan_market` | Scan live Base pools — `mode=dips` for reversal setups, `mode=momentum` for breakouts |
+| `score_token` | Score a specific token for dip-reversal potential - hard gates + weighted scoring |
+| `check_token` | Safety check a token address - honeypot detection, liquidity, sell-side risk |
+| `scan_market` | Scan live Base pools - `mode=dips` for reversal setups, `mode=momentum` for breakouts |
 
 ### Coder (5)
 
 | Tool | Description |
 |------|-------------|
 | `generate_contract` | Generate a Solidity smart contract (ERC-20, ERC-721, DeFi hooks, Uniswap v3/v4) with NatSpec |
-| `audit_contract` | AI code review of a Solidity contract — reentrancy, access control, overflow, gas issues |
-| `explain_code` | Plain-English explanation of any code snippet — Solidity, TypeScript, or config |
+| `audit_contract` | AI code review of a Solidity contract - reentrancy, access control, overflow, gas issues |
+| `explain_code` | Plain-English explanation of any code snippet - Solidity, TypeScript, or config |
 | `review_code` | Code review with actionable feedback on logic, patterns, and best practices |
 | `generate_mcp_skill` | Generate a new MCP tool definition from a plain-English description |
 
@@ -132,26 +132,26 @@
 
 | Tool | Description |
 |------|-------------|
-| `base_query_vaults` | List Morpho yield vaults on Base sorted by APY — vault name, asset, APY, total deposits |
-| `base_list_markets` | List Moonwell lending/borrowing markets — supply APY, borrow APY, liquidity, utilization |
-| `base_prepare_deposit` | Get deposit instructions for a Morpho vault — address, APY, and step-by-step guide |
+| `base_query_vaults` | List Morpho yield vaults on Base sorted by APY - vault name, asset, APY, total deposits |
+| `base_list_markets` | List Moonwell lending/borrowing markets - supply APY, borrow APY, liquidity, utilization |
+| `base_prepare_deposit` | Get deposit instructions for a Morpho vault - address, APY, and step-by-step guide |
 | `base_chain_stats` | Real-time Base chain stats: ETH price, gas in gwei, and latest block info |
 
 ### Content & Humanizer (2)
 
 | Tool | Description |
 |------|-------------|
-| `humanize_text` | Strip AI writing patterns — makes output sound natural (requires `MINIMAX_API_KEY`) |
-| `write_content` | Write a Twitter/X thread or single post — `format=thread` (default) or `format=post` |
+| `humanize_text` | Strip AI writing patterns - makes output sound natural (requires `MINIMAX_API_KEY`) |
+| `write_content` | Write a Twitter/X thread or single post - `format=thread` (default) or `format=post` |
 
 ### Semantic Memory (10)
 
 | Tool | Description |
 |------|-------------|
 | `memory_add` | Add text, notes, or auto-fetch a URL to semantic memory |
-| `memory_search` | Search by meaning — "what did I save about X?" |
+| `memory_search` | Search by meaning - "what did I save about X?" |
 | `memory_context` | Load entries relevant to the current session topic |
-| `memory_profile` | Your memory profile — preferences, history, patterns |
+| `memory_profile` | Your memory profile - preferences, history, patterns |
 | `memory_list` | List recent memory entries |
 | `memory_delete` | Remove a memory entry by ID |
 | `memory_insight` | AI insights derived from your memory patterns |
@@ -163,17 +163,17 @@
 
 | Tool | Description |
 |------|-------------|
-| `web_search` | Search the web in real time — returns top results with titles, URLs, and summaries |
-| `web_scrape` | Read any URL and return its full content — articles, docs, pages |
+| `web_search` | Search the web in real time - returns top results with titles, URLs, and summaries |
+| `web_scrape` | Read any URL and return its full content - articles, docs, pages |
 
 ### Autonomous Monitor (4)
 
-> Runs research on a schedule — no chat needed. Saves findings to vault and sends Telegram briefings.
+> Runs research on a schedule - no chat needed. Saves findings to vault and sends Telegram briefings.
 
 | Tool | Description |
 |------|-------------|
 | `schedule_research` | Schedule a recurring research topic with a preset (daily, weekly) and optional vault save |
-| `create_monitor` | Set up a recurring research agent for any topic — daily, weekly, or custom cron |
+| `create_monitor` | Set up a recurring research agent for any topic - daily, weekly, or custom cron |
 | `list_monitors` | List all active monitors with topic, schedule, and next run time |
 | `cancel_monitor` | Stop and delete a monitor by ID |
 
@@ -181,7 +181,7 @@
 
 | Tool | Description |
 |------|-------------|
-| `noel_status` | Full dashboard — memory usage, active agents, active automations, recent research, execution scores |
+| `noel_status` | Full dashboard - memory usage, active agents, active automations, recent research, execution scores |
 
 ---
 
@@ -214,7 +214,7 @@ Wallet signing happens locally via ethers.js. The private key lives at `~/.noelc
 ### Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.29.0
 ```
 
 ### Claude Desktop
@@ -227,7 +227,7 @@ Windows: `%APPDATA%\Claude\claude_desktop_config.json`
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"]
+      "args": ["-y", "@noelclaw/mcp@3.29.0"]
     }
   }
 }
@@ -242,7 +242,7 @@ Edit `~/.cursor/mcp.json` (Cursor) or `~/.windsurf/mcp_config.json` (Windsurf):
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"]
+      "args": ["-y", "@noelclaw/mcp@3.29.0"]
     }
   }
 }
@@ -256,7 +256,7 @@ mcp_servers:
     command: npx
     args:
       - "-y"
-      - "@noelclaw/mcp"
+      - "@noelclaw/mcp@3.29.0"
 ```
 
 ---
@@ -361,7 +361,7 @@ Returns expected output and price impact. Does not execute.
 | `amount` | string | yes | Human-readable amount, e.g. `"0.01"` or `"50%"` of balance |
 | `maxPriceImpactPct` | number | no | Abort if price impact exceeds this % (default 3) |
 
-Routes through 0x Permit2 on Base mainnet. Signed locally — private key never leaves your device. Slippage capped at 1% by default.
+Routes through 0x Permit2 on Base mainnet. Signed locally - private key never leaves your device. Slippage capped at 1% by default.
 
 ---
 
@@ -462,7 +462,7 @@ Each step passes through Sentinel gating. Blocked steps halt the run and log to 
 
 ### `get_noel_ledger`
 
-No parameters. Sentinel audit trail — every gate decision with check type, duration, and reason.
+No parameters. Sentinel audit trail - every gate decision with check type, duration, and reason.
 
 ---
 
@@ -472,13 +472,13 @@ No parameters. Sentinel audit trail — every gate decision with check type, dur
 |-----------|------|----------|-------------|
 | `type` | string | yes | `research`, `execution`, `workflow`, `prompt`, `file`, `memory` |
 | `title` | string | yes | Human-readable title |
-| `content` | string | yes | Content — markdown, JSON, code, or plain text |
+| `content` | string | yes | Content - markdown, JSON, code, or plain text |
 | `key` | string | no | Slug key, e.g. `research/btc-analysis` (auto-generated if omitted) |
 | `contentType` | string | no | `markdown`, `json`, `text`, `code` |
 | `tags` | string[] | no | Tags for filtering |
 | `commitMsg` | string | no | Version message |
 
-Auto-versions on every update — all previous versions accessible via `vault_history`.
+Auto-versions on every update - all previous versions accessible via `vault_history`.
 
 ---
 
@@ -584,7 +584,7 @@ Auto-versions on every update — all previous versions accessible via `vault_hi
 |-----------|------|----------|-------------|
 | `fromKey` | string | yes | Source vault entry key |
 | `toKey` | string | yes | Target vault entry key |
-| `relation` | string | yes | How `fromKey` relates to `toKey` — see relation types below |
+| `relation` | string | yes | How `fromKey` relates to `toKey` - see relation types below |
 
 Creates a directed edge between two vault entries, building a knowledge graph over time. Both entries must already exist in your vault. Duplicate links are updated in-place instead of creating duplicates.
 
@@ -595,7 +595,7 @@ Creates a directed edge between two vault entries, building a knowledge graph ov
 | `references` | This entry cites or uses information from the target |
 | `derived_from` | This entry was built from or synthesizes the target |
 | `supersedes` | This entry replaces or improves on the target |
-| `related` | General association — thematically connected |
+| `related` | General association - thematically connected |
 | `continues` | This entry is a follow-on to the target (e.g. part 2 of a thread) |
 
 **Example:**
@@ -622,11 +622,11 @@ Each result includes `key`, `title`, `type`, `relation`, and `direction` (`outbo
 ```
 Related entries for `agent/market-researcher` (2)
 
-- BTC Analysis Q2 (research/btc-analysis) [research] — outbound references
-- ETH Momentum Thesis (research/eth-analysis) [research] — outbound related
+- BTC Analysis Q2 (research/btc-analysis) [research] - outbound references
+- ETH Momentum Thesis (research/eth-analysis) [research] - outbound related
 ```
 
-**How the graph builds over time:** As you save research, link entries together, and spawn agents that reference vault content, the graph accumulates context automatically. `vault_related` is how you see that accumulated structure — what an agent is drawing on, what a synthesis was built from, how findings chain together.
+**How the graph builds over time:** As you save research, link entries together, and spawn agents that reference vault content, the graph accumulates context automatically. `vault_related` is how you see that accumulated structure - what an agent is drawing on, what a synthesis was built from, how findings chain together.
 
 ---
 
@@ -640,7 +640,7 @@ No parameters. Returns your local wallet address. Keys stored at `~/.noelclaw/wa
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `scenario` | string | yes | What to simulate — plain English, any topic |
+| `scenario` | string | yes | What to simulate - plain English, any topic |
 
 Builds a knowledge graph, generates agent personas, runs belief propagation. Returns a `simulation_id`. Poll with `miroshark_status`.
 
@@ -675,7 +675,7 @@ No parameters. Returns all specialist agents with name, ID, description, and pri
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `agentId` | string | yes | Agent ID from `list_agents`. Built-in: `analyst`, `risk-manager`, `researcher`, `executor`, `scout` |
-| `task` | string | yes | The task or question — be specific |
+| `task` | string | yes | The task or question - be specific |
 | `maxTokens` | number | no | Max response tokens (default 800) |
 
 ---
@@ -684,11 +684,11 @@ No parameters. Returns all specialist agents with name, ID, description, and pri
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `name` | string | yes | Unique agent name — lowercase alphanumeric with hyphens (e.g. `market-researcher`, `base-tracker`) |
+| `name` | string | yes | Unique agent name - lowercase alphanumeric with hyphens (e.g. `market-researcher`, `base-tracker`) |
 | `goal` | string | yes | What this agent is trying to accomplish |
 | `context` | string | no | Starting context, data, or notes the agent should carry |
 
-Creates a persistent named agent and saves its initial state to vault at key `agent/{name}`. The agent starts with a goal, a status of `active`, and an empty update log. It survives indefinitely across sessions — recall it anytime with `agent_recall`.
+Creates a persistent named agent and saves its initial state to vault at key `agent/{name}`. The agent starts with a goal, a status of `active`, and an empty update log. It survives indefinitely across sessions - recall it anytime with `agent_recall`.
 
 **How it works:** Agent state is stored as a versioned vault entry (type `memory`). Every `agent_update` creates a new vault version, so the full history of an agent's work is preserved and diffable.
 
@@ -705,15 +705,15 @@ agent_spawn name="base-tracker" goal="monitor emerging Base chain protocols week
 |-----------|------|----------|-------------|
 | `name` | string | yes | Agent name as used in `agent_spawn` |
 
-Loads a persistent agent's full state from vault — goal, current status, vault version, last updated timestamp, and the 3 most recent progress updates with findings and next steps.
+Loads a persistent agent's full state from vault - goal, current status, vault version, last updated timestamp, and the 3 most recent progress updates with findings and next steps.
 
 Use this at the start of a session to pick up where you left off, or to check what an agent last did before continuing its work.
 
 ```
 agent_recall name="base-tracker"
 → Goal: monitor emerging Base chain protocols weekly
-→ Status: active — v4
-→ Last progress: found 3 new protocols — Morpho, Aerodrome v2, Seamless
+→ Status: active - v4
+→ Last progress: found 3 new protocols - Morpho, Aerodrome v2, Seamless
 → Next: check TVL trends for each
 ```
 
@@ -727,14 +727,14 @@ agent_recall name="base-tracker"
 | `progress` | string | yes | What was accomplished in this update |
 | `findings` | string | no | Key findings, data, or outputs from this step |
 | `status` | string | no | `active` (default) \| `blocked` \| `complete` |
-| `nextStep` | string | no | What should happen next — helps on the next recall |
+| `nextStep` | string | no | What should happen next - helps on the next recall |
 
-Appends a progress entry to the agent's update log and saves a new vault version. The log keeps the last 20 updates — older entries are trimmed automatically. `nextStep` is surfaced prominently on `agent_recall` so the agent always knows where to continue.
+Appends a progress entry to the agent's update log and saves a new vault version. The log keeps the last 20 updates - older entries are trimmed automatically. `nextStep` is surfaced prominently on `agent_recall` so the agent always knows where to continue.
 
 **Status values:**
-- `active` — ongoing, will continue
-- `blocked` — stuck, needs input or a different approach
-- `complete` — goal achieved
+- `active` - ongoing, will continue
+- `blocked` - stuck, needs input or a different approach
+- `complete` - goal achieved
 
 ```
 agent_update name="base-tracker" progress="analyzed Morpho TVL trend" findings="TVL up 40% in 30d, protocol is gaining traction" status="active" nextStep="check Aerodrome v2 next"
@@ -757,7 +757,7 @@ agent_update name="base-tracker" ...    ← save more progress
 |-----------|------|----------|-------------|
 | `name` | string | yes | Agent name as used in `agent_spawn` |
 | `schedule` | string | yes | `"daily"`, `"weekly"`, or a cron expression |
-| `task` | string | yes | What to do on each run — plain English |
+| `task` | string | yes | What to do on each run - plain English |
 
 Schedules an agent to run autonomously. Each firing loads the agent state, executes the task, and appends to the agent's update log.
 
@@ -779,7 +779,7 @@ Removes the schedule without deleting the agent or its state.
 |-----------|------|----------|-------------|
 | `name` | string | yes | Agent name |
 
-Suspends the schedule. The agent retains all state — resume anytime.
+Suspends the schedule. The agent retains all state - resume anytime.
 
 ---
 
@@ -800,7 +800,7 @@ Reactivates a paused agent from its last checkpoint.
 | `name` | string | yes | Agent name |
 | `limit` | number | no | Max runs to return (default 20) |
 
-Returns execution history — timestamps, outcomes, and errors for each autonomous run.
+Returns execution history - timestamps, outcomes, and errors for each autonomous run.
 
 ---
 
@@ -960,10 +960,10 @@ Strips AI patterns using MiniMax. Requires `MINIMAX_API_KEY` in env.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `query` | string | yes | Search by meaning — e.g. `"ETH yield strategies"` |
+| `query` | string | yes | Search by meaning - e.g. `"ETH yield strategies"` |
 | `n` | number | no | Max results to return (default 10) |
 
-Semantic search — finds by meaning, not just keywords.
+Semantic search - finds by meaning, not just keywords.
 
 ---
 
@@ -978,7 +978,7 @@ Semantic search — finds by meaning, not just keywords.
 
 ### `memory_profile`
 
-No parameters. Returns your memory profile — preferences, history, and patterns learned from your saved entries.
+No parameters. Returns your memory profile - preferences, history, and patterns learned from your saved entries.
 
 ---
 
@@ -1052,7 +1052,7 @@ Returns the full text content of any web page. Requires `FIRECRAWL_API_KEY` in e
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `topic` | string | yes | What to research — topic, keyword, or question |
+| `topic` | string | yes | What to research - topic, keyword, or question |
 | `schedule` | string | yes | Cron preset or expression. Presets: `daily-8am`, `daily-6pm`, `weekly-monday`, `hourly`. Or raw cron: `0 8 * * *` |
 | `label` | string | no | Short label to identify this monitor, e.g. `"morning brief"` |
 
@@ -1076,7 +1076,7 @@ No parameters. Returns all active monitors with their topic, schedule, next run 
 
 ### `noel_status`
 
-No parameters. Full dashboard — memory usage, swarm health, active automations, recent research, and execution scores.
+No parameters. Full dashboard - memory usage, swarm health, active automations, recent research, and execution scores.
 
 ---
 
@@ -1093,22 +1093,22 @@ Set in your MCP client config under the `env` block. All optional.
 | `TELEGRAM_BOT_TOKEN` | Your Telegram bot token for automation alerts |
 | `TELEGRAM_CHAT_ID` | Your Telegram chat ID for delivery |
 | `MINIMAX_API_KEY` | Required for `humanize_text` |
-| `GITHUB_TOKEN` | Personal access token — required for private repos, recommended for higher rate limits |
+| `GITHUB_TOKEN` | Personal access token - required for private repos, recommended for higher rate limits |
 
 ---
 
 ### GitHub (8)
 
-> Read repos, PRs, issues, files, and commits from any GitHub repository. Set `GITHUB_TOKEN` for private repos — public repos work without a token.
+> Read repos, PRs, issues, files, and commits from any GitHub repository. Set `GITHUB_TOKEN` for private repos - public repos work without a token.
 
 | Tool | Description |
 |------|-------------|
 | `github_list_repos` | List repos for a user or org. Leave username empty to list your own (requires token) |
-| `github_list_prs` | List pull requests for a repo — open, closed, or all |
+| `github_list_prs` | List pull requests for a repo - open, closed, or all |
 | `github_get_pr` | Full PR details: body, changed files with diffs, reviews, and comments |
-| `github_list_issues` | List issues for a repo — filter by state and label |
+| `github_list_issues` | List issues for a repo - filter by state and label |
 | `github_get_issue` | Full issue details with all comments |
-| `github_get_file` | Read any file from a repo — decoded content up to 10k chars |
+| `github_get_file` | Read any file from a repo - decoded content up to 10k chars |
 | `github_get_commits` | Recent commits for a repo, branch, or specific file |
 | `github_search_code` | Search code on GitHub with qualifiers (repo:, language:, path:, filename:) |
 
@@ -1116,12 +1116,12 @@ Set in your MCP client config under the `env` block. All optional.
 
 ### Chronicle (2)
 
-> Append-only audit trail. Entries are permanent — nothing is updated or deleted.
+> Append-only audit trail. Entries are permanent - nothing is updated or deleted.
 
 | Tool | Description |
 |------|-------------|
-| `chronicle_add` | Add an entry to the audit trail — timestamped and permanent |
-| `chronicle_list` | Read the audit trail — filter by tag or date |
+| `chronicle_add` | Add an entry to the audit trail - timestamped and permanent |
+| `chronicle_list` | Read the audit trail - filter by tag or date |
 
 ---
 
@@ -1133,8 +1133,8 @@ Set in your MCP client config under the `env` block. All optional.
 |------|-------------|
 | `packet_create` | Define a new workflow packet with a name and ordered steps |
 | `packet_run` | Execute a packet by name with optional runtime context |
-| `packet_list` | List all available packets — yours and shared |
-| `packet_share` | Share a packet — returns a shareable ID or URL |
+| `packet_list` | List all available packets - yours and shared |
+| `packet_share` | Share a packet - returns a shareable ID or URL |
 
 ---
 
@@ -1154,7 +1154,7 @@ Set in your MCP client config under the `env` block. All optional.
 |-----------|------|----------|-------------|
 | `limit` | number | no | Max entries (default 50) |
 | `tag` | string | no | Filter by tag |
-| `since` | string | no | ISO date — entries after this date only |
+| `since` | string | no | ISO date - entries after this date only |
 
 ---
 
@@ -1204,6 +1204,6 @@ Set in your MCP client config under the `env` block. All optional.
 | Tools not found after restart | Run `npx clear-npx-cache` then restart |
 | Swap fails | Check balance with `base_mcp_balance`, confirm Base mainnet connectivity |
 | `humanize_text` fails | Set `MINIMAX_API_KEY` in env |
-| Rate limit (429) | Auto-retries up to 3× with backoff — no action needed |
-| GitHub 401 | Set `GITHUB_TOKEN` in env — required for private repos |
-| GitHub 403 rate limit | Add `GITHUB_TOKEN` — unauthenticated requests have lower limits |
+| Rate limit (429) | Auto-retries up to 3× with backoff - no action needed |
+| GitHub 401 | Set `GITHUB_TOKEN` in env - required for private repos |
+| GitHub 403 rate limit | Add `GITHUB_TOKEN` - unauthenticated requests have lower limits |

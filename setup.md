@@ -1,6 +1,6 @@
 ﻿# Setup & Install
 
-The `@noelclaw/mcp` package runs via `npx` — no build step, no cloning, no local files needed. One command gives you all 102 tools in any MCP-compatible AI client.
+The `@noelclaw/mcp` package runs via `npx` - no build step, no cloning, no local files needed. One command gives you all 103 tools in any MCP-compatible AI client.
 
 **Requirement:** Node.js >= 18. Check with `node --version`. Download from [nodejs.org](https://nodejs.org) if needed.
 
@@ -9,7 +9,7 @@ The `@noelclaw/mcp` package runs via `npx` — no build step, no cloning, no loc
 ## Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.29.0
 ```
 
 Verify the server is registered:
@@ -29,9 +29,9 @@ get_market_data
 
 ## Claude Desktop
 
-**Mac** — Edit `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Mac** - Edit `~/Library/Application Support/Claude/claude_desktop_config.json`
 
-**Windows** — Edit `%APPDATA%\Claude\claude_desktop_config.json`
+**Windows** - Edit `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
@@ -44,7 +44,7 @@ get_market_data
 }
 ```
 
-Save the file, then **restart Claude Desktop**. all 102 tools appear automatically in the tool list.
+Save the file, then **restart Claude Desktop**. all 103 tools appear automatically in the tool list.
 
 ---
 
@@ -140,7 +140,7 @@ Quick install via Aeon skill registry:
 aeon skill add noelclaw
 ```
 
-Or add manually to your Aeon config — see the [Aeon page](aeon.md).
+Or add manually to your Aeon config - see the [Aeon page](aeon.md).
 
 ---
 
@@ -167,7 +167,7 @@ Ask your AI client:
 list all noelclaw tools
 ```
 
-You should see 102 tools.
+You should see 103 tools.
 
 ### 2. Pull live market data
 
@@ -224,8 +224,8 @@ See [Environment Variables](env-vars.md) for the full list.
 |---------|-----|
 | Tools not showing | Restart your MCP client after saving the config |
 | `npx: command not found` | Install Node.js 18+ from [nodejs.org](https://nodejs.org) |
-| Server starts but no response | Normal — the MCP server waits for stdin (MCP protocol), it does not serve HTTP |
+| Server starts but no response | Normal - the MCP server waits for stdin (MCP protocol), it does not serve HTTP |
 | Slow first start | `npx` downloads the package on first run. Subsequent starts are instant |
-| `connect_timeout` errors | Increase to `connect_timeout: 20` in your config — first run takes longer |
+| `connect_timeout` errors | Increase to `connect_timeout: 20` in your config - first run takes longer |
 | `humanize_text` fails | Requires `MINIMAX_API_KEY` env var |
 | Coder tools fail | Requires `BANKR_API_KEY` env var |

@@ -1,6 +1,6 @@
 # Add to Cursor / Windsurf
 
-Install the Noelclaw MCP skill in Cursor or Windsurf. No build step — runs via `npx`.
+Install the Noelclaw MCP skill in Cursor or Windsurf. No build step - runs via `npx`.
 
 **Requirement:** Node.js >= 18.
 

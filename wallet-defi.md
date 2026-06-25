@@ -48,7 +48,7 @@ Users can also connect external wallets via Privy (WalletConnect, MetaMask, Coin
 
 ## USDC Balance & AI Model Access
 
-AI model access is pay-per-use via USDC on Base. Your custodial wallet is created automatically on signup — no separate setup needed.
+AI model access is pay-per-use via USDC on Base. Your custodial wallet is created automatically on signup - no separate setup needed.
 
 **Check balance:**
 - Balance is shown in the Models page header as a live USDC amount
@@ -65,7 +65,7 @@ AI model access is pay-per-use via USDC on Base. Your custodial wallet is create
 **How billing works:**
 - Each AI model call deducts a small amount of USDC based on tokens used
 - If your balance runs low mid-request, the system auto-retries the payment (x402 protocol) without interrupting your workflow
-- No prepaid bundles or credits — pure pay-as-you-go
+- No prepaid bundles or credits - pure pay-as-you-go
 
 ---
 
@@ -73,7 +73,7 @@ AI model access is pay-per-use via USDC on Base. Your custodial wallet is create
 
 Users accessing Noel through MCP clients (Hermes, Claude, Cursor) get a full DeFi wallet on Base mainnet, managed entirely through MCP tools.
 
-Wallets are created with **ethers.js** and stored **locally** at `~/.noelclaw/wallet.json`. The private key never leaves your machine — Noelclaw's backend only receives routing calldata (0x), not your key. Non-custodial by design.
+Wallets are created with **ethers.js** and stored **locally** at `~/.noelclaw/wallet.json`. The private key never leaves your machine - Noelclaw's backend only receives routing calldata (0x), not your key. Non-custodial by design.
 
 ### Check your balance
 
@@ -89,7 +89,7 @@ Returns all Base mainnet token balances.
 base_mcp_swap fromToken: "ETH" toToken: "USDC" amount: "0.1"
 ```
 
-Routes through **0x Permit2** on Base mainnet. Signed locally with slippage capped at 1% and price-impact guard at 3%. Amount is human-readable — no wei conversion needed.
+Routes through **0x Permit2** on Base mainnet. Signed locally with slippage capped at 1% and price-impact guard at 3%. Amount is human-readable - no wei conversion needed.
 
 ### Send tokens
 
@@ -101,10 +101,10 @@ Supports ETH, USDC, USDT, DAI, and WETH on Base. Also accepts ENS names.
 
 ### Security
 
-- Private key lives at `~/.noelclaw/wallet.json` — local only, never transmitted
+- Private key lives at `~/.noelclaw/wallet.json` - local only, never transmitted
 - All transactions are signed client-side before broadcast
 - The Noelclaw backend provides routing (0x calldata) but never holds or sees your private key
-- Non-custodial — you own your funds
+- Non-custodial - you own your funds
 
 ---
 

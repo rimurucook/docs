@@ -58,7 +58,7 @@ Aeon agents are well-suited to longer autonomous tasks. These tool groups see th
 
 ### Deep Research
 
-Aeon agents can run multi-stage research that plans, searches, scrapes, and synthesizes — saving results to vault automatically:
+Aeon agents can run multi-stage research that plans, searches, scrapes, and synthesizes - saving results to vault automatically:
 
 ```
 deep_research topic: "analyze BTC market structure"
@@ -67,7 +67,7 @@ research_compare fromKey: "research/btc-q1" toKey: "research/btc-q2"
 
 ### Noel Vault
 
-Vault is persistent across sessions — ideal for Aeon agents that need to store intermediate findings, plans, or outputs:
+Vault is persistent across sessions - ideal for Aeon agents that need to store intermediate findings, plans, or outputs:
 
 ```
 vault_save type: "execution" title: "Agent Output 001" content: "..." key: "agent-output-001"
@@ -110,18 +110,18 @@ ask_noel question: "What narratives are gaining traction on Base?"
 
 A typical Aeon agent task using noelclaw tools:
 
-1. `ask_noel` — pull market analysis and current context
-2. `deep_research` — run multi-stage research, auto-saves to vault
-3. `agent_spawn` — create a persistent agent to track the topic
-4. `vault_save` — store the analysis output
-5. `create_automation` — set a recurring task based on the analysis
-6. `agent_schedule` — schedule the agent to run daily
+1. `ask_noel` - pull market analysis and current context
+2. `deep_research` - run multi-stage research, auto-saves to vault
+3. `agent_spawn` - create a persistent agent to track the topic
+4. `vault_save` - store the analysis output
+5. `create_automation` - set a recurring task based on the analysis
+6. `agent_schedule` - schedule the agent to run daily
 
 ---
 
 ## Notes
 
-- All 103 tools are available — no Aeon-specific limitations
+- All 103 tools are available - no Aeon-specific limitations
 - BYOK env vars (Grok, MiniMax) work the same way as in other clients
 - See [Environment Variables](env-vars.md) for optional keys
 - See [MCP Server Reference](mcp-server.md) for full tool parameter docs

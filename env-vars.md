@@ -1,6 +1,6 @@
 ﻿# Environment Variables
 
-The MCP server reads these from your local environment — set them in your MCP client config under the `env` block. All are optional unless noted.
+The MCP server reads these from your local environment - set them in your MCP client config under the `env` block. All are optional unless noted.
 
 ---
 
@@ -14,10 +14,10 @@ The MCP server reads these from your local environment — set them in your MCP 
 | `FIRECRAWL_API_KEY` | for `deep_research`, `web_search` | Required for `deep_research` and `web_search`; optional for `web_scrape` (falls back to basic fetch) |
 | `TRIGGER_SECRET_KEY` | for `create_monitor` | Required for autonomous scheduled monitors |
 | `ALCHEMY_API_KEY` | no | Faster swap quotes and Base mainnet balance lookups |
-| `TELEGRAM_BOT_TOKEN` | no | Your Telegram bot token — for monitor and automation notifications |
+| `TELEGRAM_BOT_TOKEN` | no | Your Telegram bot token - for monitor and automation notifications |
 | `TELEGRAM_CHAT_ID` | no | Your Telegram chat ID for delivery |
-| `MINIMAX_API_KEY` | for `humanize_text` | MiniMax API key — required to use the humanizer tool |
-| `GITHUB_TOKEN` | no | GitHub personal access token — required for private repos and higher API rate limits. Public repos work without it |
+| `MINIMAX_API_KEY` | for `humanize_text` | MiniMax API key - required to use the humanizer tool |
+| `GITHUB_TOKEN` | no | GitHub personal access token - required for private repos and higher API rate limits. Public repos work without it |
 
 > **Telegram** is only needed if you want push notifications outside your AI client. If you use Noelclaw through Claude, Cursor, Hermes, or Aeon, you already get all results inline.
 
@@ -28,7 +28,7 @@ The MCP server reads these from your local environment — set them in your MCP 
 ### Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.29.0
 ```
 
 Then edit `~/.claude.json` to add env vars under the server entry:
@@ -38,7 +38,7 @@ Then edit `~/.claude.json` to add env vars under the server entry:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"],
+      "args": ["-y", "@noelclaw/mcp@3.29.0"],
       "env": {
         "ANTHROPIC_API_KEY": "sk-ant-...",
         "MINIMAX_API_KEY": "your-key"
@@ -58,7 +58,7 @@ Windows: `%APPDATA%\Claude\claude_desktop_config.json`
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"],
+      "args": ["-y", "@noelclaw/mcp@3.29.0"],
       "env": {
         "ANTHROPIC_API_KEY": "sk-ant-...",
         "MINIMAX_API_KEY": "your-key"
@@ -76,7 +76,7 @@ mcp_servers:
     command: npx
     args:
       - "-y"
-      - "@noelclaw/mcp"
+      - "@noelclaw/mcp@3.29.0"
     env:
       MINIMAX_API_KEY: your-key
     timeout: 30
@@ -87,11 +87,11 @@ mcp_servers:
 
 ## Which Variables Do You Actually Need?
 
-For most users, **no variables are required** — all 102 tools work out of the box:
+For most users, **no variables are required** - all 103 tools work out of the box:
 
 - A local wallet auto-generates at `~/.noelclaw/wallet.json` on first use
-- Market data, vault, memory, swarm, MiroShark — no keys needed
-- `swap_tokens`, `send_token` — just need a funded local wallet
+- Market data, vault, memory, swarm, MiroShark - no keys needed
+- `swap_tokens`, `send_token` - just need a funded local wallet
 
 Add keys only if you want:
 - Your own Anthropic account for the CLI agent → `ANTHROPIC_API_KEY`

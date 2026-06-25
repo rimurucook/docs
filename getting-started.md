@@ -6,13 +6,13 @@ New to Noelclaw? You'll be up and running in under 5 minutes.
 
 ## What is Noelclaw?
 
-Noelclaw is an MCP skill — a plugin for AI tools like Claude, Cursor, Bankr, Aeon, and Hermes. Once installed, your AI gets 103 tools: persistent memory that carries across every session, autonomous agents that run on a schedule, live market data, DeFi execution on Base, deep research, GitHub integration, token scanning, code generation, audit trails, workflow packets, and more.
+Noelclaw is an MCP skill - a plugin for AI tools like Claude, Cursor, Bankr, Aeon, and Hermes. Once installed, your AI gets 103 tools: persistent memory that carries across every session, autonomous agents that run on a schedule, live market data, DeFi execution on Base, deep research, GitHub integration, token scanning, code generation, audit trails, workflow packets, and more.
 
 You talk to it naturally. No commands to memorize.
 
 ---
 
-## Step 1 — Check Node.js
+## Step 1 - Check Node.js
 
 Noelclaw requires Node.js 18 or newer. Check if you have it:
 
@@ -20,32 +20,32 @@ Noelclaw requires Node.js 18 or newer. Check if you have it:
 node --version
 ```
 
-If you see `v18.x.x` or higher — you're good. If not, download it free from [nodejs.org](https://nodejs.org) (choose the LTS version).
+If you see `v18.x.x` or higher - you're good. If not, download it free from [nodejs.org](https://nodejs.org) (choose the LTS version).
 
 ---
 
-## Step 2 — Install the Skill
+## Step 2 - Install the Skill
 
 ### One-command setup (recommended)
 
 ```bash
-npx -y @noelclaw/mcp install
+npx -y @noelclaw/mcp@3.29.0 install
 ```
 
 This detects all MCP-compatible apps on your machine (Claude Desktop, Cursor, Windsurf, VS Code, Zed) and configures each one automatically. No JSON editing. Then restart your client.
 
 ---
 
-### Manual setup — pick your client
+### Manual setup - pick your client
 
 ### Claude Desktop
 
-**Mac** — open this file in any text editor:
+**Mac** - open this file in any text editor:
 ```
 ~/Library/Application Support/Claude/claude_desktop_config.json
 ```
 
-**Windows** — open this file:
+**Windows** - open this file:
 ```
 %APPDATA%\Claude\claude_desktop_config.json
 ```
@@ -57,13 +57,13 @@ Paste this (or add the `noelclaw` block if the file already exists):
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"]
+      "args": ["-y", "@noelclaw/mcp@3.29.0"]
     }
   }
 }
 ```
 
-Save the file. **Fully quit and restart Claude Desktop** — not just close the window.
+Save the file. **Fully quit and restart Claude Desktop** - not just close the window.
 
 → [Detailed Claude guide](claude-install.md)
 
@@ -72,7 +72,7 @@ Save the file. **Fully quit and restart Claude Desktop** — not just close the 
 ### Claude Code (terminal)
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.29.0
 ```
 
 That's it. Restart Claude Code and the tools are available.
@@ -82,7 +82,7 @@ That's it. Restart Claude Code and the tools are available.
 ### Hermes
 
 ```bash
-hermes mcp add noelclaw -- npx -y @noelclaw/mcp
+hermes mcp add noelclaw -- npx -y @noelclaw/mcp@3.29.0
 ```
 
 Or add it to `~/.hermes/config.yaml`:
@@ -93,7 +93,7 @@ mcp_servers:
     command: npx
     args:
       - -y
-      - "@noelclaw/mcp"
+      - "@noelclaw/mcp@3.29.0"
     timeout: 30
 ```
 
@@ -112,7 +112,7 @@ Edit `~/.cursor/mcp.json` (Cursor) or `~/.windsurf/mcp_config.json` (Windsurf):
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"]
+      "args": ["-y", "@noelclaw/mcp@3.29.0"]
     }
   }
 }
@@ -122,9 +122,9 @@ Edit `~/.cursor/mcp.json` (Cursor) or `~/.windsurf/mcp_config.json` (Windsurf):
 
 ---
 
-## Step 3 — Try It Out
+## Step 3 - Try It Out
 
-Once installed, just talk to your AI normally. No tool names needed — Noelclaw picks the right tool automatically.
+Once installed, just talk to your AI normally. No tool names needed - Noelclaw picks the right tool automatically.
 
 **Search the web in real time:**
 > "Find the latest news about AI agents today"
@@ -155,9 +155,9 @@ Once installed, just talk to your AI normally. No tool names needed — Noelclaw
 
 ---
 
-## Step 4 — Autonomous Monitors (the best part)
+## Step 4 - Autonomous Monitors (the best part)
 
-Noelclaw can run research automatically on a schedule — no prompting needed.
+Noelclaw can run research automatically on a schedule - no prompting needed.
 
 ```
 "Monitor AI agents and automation news every morning at 8am"
@@ -168,7 +168,7 @@ What happens next:
 - Every morning, Noelclaw searches the web for your topic
 - Summarizes the findings with an urgency score (1–5)
 - Saves the full report to your vault
-- Sends a Telegram briefing — quiet on routine days, loud on breaking news
+- Sends a Telegram briefing - quiet on routine days, loud on breaking news
 - Compares each run to the previous one, highlighting what changed
 
 To manage monitors:
@@ -179,9 +179,9 @@ To get Telegram delivery, run `node worker/scripts/setup-telegram.mjs` once to c
 
 ---
 
-## Step 5 — Semantic Memory
+## Step 5 - Semantic Memory
 
-Noelclaw remembers things you tell it — across sessions, across chats.
+Noelclaw remembers things you tell it - across sessions, across chats.
 
 Tell it once:
 > "I prefer Lido for staking and Aerodrome for LP. I avoid leverage and meme coins."
@@ -195,14 +195,32 @@ It already knows. No need to repeat yourself every session.
 
 ---
 
+## Step 6 - Noel Shell (Webapp Tool Calling)
+
+When you use Noelclaw in the webapp at [app.noelclaw.com](https://app.noelclaw.com), the chat supports **native tool calling** via Noel Shell. Instead of just answering questions, the chat can take actions:
+
+- **Spawn agents** — "Start an agent to monitor DeFi yields"
+- **Save to vault** — "Save this analysis to my vault"
+- **Search memory** — "What do I already know about ETH?"
+- **Create automations** — "Set up a DCA buying $50 of ETH every day"
+- **Estimate swaps** — "How much USDC do I need for 0.5 ETH?"
+- **List agents** — "Show me my active agents"
+- **Check wallet balance** — "What's my Base balance?"
+
+Seven agents are available in the webapp: **Noel** (crypto), **CoinGecko** (crypto data), **Sage** (analysis), **Forge** (developer), **Quill** (creative), **Spectre** (trading), and **Atlas** (general).
+
+→ [Noel Shell docs](noel-shell.md)
+
+---
+
 ## Troubleshooting
 
 | Problem | Fix |
 |---------|-----|
 | Tools not showing in Claude Desktop | Make sure you fully quit and restarted (not just closed the window) |
-| `npx: command not found` | Node.js isn't installed — download from [nodejs.org](https://nodejs.org) |
-| First message is slow | Normal — first run downloads the package (~5 seconds). Fast after that. |
-| Tool call fails with auth error | Make sure you're signed in at [noelclaw.com](https://noelclaw.com) |
-| Vault tools return empty | Normal on first use — start by saving something with `vault_save` |
+| `npx: command not found` | Node.js isn't installed - download from [nodejs.org](https://nodejs.org) |
+| First message is slow | Normal - first run downloads the package (~5 seconds). Fast after that. |
+| Tool call fails with auth error | Make sure you're signed in at [app.noelclaw.com](https://app.noelclaw.com) |
+| Vault tools return empty | Normal on first use - start by saving something with `vault_save` |
 | `create_monitor` not working | Add `TRIGGER_SECRET_KEY` to your MCP config env block |
 | Monitor runs but no Telegram | Add `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` to your MCP config env |

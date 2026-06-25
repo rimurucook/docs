@@ -1,8 +1,8 @@
 # Semantic Memory
 
-Noelclaw remembers things you tell it — across sessions, across chats, across days.
+Noelclaw remembers things you tell it - across sessions, across chats, across days.
 
-This isn't just chat history. It's a vector knowledge base: your preferences, research, decisions, and strategies are indexed by **meaning**, not keywords. Ask "what's my risk tolerance?" and it finds "user avoids leverage and prefers Base-only DeFi" — even if you never used those exact words.
+This isn't just chat history. It's a vector knowledge base: your preferences, research, decisions, and strategies are indexed by **meaning**, not keywords. Ask "what's my risk tolerance?" and it finds "user avoids leverage and prefers Base-only DeFi" - even if you never used those exact words.
 
 ---
 
@@ -10,8 +10,8 @@ This isn't just chat history. It's a vector knowledge base: your preferences, re
 
 Every time you save something to the vault or tell Noelclaw to remember something, it gets stored in two places:
 
-1. **Vault** — structured, versioned, searchable by keyword
-2. **Semantic memory (vector index)** — indexed by meaning, searchable by intent
+1. **Vault** - structured, versioned, searchable by keyword
+2. **Semantic memory (vector index)** - indexed by meaning, searchable by intent
 
 When you ask a question, Noelclaw searches semantic memory first. If it finds relevant entries, it uses those to answer. If not, it falls back to keyword search.
 
@@ -42,7 +42,7 @@ Close your current chat. Open a fresh one. Then ask:
 
 > "What's my portfolio allocation?"
 
-Noelclaw will answer correctly — pulling from memory it saved in a completely different session.
+Noelclaw will answer correctly - pulling from memory it saved in a completely different session.
 
 ---
 
@@ -52,10 +52,10 @@ These tools are available directly if you want more control:
 
 | Tool | What It Does |
 |------|-------------|
-| `memory_add` | Add content to semantic memory — text, notes, or auto-fetch a URL. |
-| `memory_search` | Search by meaning — finds relevant entries even without exact keywords. |
+| `memory_add` | Add content to semantic memory - text, notes, or auto-fetch a URL. |
+| `memory_search` | Search by meaning - finds relevant entries even without exact keywords. |
 | `memory_context` | Load the most relevant memories for a topic as ready-to-use AI context. |
-| `memory_profile` | See your memory stats — total entries, recent activity, patterns. |
+| `memory_profile` | See your memory stats - total entries, recent activity, patterns. |
 | `memory_list` | List recent memory entries, optionally filtered by tag. |
 | `memory_delete` | Remove a specific memory entry by ID. |
 | `memory_insight` | AI-generated insights derived from patterns across your saved memories. |
@@ -76,7 +76,7 @@ Or directly:
 Noelclaw fetches the page, indexes the full content, and makes it searchable in ~30 seconds.
 
 ### Full workspace sync
-For Google Drive, Gmail, and full Notion workspace sync — connect via your dashboard at [noelclaw.com](https://noelclaw.com).
+For Google Drive, Gmail, and full Notion workspace sync - connect via your dashboard at [noelclaw.com](https://noelclaw.com).
 
 ---
 
@@ -85,20 +85,20 @@ For Google Drive, Gmail, and full Notion workspace sync — connect via your das
 This is the best way to see it in action.
 
 **Session 1 (save):**
-> "Remember these about me: I only trade on Base mainnet. I prefer low-risk DeFi — Lido for ETH staking, Aerodrome for LP. I never touch leverage or meme coins. Portfolio is 60% ETH, 25% USDC, 15% other. I DCA monthly on 15%+ dips."
+> "Remember these about me: I only trade on Base mainnet. I prefer low-risk DeFi - Lido for ETH staking, Aerodrome for LP. I never touch leverage or meme coins. Portfolio is 60% ETH, 25% USDC, 15% other. I DCA monthly on 15%+ dips."
 
 Close the chat. Open a completely new one.
 
 **Session 2 (recall):**
 > "I'm thinking of bridging to Ethereum mainnet for some yield plays. Is that smart for me?"
 
-Expected response: Noelclaw immediately says no — referencing your Base-only preference, your low-risk profile, and the gas cost argument. All from memory. Zero context given in this session.
+Expected response: Noelclaw immediately says no - referencing your Base-only preference, your low-risk profile, and the gas cost argument. All from memory. Zero context given in this session.
 
 ---
 
 ## Tips
 
-- **Be specific when saving** — "I prefer low-risk DeFi on Base, Lido and Aerodrome specifically" is better than "I like DeFi"
-- **Memory is per-user** — your memories are isolated. Other users can't see yours.
-- **No setup needed** — semantic memory is on by default for all Noelclaw users. No API key required.
-- **Vault and memory are linked** — `vault_save` automatically syncs to semantic memory. You don't need to use both.
+- **Be specific when saving** - "I prefer low-risk DeFi on Base, Lido and Aerodrome specifically" is better than "I like DeFi"
+- **Memory is per-user** - your memories are isolated. Other users can't see yours.
+- **No setup needed** - semantic memory is on by default for all Noelclaw users. No API key required.
+- **Vault and memory are linked** - `vault_save` automatically syncs to semantic memory. You don't need to use both.

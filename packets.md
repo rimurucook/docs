@@ -1,4 +1,4 @@
-# Packets — Reusable Workflow Flows
+# Packets - Reusable Workflow Flows
 
 Packets are reusable workflow units. Define a sequence of steps once, run it on demand, and share it with others. Think of a packet as a macro: you describe a workflow in plain English, Noelclaw converts it into a named runnable unit, and you or anyone else can execute it by name.
 
@@ -12,7 +12,7 @@ Define a new workflow packet.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `name` | string | yes | Short slug name — e.g. `"morning-brief"`, `"base-scan"` |
+| `name` | string | yes | Short slug name - e.g. `"morning-brief"`, `"base-scan"` |
 | `description` | string | yes | What this packet does |
 | `steps` | string[] | yes | Ordered list of steps in plain English |
 | `tags` | string[] | no | Tags for discovery |
@@ -75,13 +75,13 @@ Returns a share URL or ID that others can use to import the packet.
 
 ## Use Cases
 
-**Morning brief** — Every morning: check market, scan dips, search vault for recent notes, send summary.
+**Morning brief** - Every morning: check market, scan dips, search vault for recent notes, send summary.
 
-**Research pipeline** — Web search → extract facts → save to vault → add chronicle entry.
+**Research pipeline** - Web search → extract facts → save to vault → add chronicle entry.
 
-**Base DeFi scan** — Get portfolio → scan dips → list Morpho vaults → recommend action.
+**Base DeFi scan** - Get portfolio → scan dips → list Morpho vaults → recommend action.
 
-**Agent kickoff** — Spawn a named agent → give it a context → log the spawn in chronicle.
+**Agent kickoff** - Spawn a named agent → give it a context → log the spawn in chronicle.
 
 ---
 

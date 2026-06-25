@@ -2,7 +2,7 @@
 
 ## How It Works
 
-Noelclaw is a local MCP server (`@noelclaw/mcp`) that runs as a Node.js process on your machine. When you ask your AI a question, the MCP server handles it — some requests are answered directly from local data, others call the Noelclaw API.
+Noelclaw is a local MCP server (`@noelclaw/mcp`) that runs as a Node.js process on your machine. When you ask your AI a question, the MCP server handles it - some requests are answered directly from local data, others call the Noelclaw API.
 
 ```
   AI Clients
@@ -15,7 +15,7 @@ Noelclaw is a local MCP server (`@noelclaw/mcp`) that runs as a Node.js process 
          ┌─────────────────────┐
          │   @noelclaw/mcp     │
          │   Node.js, local    │
-         │   102 tools         │
+         │   103 tools         │
          └──────────┬──────────┘
                     │
        ┌────────────┼────────────────┐
@@ -43,20 +43,20 @@ Noelclaw is a local MCP server (`@noelclaw/mcp`) that runs as a Node.js process 
 
 ---
 
-## API — api.noelclaw.com
+## API - api.noelclaw.com
 
 All cloud tools go through `api.noelclaw.com`. This endpoint handles:
 
-- **Auth** — every request is authenticated by a wallet signature (generated automatically) or a session token
-- **Rate limiting** — 100 requests/min per IP
-- **BYOK header forwarding** — your own API keys (`X-User-*` headers) are forwarded to the right backend
-- **Retry handling** — auto-retry on 429 and 5xx responses
+- **Auth** - every request is authenticated by a wallet signature (generated automatically) or a session token
+- **Rate limiting** - 100 requests/min per IP
+- **BYOK header forwarding** - your own API keys (`X-User-*` headers) are forwarded to the right backend
+- **Retry handling** - auto-retry on 429 and 5xx responses
 
 ---
 
 ## Authentication
 
-Noelclaw uses wallet-based auth by default — no account or login required.
+Noelclaw uses wallet-based auth by default - no account or login required.
 
 ```
 First run:
@@ -71,9 +71,9 @@ Per request:
   → request is authorized
 ```
 
-Your private key never leaves your machine. The API only sees the wallet address and the signature — never the key itself.
+Your private key never leaves your machine. The API only sees the wallet address and the signature - never the key itself.
 
-If you have a session token (`NOELCLAW_SESSION_TOKEN`), it's used instead of wallet signing — simpler, and unlocks full tool access without a funded wallet.
+If you have a session token (`NOELCLAW_SESSION_TOKEN`), it's used instead of wallet signing - simpler, and unlocks full tool access without a funded wallet.
 
 ---
 
@@ -83,7 +83,7 @@ If you have a session token (`NOELCLAW_SESSION_TOKEN`), it's used instead of wal
 User prompts AI
       │
       ▼  MCP protocol (stdio)
-@noelclaw/mcp — validates input with Zod
+@noelclaw/mcp - validates input with Zod
       │
       ├── Market/yield tools → direct to CoinGecko / DeFiLlama
       │
@@ -161,9 +161,15 @@ POST api.noelclaw.com/swarm/research
 |---|---|
 | Private key | Stored at `~/.noelclaw/wallet.json`, never sent anywhere |
 | API keys | Set as env vars in your MCP config, forwarded as `X-User-*` headers, never logged |
-| Auth | Wallet signature per request — or session token from noelclaw.com |
+| Auth | Wallet signature per request - or session token from app.noelclaw.com |
 | Rate limiting | 100 req/min per IP at the API layer |
 | Agent safety | Sentinel gates all Framework actions before execution |
+| Private key decryption | `getDecryptedPKByUserId` is internalAction only — never callable from client |
+| Wallet creation | `createWallet` is internalAction only — prevents arbitrary wallet creation |
+| Private key retrieval | `getPrivateKey` returns address only, never the raw key |
+| OTP brute force | 5-attempt lockout on OTP verification |
+
+**8 security boundaries** enforced across the backend + **4 vulnerability fixes** in v3.29.0.
 
 ---
 
@@ -173,11 +179,11 @@ All optional. Set in the `env` block of your MCP config.
 
 | Variable | What It Does |
 |---|---|
-| `NOELCLAW_SESSION_TOKEN` | Session token from noelclaw.com — simplest auth, recommended |
+| `NOELCLAW_SESSION_TOKEN` | Session token from app.noelclaw.com - simplest auth, recommended |
 | `ANTHROPIC_API_KEY` | Use your own Claude quota instead of the platform |
 | `BANKR_API_KEY` | Use Bankr/Grok instead of Anthropic |
 | `FIRECRAWL_API_KEY` | Required for `deep_research` and `web_search`; optional for `web_scrape` (falls back to basic fetch) |
 | `TRIGGER_SECRET_KEY` | Required for create_monitor (Trigger.dev) |
-| `TELEGRAM_BOT_TOKEN` | Your Telegram bot token — for monitor notifications |
-| `TELEGRAM_CHAT_ID` | Your Telegram chat ID — for monitor delivery |
+| `TELEGRAM_BOT_TOKEN` | Your Telegram bot token - for monitor notifications |
+| `TELEGRAM_CHAT_ID` | Your Telegram chat ID - for monitor delivery |
 | `ALCHEMY_API_KEY` | Faster swap quotes and Base balance lookups |

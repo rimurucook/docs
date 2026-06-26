@@ -11,7 +11,7 @@ Works in **Cursor, Windsurf, Claude Desktop, ChatGPT, Zed, Hermes, Bankr, Aeon**
 - Website: [noelclaw.com](https://noelclaw.fun)
 - App: [app.noelclaw.com](https://app.noelclaw.com)
 - npm: [@noelclaw/mcp](https://www.npmjs.com/package/@noelclaw/mcp)
-- Version: `3.29.0`
+- Version: `3.30.7`
 
 ---
 
@@ -34,14 +34,14 @@ Packets, automations, monitors, and deep research. Anything that runs after you 
 
 ### One-command setup (auto-detects all MCP clients)
 ```bash
-npx -y @noelclaw/mcp@3.29.0 install
+npx -y @noelclaw/mcp@3.30.7 install
 ```
 
 Detects Claude Desktop, Cursor, Windsurf, VS Code, Zed, and configures each automatically. Then restart your client.
 
 ### Claude Code
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.29.0
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.30.7
 ```
 
 ### Claude Desktop
@@ -54,7 +54,7 @@ Edit your config file:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.29.0"]
+      "args": ["-y", "@noelclaw/mcp@3.30.7"]
     }
   }
 }
@@ -64,7 +64,7 @@ Restart Claude Desktop after saving.
 
 ### Hermes
 ```bash
-hermes mcp add noelclaw -- npx -y @noelclaw/mcp@3.29.0
+hermes mcp add noelclaw -- npx -y @noelclaw/mcp@3.30.7
 ```
 
 No build step. No config required. Runs on first use.
@@ -73,7 +73,7 @@ No build step. No config required. Runs on first use.
 
 ## 103 Tools Across 21 Categories
 
-> **New in v3.29.0 — Noel Shell:** The webapp chat now supports native tool calling. Seven shell tools let the chat spawn agents, save to vault, search memory, create automations, estimate swaps, list agents, and check wallet balances — all from natural conversation. See [Noel Shell](noel-shell.md).
+> **New in v3.30.7 — Noel Shell:** The webapp chat now supports native tool calling. Seven shell tools let the chat spawn agents, save to vault, search memory, create automations, estimate swaps, list agents, and check wallet balances — all from natural conversation. See [Noel Shell](noel-shell.md).
 
 Grouped by pillar - every tool serves Memory, Agents, Workflows, or the execution domains those workflows can target.
 
@@ -105,7 +105,7 @@ Grouped by pillar - every tool serves Memory, Agents, Workflows, or the executio
 
 ## What's New
 
-### v3.29.0 - Noel Shell, Multi-Provider Chat, Security Hardening
+### v3.30.7 - Noel Shell, Multi-Provider Chat, Security Hardening
 - **Noel Shell** - native tool calling from the webapp chat. Seven tools: `spawn_agent`, `save_to_vault`, `search_memory`, `create_automation`, `estimate_swap`, `list_agents`, `get_wallet_balance`. The chat can now act, not just answer. See [Noel Shell docs](noel-shell.md).
 - **7 Agents** - Noel (crypto), CoinGecko (crypto data), Sage (analysis), Forge (developer), Quill (creative), Spectre (trading), Atlas (general). Each agent has its own persona and tool access.
 - **Multi-provider chat** - provider cascade: Bankr → OpenAI → Anthropic → Groq → OpenRouter → Custom → Local fallback. No single provider dependency.

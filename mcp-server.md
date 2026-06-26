@@ -214,7 +214,7 @@ Wallet signing happens locally via ethers.js. The private key lives at `~/.noelc
 ### Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.29.0
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.30.7
 ```
 
 ### Claude Desktop
@@ -227,7 +227,7 @@ Windows: `%APPDATA%\Claude\claude_desktop_config.json`
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.29.0"]
+      "args": ["-y", "@noelclaw/mcp@3.30.7"]
     }
   }
 }
@@ -242,7 +242,7 @@ Edit `~/.cursor/mcp.json` (Cursor) or `~/.windsurf/mcp_config.json` (Windsurf):
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.29.0"]
+      "args": ["-y", "@noelclaw/mcp@3.30.7"]
     }
   }
 }
@@ -256,7 +256,7 @@ mcp_servers:
     command: npx
     args:
       - "-y"
-      - "@noelclaw/mcp@3.29.0"
+      - "@noelclaw/mcp@3.30.7"
 ```
 
 ---

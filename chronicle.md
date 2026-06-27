@@ -6,6 +6,45 @@ Chronicle is an append-only log. Every entry you add is timestamped and permanen
 
 ## Tools
 
+### `chronicle_search`
+
+Search the audit trail by keyword.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | yes | Keyword to search across event titles and details |
+| `limit` | number | no | Max results to return (default 100) |
+
+**Example:**
+```
+chronicle_search query="ETH"
+chronicle_search query="Morpho" limit=20
+chronicle_search query="swap"
+```
+
+Returns matching events with timestamps. Scans the most recent 100 entries.
+
+---
+
+### `chronicle_stats`
+
+Runtime activity analytics over a time window.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `days` | number | no | Window in days (default 30, max 90) |
+
+**Example:**
+```
+chronicle_stats
+chronicle_stats days=7
+chronicle_stats days=90
+```
+
+Returns: event count by type, daily heatmap, busiest days, average events per day.
+
+---
+
 ### `chronicle_add`
 
 Add an entry to the audit trail.

@@ -28,7 +28,7 @@ The MCP server reads these from your local environment - set them in your MCP cl
 ### Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.30.7
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.32.4
 ```
 
 Then edit `~/.claude.json` to add env vars under the server entry:
@@ -38,7 +38,7 @@ Then edit `~/.claude.json` to add env vars under the server entry:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.30.7"],
+      "args": ["-y", "@noelclaw/mcp@3.32.4"],
       "env": {
         "ANTHROPIC_API_KEY": "sk-ant-...",
         "MINIMAX_API_KEY": "your-key"
@@ -58,7 +58,7 @@ Windows: `%APPDATA%\Claude\claude_desktop_config.json`
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.30.7"],
+      "args": ["-y", "@noelclaw/mcp@3.32.4"],
       "env": {
         "ANTHROPIC_API_KEY": "sk-ant-...",
         "MINIMAX_API_KEY": "your-key"
@@ -76,7 +76,7 @@ mcp_servers:
     command: npx
     args:
       - "-y"
-      - "@noelclaw/mcp@3.30.7"
+      - "@noelclaw/mcp@3.32.4"
     env:
       MINIMAX_API_KEY: your-key
     timeout: 30
@@ -87,7 +87,7 @@ mcp_servers:
 
 ## Which Variables Do You Actually Need?
 
-For most users, **no variables are required** - all 103 tools work out of the box:
+For most users, **no variables are required** - all 108 tools work out of the box:
 
 - A local wallet auto-generates at `~/.noelclaw/wallet.json` on first use
 - Market data, vault, memory, swarm, MiroShark - no keys needed

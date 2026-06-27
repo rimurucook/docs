@@ -1,18 +1,18 @@
 # Noel Shell
 
-> Native tool calling from the webapp chat. Available at [app.noelclaw.com](https://app.noelclaw.com) since `@noelclaw/mcp@3.30.7`.
+> Native tool calling from the webapp chat. Available at [app.noelclaw.com](https://app.noelclaw.com) since `@noelclaw/mcp@3.32.4`.
 
 ---
 
 ## Overview
 
-Noel Shell bridges the gap between conversation and action. When you chat with an agent in the Noelclaw webapp, the chat doesn't just answer questions — it can **call tools** to spawn agents, save to your vault, search memory, create automations, estimate swaps, list agents, and check wallet balances.
+Noel Shell bridges the gap between conversation and action. When you chat with an agent in the Noelclaw webapp, the chat doesn't just answer questions — it can **call tools** to spawn agents, save to your vault, search memory, create automations, estimate and execute swaps, list agents, and check wallet balances.
 
-This means a single natural-language message can trigger real work: creating a DCA, saving research, recalling what you know, or spawning a background agent — without leaving the chat.
+This means a single natural-language message can trigger real work: creating a DCA, saving research, recalling what you know, spawning a background agent, or executing a real swap on Base — without leaving the chat.
 
 ---
 
-## The 7 Shell Tools
+## Shell Tools
 
 | Tool | Description | Example Trigger |
 |---|---|---|
@@ -21,8 +21,9 @@ This means a single natural-language message can trigger real work: creating a D
 | `search_memory` | Semantic search across accumulated memories | "What do I already know about ETH?" |
 | `create_automation` | Create DCA, price alert, or conditional automation | "Set up a DCA buying $50 of ETH every day" |
 | `estimate_swap` | Preview a swap — expected output and price impact | "How much USDC do I need for 0.5 ETH?" |
+| `execute_swap` | Execute a swap on Base mainnet after user confirms. Requires `confirmed=true`. Returns tx hash + Basescan link. | "Yes, confirm the swap" |
 | `list_agents` | List all available specialist agents | "Show me my active agents" |
-| `get_wallet_balance` | Check wallet balance on Base | "What's my Base balance?" |
+| `get_wallet_balance` | Check live wallet balance on Base with USD pricing | "What's my Base balance?" |
 
 ---
 
@@ -147,7 +148,7 @@ Noel Shell tools respect the same security model as all Noelclaw tools:
 
 The backend enforces 8 security boundaries across wallet, vault, chronicle, API keys, notifications, activities, agent identities, and marketplace — all with row-level auth and cross-user isolation tested.
 
-### 4 Vulnerability Fixes (v3.30.7)
+### 4 Vulnerability Fixes (v3.31.0)
 
 1. `getDecryptedPKByUserId` → converted to `internalAction` (was publicly callable)
 2. `createWallet` → converted to `internalAction` (was publicly callable)
@@ -161,11 +162,11 @@ The backend enforces 8 security boundaries across wallet, vault, chronicle, API 
 The webapp includes a **ConnectMcpModal** — an onboarding flow for connecting the MCP server to your IDE directly from the webapp. When you click "Connect to IDE", the modal:
 
 1. Detects your OS and available MCP clients (Cursor, Windsurf, Claude Desktop, VS Code, Zed)
-2. Shows the exact install command: `npx -y @noelclaw/mcp@3.30.7`
+2. Shows the exact install command: `npm install -g @noelclaw/mcp@3.32.4`
 3. Provides copy-paste config snippets for each client
 4. Guides you through restarting your client to activate the tools
 
-This makes it easy to go from using the webapp to having all 103 tools available in your IDE.
+This makes it easy to go from using the webapp to having all 108 MCP tools available in your IDE.
 
 ---
 
@@ -183,5 +184,5 @@ The webapp features a **Claude-style warm palette** with:
 
 - [Getting Started](getting-started.md)
 - [Architecture](architecture.md)
-- [All 103 Tools](mcp-server.md)
+- [All 108 Tools](mcp-server.md)
 - [Environment Variables](env-vars.md)

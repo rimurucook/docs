@@ -2,7 +2,7 @@
 
 `@noelclaw/mcp` is an MCP server that exposes all Noelclaw tools to any MCP-compatible AI client. Install once via `npx` - no build step, no account, no config required.
 
-**103 tools across 21 categories.** Persistent vault, semantic memory, autonomous agents, DeFi execution on Base, token scanning, deep research, live web research, autonomous monitors, GitHub integration, AI code generation, audit trail, workflow packets, MiroShark simulation, and more.
+**108 tools across 22 categories.** Persistent vault, semantic memory, chronicle search, autonomous agents, DeFi execution on Base (estimate + execute swaps), live wallet pricing, diagnostics, token scanning, deep research, live web research, autonomous monitors, GitHub integration, AI code generation, audit trail, workflow packets, MiroShark simulation, and more.
 
 ---
 
@@ -26,15 +26,16 @@
 | `market_thesis` | Bull/bear thesis for any token or sector |
 | `trade_plan` | Entry, exit, and risk levels for a trade setup |
 
-### DeFi & Base (8)
+### DeFi & Base (9)
 
 > Transactions signed client-side via ethers.js - private key never leaves your machine.
 
 | Tool | Description |
 |------|-------------|
-| `base_mcp_balance` | Current token balances for your local wallet on Base |
+| `base_mcp_balance` | Current token balances for your local wallet on Base with live ETH price from CoinGecko |
 | `base_mcp_estimate` | Preview a swap - expected output and price impact, without executing |
 | `base_mcp_swap` | Swap tokens on Base via 0x Permit2. Signed locally. Slippage capped 1%, price-impact guard 3% |
+| `execute_swap` | Execute a token swap on Base mainnet from Noel Shell. Requires `confirmed=true` after explicit user confirmation. Enforces estimate → preview → confirm → execute flow. Returns tx hash + Basescan link. |
 | `base_mcp_send` | Send ETH or ERC-20 tokens to any address or ENS name on Base mainnet |
 | `base_mcp_status` | Check MCP wallet status and config |
 | `base_mcp_resolve` | Resolve an ENS name or address alias to a checksummed Base address |
@@ -79,11 +80,13 @@
 | `vault_link` | Create a semantic relationship between two vault entries - build a knowledge graph |
 | `vault_related` | Traverse the knowledge graph - see all entries linked to a given key |
 
-### Wallet (1)
+### Wallet (3)
 
 | Tool | Description |
 |------|-------------|
 | `get_wallet_address` | Your local Noelclaw wallet address - keys stored at `~/.noelclaw/wallet.json`, never leave your machine |
+| `get_wallet_balance` | Live ETH + USDC balance from Base mainnet with real-time USD pricing from CoinGecko. No API key required. |
+| `wallet_sign_message` | EIP-191 personal_sign with the local Noelclaw wallet. Returns signature + verification instructions. Prove wallet ownership off-chain without sending a transaction. |
 
 ### MiroShark (3)
 
@@ -183,6 +186,12 @@
 |------|-------------|
 | `noel_status` | Full dashboard - memory usage, active agents, active automations, recent research, execution scores |
 
+### Diagnostics (1)
+
+| Tool | Description |
+|------|-------------|
+| `noel_diagnostics` | Pre-flight health check: pings Convex backend, Firecrawl, and Supermemory; lists which API keys are configured; warns on missing LLM key or Firecrawl key with actionable hints. Run before any long research session. |
+
 ---
 
 ## How It Works
@@ -214,7 +223,7 @@ Wallet signing happens locally via ethers.js. The private key lives at `~/.noelc
 ### Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.30.7
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.32.4
 ```
 
 ### Claude Desktop
@@ -227,7 +236,7 @@ Windows: `%APPDATA%\Claude\claude_desktop_config.json`
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.30.7"]
+      "args": ["-y", "@noelclaw/mcp@3.32.4"]
     }
   }
 }
@@ -242,7 +251,7 @@ Edit `~/.cursor/mcp.json` (Cursor) or `~/.windsurf/mcp_config.json` (Windsurf):
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.30.7"]
+      "args": ["-y", "@noelclaw/mcp@3.32.4"]
     }
   }
 }
@@ -256,7 +265,7 @@ mcp_servers:
     command: npx
     args:
       - "-y"
-      - "@noelclaw/mcp@3.30.7"
+      - "@noelclaw/mcp@3.32.4"
 ```
 
 ---
@@ -1114,7 +1123,7 @@ Set in your MCP client config under the `env` block. All optional.
 
 ---
 
-### Chronicle (2)
+### Chronicle (4)
 
 > Append-only audit trail. Entries are permanent - nothing is updated or deleted.
 
@@ -1122,6 +1131,8 @@ Set in your MCP client config under the `env` block. All optional.
 |------|-------------|
 | `chronicle_add` | Add an entry to the audit trail - timestamped and permanent |
 | `chronicle_list` | Read the audit trail - filter by tag or date |
+| `chronicle_search` | Keyword search across chronicle events by title and detail. Find when anything happened without scrolling the full log. |
+| `chronicle_stats` | Runtime activity analytics: event breakdown by type, daily heatmap, busiest days, avg events/day over a configurable window (default 30 days, max 90). |
 
 ---
 

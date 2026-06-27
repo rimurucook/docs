@@ -15,7 +15,7 @@ Noelclaw is a local MCP server (`@noelclaw/mcp`) that runs as a Node.js process 
          ┌─────────────────────┐
          │   @noelclaw/mcp     │
          │   Node.js, local    │
-         │   103 tools         │
+         │   108 tools         │
          └──────────┬──────────┘
                     │
        ┌────────────┼────────────────┐
@@ -169,7 +169,7 @@ POST api.noelclaw.com/swarm/research
 | Private key retrieval | `getPrivateKey` returns address only, never the raw key |
 | OTP brute force | 5-attempt lockout on OTP verification |
 
-**8 security boundaries** enforced across the backend + **4 vulnerability fixes** in v3.30.7.
+**8 security boundaries** enforced across the backend + **4 vulnerability fixes** in v3.32.4.
 
 ---
 

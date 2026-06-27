@@ -1,6 +1,6 @@
 ﻿# Aeon Integration
 
-The noelclaw skill pack is live in the Aeon ecosystem (merged PR #253). Once added, all 103 Noelclaw tools are available in Hermes and the Aeon agent runtime.
+The noelclaw skill pack is live in the Aeon ecosystem (merged PR #253). Once added, all 108 Noelclaw tools are available in Hermes and the Aeon agent runtime.
 
 ---
 
@@ -48,7 +48,7 @@ In Hermes or any Aeon agent session:
 /list-tools
 ```
 
-You should see all 103 Noelclaw tools listed.
+You should see all 108 Noelclaw tools listed.
 
 ---
 
@@ -121,7 +121,7 @@ A typical Aeon agent task using noelclaw tools:
 
 ## Notes
 
-- All 103 tools are available - no Aeon-specific limitations
+- All 108 tools are available - no Aeon-specific limitations
 - BYOK env vars (Grok, MiniMax) work the same way as in other clients
 - See [Environment Variables](env-vars.md) for optional keys
 - See [MCP Server Reference](mcp-server.md) for full tool parameter docs

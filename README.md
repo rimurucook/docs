@@ -11,7 +11,7 @@ Works in **Cursor, Windsurf, Claude Desktop, ChatGPT, Zed, Hermes, Bankr, Aeon**
 - Website: [noelclaw.com](https://noelclaw.fun)
 - App: [app.noelclaw.com](https://app.noelclaw.com)
 - npm: [@noelclaw/mcp](https://www.npmjs.com/package/@noelclaw/mcp)
-- Version: `3.30.7`
+- Version: `3.32.4`
 
 ---
 
@@ -34,14 +34,14 @@ Packets, automations, monitors, and deep research. Anything that runs after you 
 
 ### One-command setup (auto-detects all MCP clients)
 ```bash
-npx -y @noelclaw/mcp@3.30.7 install
+npx -y @noelclaw/mcp@3.32.4 install
 ```
 
 Detects Claude Desktop, Cursor, Windsurf, VS Code, Zed, and configures each automatically. Then restart your client.
 
 ### Claude Code
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.30.7
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.32.4
 ```
 
 ### Claude Desktop
@@ -54,7 +54,7 @@ Edit your config file:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.30.7"]
+      "args": ["-y", "@noelclaw/mcp@3.32.4"]
     }
   }
 }
@@ -64,16 +64,16 @@ Restart Claude Desktop after saving.
 
 ### Hermes
 ```bash
-hermes mcp add noelclaw -- npx -y @noelclaw/mcp@3.30.7
+hermes mcp add noelclaw -- npx -y @noelclaw/mcp@3.32.4
 ```
 
 No build step. No config required. Runs on first use.
 
 ---
 
-## 103 Tools Across 21 Categories
+## 108 Tools Across 22 Categories
 
-> **New in v3.30.7 — Noel Shell:** The webapp chat now supports native tool calling. Seven shell tools let the chat spawn agents, save to vault, search memory, create automations, estimate swaps, list agents, and check wallet balances — all from natural conversation. See [Noel Shell](noel-shell.md).
+> **Noel Shell:** The webapp chat supports native tool calling. Shell tools let the chat spawn agents, save to vault, search memory, create automations, estimate + execute swaps, list agents, and check wallet balances — all from natural conversation. See [Noel Shell](noel-shell.md).
 
 Grouped by pillar - every tool serves Memory, Agents, Workflows, or the execution domains those workflows can target.
 
@@ -81,7 +81,7 @@ Grouped by pillar - every tool serves Memory, Agents, Workflows, or the executio
 |--------|----------|-------|-------------|
 | **Memory** | Vault | 14 | Persistent notes with versioning, search, diff, export, credentials, knowledge graph |
 | **Memory** | Semantic Memory | 10 | Vector search, cross-session recall, URL ingestion, dedup, decay, consolidate, publish |
-| **Memory** | Chronicle | 2 | Append-only audit trail - add and list entries |
+| **Memory** | Chronicle | 4 | Append-only audit trail - add, list, search by keyword, activity stats |
 | **Agents** | Agents | 12 | Persistent named agents, hire specialists, identity, ledger, recall, update, autonomous scheduling |
 | **Agents** | Playbooks | 3 | Browse and run playbooks, audit ledger |
 | **Workflows** | Automations | 6 | DCA, price alerts, conditional buy/sell, dry-run, execution history with error categories |
@@ -98,15 +98,25 @@ Grouped by pillar - every tool serves Memory, Agents, Workflows, or the executio
 | **Execution** | Coder | 5 | Generate contracts, audit (with static-scan grounding), explain, review, MCP skill builder |
 | **Execution** | Content & Humanizer | 2 | Humanize text, write threads and posts |
 | **Execution** | MiroShark | 3 | Multi-agent market simulation |
-| **Execution** | Wallet | 1 | Local wallet address |
+| **Execution** | Wallet | 3 | Live balance with USD pricing, wallet address, sign message (EIP-191) |
+| **Execution** | Diagnostics | 1 | Pre-flight health check - Convex, Firecrawl, Supermemory, API key status |
 | **Runtime** | Session OS | 1 | System dashboard - memory, agents, automations, research, scores |
 
 ---
 
 ## What's New
 
-### v3.30.7 - Noel Shell, Multi-Provider Chat, Security Hardening
-- **Noel Shell** - native tool calling from the webapp chat. Seven tools: `spawn_agent`, `save_to_vault`, `search_memory`, `create_automation`, `estimate_swap`, `list_agents`, `get_wallet_balance`. The chat can now act, not just answer. See [Noel Shell docs](noel-shell.md).
+### v3.32.4 - Chronicle Search, execute_swap, Live Wallet Pricing, Diagnostics
+- **`execute_swap`** — execute token swaps on Base mainnet from Noel Shell. Enforces estimate → confirm → execute flow. Routes via 0x Permit2. Returns tx hash + Basescan link. Hard-blocked without `confirmed=true`.
+- **`chronicle_search`** — keyword search across runtime events by title and detail. Find when your agent last researched any topic without scrolling the full log.
+- **`chronicle_stats`** — runtime activity analytics: event breakdown by type, daily heatmap, busiest days, avg events/day over a configurable window (default 30 days, max 90).
+- **`get_wallet_balance`** — live ETH + USDC balance from Base mainnet with real-time USD pricing from CoinGecko. No API key required.
+- **`wallet_sign_message`** — EIP-191 personal_sign to prove wallet ownership off-chain without sending a transaction.
+- **`noel_diagnostics`** — pre-flight health check: pings Convex, Firecrawl, Supermemory; lists configured API keys; warns on missing LLM key or Firecrawl key with actionable hints.
+- **Base Builder Code** — all x402 payment flows now include `bc_7diuqbqo` as `builderCode`. Transactions are attributed to Noelclaw in the Base Dashboard.
+
+### v3.31.0 - Noel Shell, Multi-Provider Chat, Security Hardening
+- **Noel Shell** - native tool calling from the webapp chat. Shell tools: `spawn_agent`, `save_to_vault`, `search_memory`, `create_automation`, `estimate_swap`, `list_agents`, `get_wallet_balance`. The chat can now act, not just answer. See [Noel Shell docs](noel-shell.md).
 - **7 Agents** - Noel (crypto), CoinGecko (crypto data), Sage (analysis), Forge (developer), Quill (creative), Spectre (trading), Atlas (general). Each agent has its own persona and tool access.
 - **Multi-provider chat** - provider cascade: Bankr → OpenAI → Anthropic → Groq → OpenRouter → Custom → Local fallback. No single provider dependency.
 - **ConnectMcpModal** - onboarding flow for connecting the MCP server to your IDE directly from the webapp.

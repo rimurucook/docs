@@ -11,7 +11,7 @@ Works in **Cursor, Windsurf, Claude Desktop, ChatGPT, Zed, Hermes, Bankr, Aeon**
 - Website: [noelclaw.com](https://noelclaw.fun)
 - App: [app.noelclaw.com](https://app.noelclaw.com)
 - npm: [@noelclaw/mcp](https://www.npmjs.com/package/@noelclaw/mcp)
-- Version: `3.32.4`
+- Version: `3.32.5`
 
 ---
 
@@ -34,14 +34,14 @@ Packets, automations, monitors, and deep research. Anything that runs after you 
 
 ### One-command setup (auto-detects all MCP clients)
 ```bash
-npx -y @noelclaw/mcp@3.32.4 install
+npx -y @noelclaw/mcp@3.32.5 install
 ```
 
 Detects Claude Desktop, Cursor, Windsurf, VS Code, Zed, and configures each automatically. Then restart your client.
 
 ### Claude Code
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.32.4
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.32.5
 ```
 
 ### Claude Desktop
@@ -54,7 +54,7 @@ Edit your config file:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.32.4"]
+      "args": ["-y", "@noelclaw/mcp@3.32.5"]
     }
   }
 }
@@ -64,7 +64,7 @@ Restart Claude Desktop after saving.
 
 ### Hermes
 ```bash
-hermes mcp add noelclaw -- npx -y @noelclaw/mcp@3.32.4
+hermes mcp add noelclaw -- npx -y @noelclaw/mcp@3.32.5
 ```
 
 No build step. No config required. Runs on first use.
@@ -106,7 +106,7 @@ Grouped by pillar - every tool serves Memory, Agents, Workflows, or the executio
 
 ## What's New
 
-### v3.32.4 - Chronicle Search, execute_swap, Live Wallet Pricing, Diagnostics
+### v3.32.5 - Chronicle Search, execute_swap, Live Wallet Pricing, Diagnostics
 - **`execute_swap`** — execute token swaps on Base mainnet from Noel Shell. Enforces estimate → confirm → execute flow. Routes via 0x Permit2. Returns tx hash + Basescan link. Hard-blocked without `confirmed=true`.
 - **`chronicle_search`** — keyword search across runtime events by title and detail. Find when your agent last researched any topic without scrolling the full log.
 - **`chronicle_stats`** — runtime activity analytics: event breakdown by type, daily heatmap, busiest days, avg events/day over a configurable window (default 30 days, max 90).

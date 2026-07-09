@@ -9,7 +9,7 @@ The `@noelclaw/mcp` package runs via `npx` - no build step, no cloning, no local
 ## Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.32.4
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.32.5
 ```
 
 Verify the server is registered:

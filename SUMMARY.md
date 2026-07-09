@@ -20,6 +20,7 @@
 * [MiroShark Simulation](miroshark.md)
 * [Wallet & DeFi](wallet-defi.md)
 * [Noel Shell](noel-shell.md)
+* [Base Watchdog (Token Monitoring)](base-watchdog.md)
 
 ## Reference
 

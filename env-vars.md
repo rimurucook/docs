@@ -28,7 +28,7 @@ The MCP server reads these from your local environment - set them in your MCP cl
 ### Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.32.4
+claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.32.5
 ```
 
 Then edit `~/.claude.json` to add env vars under the server entry:
@@ -38,7 +38,7 @@ Then edit `~/.claude.json` to add env vars under the server entry:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.32.4"],
+      "args": ["-y", "@noelclaw/mcp@3.32.5"],
       "env": {
         "ANTHROPIC_API_KEY": "sk-ant-...",
         "MINIMAX_API_KEY": "your-key"
@@ -58,7 +58,7 @@ Windows: `%APPDATA%\Claude\claude_desktop_config.json`
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.32.4"],
+      "args": ["-y", "@noelclaw/mcp@3.32.5"],
       "env": {
         "ANTHROPIC_API_KEY": "sk-ant-...",
         "MINIMAX_API_KEY": "your-key"
@@ -76,7 +76,7 @@ mcp_servers:
     command: npx
     args:
       - "-y"
-      - "@noelclaw/mcp@3.32.4"
+      - "@noelclaw/mcp@3.32.5"
     env:
       MINIMAX_API_KEY: your-key
     timeout: 30

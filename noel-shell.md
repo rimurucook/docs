@@ -1,6 +1,6 @@
 # Noel Shell
 
-> Native tool calling from the webapp chat. Available at [app.noelclaw.com](https://app.noelclaw.com) since `@noelclaw/mcp@3.32.4`.
+> Native tool calling from the webapp chat. Available at [app.noelclaw.com](https://app.noelclaw.com) since `@noelclaw/mcp@3.32.5`.
 
 ---
 
@@ -162,7 +162,7 @@ The backend enforces 8 security boundaries across wallet, vault, chronicle, API 
 The webapp includes a **ConnectMcpModal** — an onboarding flow for connecting the MCP server to your IDE directly from the webapp. When you click "Connect to IDE", the modal:
 
 1. Detects your OS and available MCP clients (Cursor, Windsurf, Claude Desktop, VS Code, Zed)
-2. Shows the exact install command: `npm install -g @noelclaw/mcp@3.32.4`
+2. Shows the exact install command: `npm install -g @noelclaw/mcp@3.32.5`
 3. Provides copy-paste config snippets for each client
 4. Guides you through restarting your client to activate the tools
 

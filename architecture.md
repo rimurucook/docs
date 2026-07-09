@@ -169,7 +169,7 @@ POST api.noelclaw.com/swarm/research
 | Private key retrieval | `getPrivateKey` returns address only, never the raw key |
 | OTP brute force | 5-attempt lockout on OTP verification |
 
-**8 security boundaries** enforced across the backend + **4 vulnerability fixes** in v3.32.4.
+**8 security boundaries** enforced across the backend + **4 vulnerability fixes** in v3.32.5.
 
 ---
 

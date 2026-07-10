@@ -11,7 +11,7 @@ No build step needed - runs via `npx`.
 ## Method 1 - CLI (Fastest)
 
 ```bash
-hermes mcp add noelclaw -- npx -y @noelclaw/mcp
+hermes mcp add noelclaw -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
 ```
 
 Reload without restarting Hermes:
@@ -32,7 +32,9 @@ mcp_servers:
     command: npx
     args:
       - -y
-      - "@noelclaw/mcp"
+      - -p
+      - "@noelclaw/mcp@3.32.7"
+      - noelclaw-mcp
     timeout: 30
     connect_timeout: 15
 ```

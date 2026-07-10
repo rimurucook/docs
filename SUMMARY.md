@@ -10,6 +10,7 @@
 * [Claude Code / Claude Desktop](claude-install.md)
 * [Hermes](hermes-openclaw.md)
 * [Cursor / Windsurf](cursor-install.md)
+* [Codex](codex-install.md)
 * [Aeon](aeon.md)
 
 ## Features

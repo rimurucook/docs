@@ -15,7 +15,7 @@ Install the Noelclaw MCP skill in Cursor or Windsurf. No build step - runs via `
 3. Click **Add Server** and fill in:
    - Name: `noelclaw`
    - Command: `npx`
-   - Args: `-y @noelclaw/mcp`
+   - Args: `-y -p @noelclaw/mcp@3.32.7 noelclaw-mcp`
 4. Save and restart Cursor
 
 ### Via Config File
@@ -27,7 +27,7 @@ Edit `~/.cursor/mcp.json`:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
     }
   }
 }
@@ -46,7 +46,7 @@ Edit `~/.windsurf/mcp_config.json`:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
     }
   }
 }
@@ -63,7 +63,7 @@ Restart Windsurf after saving.
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"],
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"],
       "env": {
         "MINIMAX_API_KEY": "your-minimax-key",
         "BANKR_API_KEY": "your-bankr-key"
@@ -96,6 +96,18 @@ get_portfolio
 ```
 swap_tokens fromToken: "ETH" toToken: "USDC" amount: "0.01"
 ```
+
+---
+
+## Run Memory Fully Local (Optional, Free)
+
+By default, memory is stored via the Noelclaw-hosted proxy. To run it entirely on your own machine instead - private, zero cost, no account needed - run the setup wizard from a terminal:
+
+```bash
+npx -y -p @noelclaw/mcp@3.32.7 noelclaw setup
+```
+
+This walks you through bringing your own LLM key (Bankr, Anthropic, OpenAI, or a custom self-hosted endpoint) and enabling local memory, which auto-installs a free, open-source [supermemory](https://github.com/supermemoryai/supermemory) server on your machine. Restart Cursor/Windsurf afterward - memory tools pick up the local server automatically. Check status with `npx -y -p @noelclaw/mcp@3.32.7 noelclaw doctor`.
 
 ---
 

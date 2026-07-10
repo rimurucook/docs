@@ -30,7 +30,10 @@ skills:
     mcp_server:
       command: npx
       args:
-        - "@noelclaw/mcp"
+        - "-y"
+        - "-p"
+        - "@noelclaw/mcp@3.32.7"
+        - "noelclaw-mcp"
     enabled: true
 ```
 

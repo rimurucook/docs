@@ -7,7 +7,7 @@ Ships as a standalone skill: [`base-watchdog/SKILL.md`](https://github.com/noelc
 **Requires:** [`@noelclaw/mcp`](https://www.npmjs.com/package/@noelclaw/mcp)
 
 ```bash
-npx -y @noelclaw/mcp@3.32.5 install
+npx -y -p @noelclaw/mcp@3.32.7 noelclaw install
 noelclaw login
 ```
 

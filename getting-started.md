@@ -29,7 +29,7 @@ If you see `v18.x.x` or higher - you're good. If not, download it free from [nod
 ### One-command setup (recommended)
 
 ```bash
-npx -y @noelclaw/mcp@3.32.5 install
+npx -y -p @noelclaw/mcp@3.32.7 noelclaw install
 ```
 
 This detects all MCP-compatible apps on your machine (Claude Desktop, Cursor, Windsurf, VS Code, Zed) and configures each one automatically. No JSON editing. Then restart your client.
@@ -57,7 +57,7 @@ Paste this (or add the `noelclaw` block if the file already exists):
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.32.5"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
     }
   }
 }
@@ -72,7 +72,7 @@ Save the file. **Fully quit and restart Claude Desktop** - not just close the wi
 ### Claude Code (terminal)
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.32.5
+claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
 ```
 
 That's it. Restart Claude Code and the tools are available.
@@ -82,7 +82,7 @@ That's it. Restart Claude Code and the tools are available.
 ### Hermes
 
 ```bash
-hermes mcp add noelclaw -- npx -y @noelclaw/mcp@3.32.5
+hermes mcp add noelclaw -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
 ```
 
 Or add it to `~/.hermes/config.yaml`:
@@ -93,7 +93,9 @@ mcp_servers:
     command: npx
     args:
       - -y
-      - "@noelclaw/mcp@3.32.5"
+      - -p
+      - "@noelclaw/mcp@3.32.7"
+      - noelclaw-mcp
     timeout: 30
 ```
 
@@ -112,7 +114,7 @@ Edit `~/.cursor/mcp.json` (Cursor) or `~/.windsurf/mcp_config.json` (Windsurf):
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.32.5"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
     }
   }
 }

@@ -11,7 +11,7 @@ Works in **Cursor, Windsurf, Claude Desktop, ChatGPT, Zed, Hermes, Bankr, Aeon**
 - Website: [noelclaw.com](https://noelclaw.fun)
 - App: [app.noelclaw.com](https://app.noelclaw.com)
 - npm: [@noelclaw/mcp](https://www.npmjs.com/package/@noelclaw/mcp)
-- Version: `3.32.5`
+- Version: `3.32.7`
 
 ---
 
@@ -34,14 +34,14 @@ Packets, automations, monitors, and deep research. Anything that runs after you 
 
 ### One-command setup (auto-detects all MCP clients)
 ```bash
-npx -y @noelclaw/mcp@3.32.5 install
+npx -y -p @noelclaw/mcp@3.32.7 noelclaw install
 ```
 
 Detects Claude Desktop, Cursor, Windsurf, VS Code, Zed, and configures each automatically. Then restart your client.
 
 ### Claude Code
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.32.5
+claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
 ```
 
 ### Claude Desktop
@@ -54,7 +54,7 @@ Edit your config file:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.32.5"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
     }
   }
 }
@@ -64,7 +64,7 @@ Restart Claude Desktop after saving.
 
 ### Hermes
 ```bash
-hermes mcp add noelclaw -- npx -y @noelclaw/mcp@3.32.5
+hermes mcp add noelclaw -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
 ```
 
 No build step. No config required. Runs on first use.
@@ -105,6 +105,12 @@ Grouped by pillar - every tool serves Memory, Agents, Workflows, or the executio
 ---
 
 ## What's New
+
+### v3.32.7 - Local Memory, OpenAI BYOK, Critical Install Fix
+- **Local memory** — run memory tools on a free, self-hosted [supermemory](https://github.com/supermemoryai/supermemory) server on your own machine. Zero cost, private, no Noelclaw account or Convex proxy needed once enabled. Run `noelclaw setup` to switch. *(Beta - code-reviewed and unit-verified, live-server testing pending.)*
+- **OpenAI BYOK** — OpenAI joins Bankr/Anthropic/Grok as a direct LLM provider. `OPENAI_BASE_URL` lets you route to any self-hosted OpenAI-compatible gateway instead (LiteLLM, vLLM, Ollama, OpenRouter, your own VPS).
+- **`noelclaw setup`** — new guided CLI wizard for picking an LLM provider and/or enabling local memory in one flow.
+- **Critical fix** — `noelclaw install` was writing a broken MCP server entry (`npx -y @noelclaw/mcp@latest`, ambiguous bin resolution) into every detected client config, so every fresh auto-install was non-functional. Fixed to the unambiguous, version-pinned form.
 
 ### v3.32.5 - Chronicle Search, execute_swap, Live Wallet Pricing, Diagnostics
 - **`execute_swap`** — execute token swaps on Base mainnet from Noel Shell. Enforces estimate → confirm → execute flow. Routes via 0x Permit2. Returns tx hash + Basescan link. Hard-blocked without `confirmed=true`.

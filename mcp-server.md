@@ -223,7 +223,7 @@ Wallet signing happens locally via ethers.js. The private key lives at `~/.noelc
 ### Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.32.5
+claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
 ```
 
 ### Claude Desktop
@@ -236,7 +236,7 @@ Windows: `%APPDATA%\Claude\claude_desktop_config.json`
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.32.5"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
     }
   }
 }
@@ -251,7 +251,7 @@ Edit `~/.cursor/mcp.json` (Cursor) or `~/.windsurf/mcp_config.json` (Windsurf):
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@3.32.5"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
     }
   }
 }
@@ -265,7 +265,9 @@ mcp_servers:
     command: npx
     args:
       - "-y"
-      - "@noelclaw/mcp@3.32.5"
+      - "-p"
+      - "@noelclaw/mcp@3.32.7"
+      - "noelclaw-mcp"
 ```
 
 ---
@@ -1211,7 +1213,7 @@ Set in your MCP client config under the `env` block. All optional.
 | Error | Fix |
 |-------|-----|
 | Tools not appearing | Restart your MCP client after adding the server |
-| `npx` hangs on first run | Use `-y` flag: `npx -y @noelclaw/mcp` |
+| `npx` hangs on first run | Use `-y` flag: `npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp` |
 | Tools not found after restart | Run `npx clear-npx-cache` then restart |
 | Swap fails | Check balance with `base_mcp_balance`, confirm Base mainnet connectivity |
 | `humanize_text` fails | Set `MINIMAX_API_KEY` in env |

@@ -9,14 +9,14 @@ The `@noelclaw/mcp` package runs via `npx` - no build step, no cloning, no local
 ## Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp@3.32.5
+claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
 ```
 
 Verify the server is registered:
 
 ```bash
 claude mcp list
-# noelclaw   npx -y @noelclaw/mcp
+# noelclaw   npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
 ```
 
 Then in any Claude Code session:
@@ -38,7 +38,7 @@ get_market_data
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
     }
   }
 }
@@ -57,7 +57,7 @@ Save the file, then **restart Claude Desktop**. all 108 tools appear automatical
 3. Add server:
    - Name: `noelclaw`
    - Command: `npx`
-   - Args: `-y @noelclaw/mcp`
+   - Args: `-y -p @noelclaw/mcp@3.32.7 noelclaw-mcp`
 
 ### Via Config File
 
@@ -68,7 +68,7 @@ Edit `~/.cursor/mcp.json`:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
     }
   }
 }
@@ -87,7 +87,7 @@ Edit `~/.windsurf/mcp_config.json`:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
     }
   }
 }
@@ -102,7 +102,7 @@ Restart Windsurf after saving.
 ### CLI Method
 
 ```bash
-hermes mcp add noelclaw --command npx --args -y --args @noelclaw/mcp
+hermes mcp add noelclaw --command npx --args -y --args -p --args @noelclaw/mcp@3.32.7 --args noelclaw-mcp
 ```
 
 Reload without restarting:
@@ -121,7 +121,9 @@ mcp_servers:
     command: npx
     args:
       - "-y"
-      - "@noelclaw/mcp"
+      - "-p"
+      - "@noelclaw/mcp@3.32.7"
+      - "noelclaw-mcp"
     timeout: 30
     connect_timeout: 10
 ```
@@ -151,7 +153,7 @@ If your client accepts a generic MCP server definition:
 ```json
 {
   "command": "npx",
-  "args": ["-y", "@noelclaw/mcp"]
+  "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
 }
 ```
 
@@ -204,7 +206,7 @@ Pass env vars to unlock extra tools or use your own API keys:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"],
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"],
       "env": {
         "MINIMAX_API_KEY": "your-key",
         "BANKR_API_KEY": "your-key"

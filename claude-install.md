@@ -31,7 +31,7 @@ If the file is empty or doesn't exist yet, paste this:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
     }
   }
 }
@@ -45,7 +45,7 @@ If the file already has other MCP servers, just add the `"noelclaw"` block insid
     "other-server": { ... },
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
     }
   }
 }
@@ -70,14 +70,14 @@ Claude will use `get_market_data` automatically and return live prices.
 ## Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y @noelclaw/mcp
+claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
 ```
 
 Verify it's registered:
 
 ```bash
 claude mcp list
-# noelclaw   npx -y @noelclaw/mcp
+# noelclaw   npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
 ```
 
 All 108 tools are now available in every Claude Code session.
@@ -95,6 +95,26 @@ This is the standout feature - try it in two separate chats.
 > "What do you know about my DeFi strategy?"
 
 Claude will pull from vault memory and answer accurately - even though this is a brand new conversation.
+
+---
+
+## Run Memory Fully Local (Optional, Free)
+
+By default, memory is stored via the Noelclaw-hosted proxy. To run it entirely on your own machine instead - private, zero cost, no account needed - run the setup wizard from a terminal:
+
+```bash
+npx -y -p @noelclaw/mcp@3.32.7 noelclaw setup
+```
+
+This walks you through:
+- Bringing your own LLM key (Bankr, Anthropic, OpenAI, or a custom self-hosted endpoint) instead of the shared proxy
+- Enabling local memory, which auto-installs a free, open-source [supermemory](https://github.com/supermemoryai/supermemory) server on your machine
+
+Once enabled, restart Claude Desktop (or start a new Claude Code session) - memory tools will use your local server automatically. Check status anytime with:
+
+```bash
+npx -y -p @noelclaw/mcp@3.32.7 noelclaw doctor
+```
 
 ---
 
@@ -116,7 +136,7 @@ Claude will pull from vault memory and answer accurately - even though this is a
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "@noelclaw/mcp@2.3.1"]
+      "args": ["-y", "-p", "@noelclaw/mcp@2.3.1", "noelclaw-mcp"]
     }
   }
 }

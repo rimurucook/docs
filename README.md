@@ -11,7 +11,7 @@ Works in **Cursor, Windsurf, Claude Desktop, ChatGPT, Zed, Hermes, Bankr, Aeon**
 - Website: [noelclaw.com](https://noelclaw.fun)
 - App: [app.noelclaw.com](https://app.noelclaw.com)
 - npm: [@noelclaw/mcp](https://www.npmjs.com/package/@noelclaw/mcp)
-- Version: `3.32.7`
+- Version: `3.43.1`
 
 ---
 
@@ -34,14 +34,14 @@ Packets, automations, monitors, and deep research. Anything that runs after you 
 
 ### One-command setup (auto-detects all MCP clients)
 ```bash
-npx -y -p @noelclaw/mcp@3.32.7 noelclaw install
+npx -y -p @noelclaw/mcp@3.43.1 noelclaw install
 ```
 
 Detects Claude Desktop, Cursor, Windsurf, VS Code, Zed, and configures each automatically. Then restart your client.
 
 ### Claude Code
 ```bash
-claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
+claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.43.1 noelclaw-mcp
 ```
 
 ### Claude Desktop
@@ -54,7 +54,7 @@ Edit your config file:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"]
     }
   }
 }
@@ -64,14 +64,14 @@ Restart Claude Desktop after saving.
 
 ### Hermes
 ```bash
-hermes mcp add noelclaw -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
+hermes mcp add noelclaw -- npx -y -p @noelclaw/mcp@3.43.1 noelclaw-mcp
 ```
 
 No build step. No config required. Runs on first use.
 
 ---
 
-## 108 Tools Across 22 Categories
+## 121 Tools Across 22 Categories
 
 > **Noel Shell:** The webapp chat supports native tool calling. Shell tools let the chat spawn agents, save to vault, search memory, create automations, estimate + execute swaps, list agents, and check wallet balances — all from natural conversation. See [Noel Shell](noel-shell.md).
 
@@ -106,6 +106,13 @@ Grouped by pillar - every tool serves Memory, Agents, Workflows, or the executio
 
 ## What's New
 
+### v3.43.1 - x402 API Market, Robinhood Chain Trading, 121 Tools
+- **x402 API Market** — sell any HTTPS API per call, buy with USDC on Base via the x402 protocol (HTTP 402 challenge → pay → retry with `PAYMENT-SIGNATURE`). No account or API key needed for buyers. Payments are replay-protected at both the request-id and tx-hash level. See [x402 API Market](x402-api-market.md).
+- **Robinhood Chain rail (`rh_*`)** — 22 tokenized stocks (added NFLX, SPY, QQQ, GME) plus trending chain tokens, arbitrary crypto by ticker or contract address, V2/V3/V4 best-fill routing, receipt-backed swap confirmations, safety scans (`rh_analyze`, `rh_safety_check`), DCA/TP-SL order engine.
+- **Investor triad from SEC primary sources, all keyless** — `stock_fundamentals` (XBRL financials), `stock_insider` (Form 4), `stock_events` (8-K decoded), plus `rh_stock_bridge` (tokenized vs real price + pool depth).
+- **Client-first refactor** — tools return evidence and structure; your model does the reasoning. `deep_research` works with zero API keys (`mode: "sources"`).
+- **Cleaner metadata** — tool count corrected to 121 everywhere, emoji removed from all tool and package descriptions.
+
 ### v3.32.7 - Local Memory, OpenAI BYOK, Critical Install Fix
 - **Local memory** — run memory tools on a free, self-hosted [supermemory](https://github.com/supermemoryai/supermemory) server on your own machine. Zero cost, private, no Noelclaw account or Convex proxy needed once enabled. Run `noelclaw setup` to switch. *(Beta - code-reviewed and unit-verified, live-server testing pending.)*
 - **OpenAI BYOK** — OpenAI joins Bankr/Anthropic/Grok as a direct LLM provider. `OPENAI_BASE_URL` lets you route to any self-hosted OpenAI-compatible gateway instead (LiteLLM, vLLM, Ollama, OpenRouter, your own VPS).
@@ -126,7 +133,7 @@ Grouped by pillar - every tool serves Memory, Agents, Workflows, or the executio
 - **7 Agents** - Noel (crypto), CoinGecko (crypto data), Sage (analysis), Forge (developer), Quill (creative), Spectre (trading), Atlas (general). Each agent has its own persona and tool access.
 - **Multi-provider chat** - provider cascade: Bankr → OpenAI → Anthropic → Groq → OpenRouter → Custom → Local fallback. No single provider dependency.
 - **ConnectMcpModal** - onboarding flow for connecting the MCP server to your IDE directly from the webapp.
-- **Security hardening** - 8 security boundaries enforced + 4 vulnerability fixes: `getDecryptedPKByUserId` → internalAction, `createWallet` → internalAction, `getPrivateKey` returns address only (never raw key), OTP 5-attempt lockout.
+- **Security hardening** - 8 security boundaries enforced + vulnerability fixes: `getDecryptedPKByUserId` → internalAction, `createWallet` → internalAction, `getPrivateKey` returns address only (never raw key). Auth is Privy + API key only (OTP removed Jul 2026).
 - **Theme refresh** - Claude-style warm palette, Inter font, neural-network knowledge-graph visual.
 
 ### v3.23.1 - Polish

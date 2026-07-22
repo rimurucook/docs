@@ -6,7 +6,7 @@ New to Noelclaw? You'll be up and running in under 5 minutes.
 
 ## What is Noelclaw?
 
-Noelclaw is an MCP skill - a plugin for AI tools like Claude, Cursor, Bankr, Aeon, and Hermes. Once installed, your AI gets 108 tools: persistent memory that carries across every session, autonomous agents that run on a schedule, live market data, DeFi execution on Base, deep research, GitHub integration, token scanning, code generation, audit trails, workflow packets, and more.
+Noelclaw is an MCP skill - a plugin for AI tools like Claude, Cursor, Bankr, Aeon, and Hermes. Once installed, your AI gets 121 tools: persistent memory that carries across every session, autonomous agents that run on a schedule, live market data, DeFi execution on Base, deep research, GitHub integration, token scanning, code generation, audit trails, workflow packets, and more.
 
 You talk to it naturally. No commands to memorize.
 
@@ -29,7 +29,7 @@ If you see `v18.x.x` or higher - you're good. If not, download it free from [nod
 ### One-command setup (recommended)
 
 ```bash
-npx -y -p @noelclaw/mcp@3.32.7 noelclaw install
+npx -y -p @noelclaw/mcp@3.43.1 noelclaw install
 ```
 
 This detects all MCP-compatible apps on your machine (Claude Desktop, Cursor, Windsurf, VS Code, Zed) and configures each one automatically. No JSON editing. Then restart your client.
@@ -57,7 +57,7 @@ Paste this (or add the `noelclaw` block if the file already exists):
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"]
     }
   }
 }
@@ -72,7 +72,7 @@ Save the file. **Fully quit and restart Claude Desktop** - not just close the wi
 ### Claude Code (terminal)
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
+claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.43.1 noelclaw-mcp
 ```
 
 That's it. Restart Claude Code and the tools are available.
@@ -82,7 +82,7 @@ That's it. Restart Claude Code and the tools are available.
 ### Hermes
 
 ```bash
-hermes mcp add noelclaw -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
+hermes mcp add noelclaw -- npx -y -p @noelclaw/mcp@3.43.1 noelclaw-mcp
 ```
 
 Or add it to `~/.hermes/config.yaml`:
@@ -94,7 +94,7 @@ mcp_servers:
     args:
       - -y
       - -p
-      - "@noelclaw/mcp@3.32.7"
+      - "@noelclaw/mcp@3.43.1"
       - noelclaw-mcp
     timeout: 30
 ```
@@ -114,7 +114,7 @@ Edit `~/.cursor/mcp.json` (Cursor) or `~/.windsurf/mcp_config.json` (Windsurf):
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"]
     }
   }
 }

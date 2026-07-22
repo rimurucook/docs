@@ -1,6 +1,6 @@
 ﻿# Install on Hermes
 
-Add Noelclaw as an MCP skill in Hermes. Once connected, all 108 tools are available directly in your agent conversations.
+Add Noelclaw as an MCP skill in Hermes. Once connected, all 121 tools are available directly in your agent conversations.
 
 No build step needed - runs via `npx`.
 
@@ -11,7 +11,7 @@ No build step needed - runs via `npx`.
 ## Method 1 - CLI (Fastest)
 
 ```bash
-hermes mcp add noelclaw -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
+hermes mcp add noelclaw -- npx -y -p @noelclaw/mcp@3.43.1 noelclaw-mcp
 ```
 
 Reload without restarting Hermes:
@@ -33,7 +33,7 @@ mcp_servers:
     args:
       - -y
       - -p
-      - "@noelclaw/mcp@3.32.7"
+      - "@noelclaw/mcp@3.43.1"
       - noelclaw-mcp
     timeout: 30
     connect_timeout: 15
@@ -49,7 +49,7 @@ Then run `/reload-mcp` in any Hermes session.
 /list-tools
 ```
 
-You should see all 108 tools listed - including `get_market_data`, `memory_search`, `swap_tokens`, `miroshark_simulate`, and more.
+You should see all 121 tools listed - including `get_market_data`, `memory_search`, `swap_tokens`, `miroshark_simulate`, and more.
 
 ---
 

@@ -7,7 +7,7 @@ Ships as a standalone skill: [`base-watchdog/SKILL.md`](https://github.com/noelc
 **Requires:** [`@noelclaw/mcp`](https://www.npmjs.com/package/@noelclaw/mcp)
 
 ```bash
-npx -y -p @noelclaw/mcp@3.32.7 noelclaw install
+npx -y -p @noelclaw/mcp@3.43.1 noelclaw install
 noelclaw login
 ```
 
@@ -122,5 +122,5 @@ chronicle_stats days=30
 ## See Also
 
 - [Wallet & DeFi](wallet-defi.md)
-- [All 108 Tools](mcp-server.md)
+- [All 121 Tools](mcp-server.md)
 - [B20 Token Standard — Base Docs](https://docs.base.org/get-started/launch-b20-token)

@@ -1,6 +1,6 @@
 ﻿# Setup & Install
 
-The `@noelclaw/mcp` package runs via `npx` - no build step, no cloning, no local files needed. One command gives you all 108 tools in any MCP-compatible AI client.
+The `@noelclaw/mcp` package runs via `npx` - no build step, no cloning, no local files needed. One command gives you all 121 tools in any MCP-compatible AI client.
 
 **Requirement:** Node.js >= 18. Check with `node --version`. Download from [nodejs.org](https://nodejs.org) if needed.
 
@@ -9,14 +9,14 @@ The `@noelclaw/mcp` package runs via `npx` - no build step, no cloning, no local
 ## Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
+claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.43.1 noelclaw-mcp
 ```
 
 Verify the server is registered:
 
 ```bash
 claude mcp list
-# noelclaw   npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
+# noelclaw   npx -y -p @noelclaw/mcp@3.43.1 noelclaw-mcp
 ```
 
 Then in any Claude Code session:
@@ -38,13 +38,13 @@ get_market_data
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"]
     }
   }
 }
 ```
 
-Save the file, then **restart Claude Desktop**. all 108 tools appear automatically in the tool list.
+Save the file, then **restart Claude Desktop**. all 121 tools appear automatically in the tool list.
 
 ---
 
@@ -57,7 +57,7 @@ Save the file, then **restart Claude Desktop**. all 108 tools appear automatical
 3. Add server:
    - Name: `noelclaw`
    - Command: `npx`
-   - Args: `-y -p @noelclaw/mcp@3.32.7 noelclaw-mcp`
+   - Args: `-y -p @noelclaw/mcp@3.43.1 noelclaw-mcp`
 
 ### Via Config File
 
@@ -68,7 +68,7 @@ Edit `~/.cursor/mcp.json`:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"]
     }
   }
 }
@@ -87,7 +87,7 @@ Edit `~/.windsurf/mcp_config.json`:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"]
     }
   }
 }
@@ -102,7 +102,7 @@ Restart Windsurf after saving.
 ### CLI Method
 
 ```bash
-hermes mcp add noelclaw --command npx --args -y --args -p --args @noelclaw/mcp@3.32.7 --args noelclaw-mcp
+hermes mcp add noelclaw --command npx --args -y --args -p --args @noelclaw/mcp@3.43.1 --args noelclaw-mcp
 ```
 
 Reload without restarting:
@@ -122,7 +122,7 @@ mcp_servers:
     args:
       - "-y"
       - "-p"
-      - "@noelclaw/mcp@3.32.7"
+      - "@noelclaw/mcp@3.43.1"
       - "noelclaw-mcp"
     timeout: 30
     connect_timeout: 10
@@ -153,7 +153,7 @@ If your client accepts a generic MCP server definition:
 ```json
 {
   "command": "npx",
-  "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
+  "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"]
 }
 ```
 
@@ -169,7 +169,7 @@ Ask your AI client:
 list all noelclaw tools
 ```
 
-You should see 108 tools.
+You should see 121 tools.
 
 ### 2. Pull live market data
 
@@ -206,7 +206,7 @@ Pass env vars to unlock extra tools or use your own API keys:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"],
+      "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"],
       "env": {
         "MINIMAX_API_KEY": "your-key",
         "BANKR_API_KEY": "your-key"

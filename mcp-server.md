@@ -2,7 +2,7 @@
 
 `@noelclaw/mcp` is an MCP server that exposes all Noelclaw tools to any MCP-compatible AI client. Install once via `npx` - no build step, no account, no config required.
 
-**108 tools across 22 categories.** Persistent vault, semantic memory, chronicle search, autonomous agents, DeFi execution on Base (estimate + execute swaps), live wallet pricing, diagnostics, token scanning, deep research, live web research, autonomous monitors, GitHub integration, AI code generation, audit trail, workflow packets, MiroShark simulation, and more.
+**121 tools across 22 categories.** Persistent vault, semantic memory, chronicle search, autonomous agents, DeFi execution on Base (estimate + execute swaps), live wallet pricing, diagnostics, token scanning, deep research, live web research, autonomous monitors, GitHub integration, AI code generation, audit trail, workflow packets, MiroShark simulation, and more.
 
 ---
 
@@ -223,7 +223,7 @@ Wallet signing happens locally via ethers.js. The private key lives at `~/.noelc
 ### Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
+claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.43.1 noelclaw-mcp
 ```
 
 ### Claude Desktop
@@ -236,7 +236,7 @@ Windows: `%APPDATA%\Claude\claude_desktop_config.json`
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"]
     }
   }
 }
@@ -251,7 +251,7 @@ Edit `~/.cursor/mcp.json` (Cursor) or `~/.windsurf/mcp_config.json` (Windsurf):
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"]
     }
   }
 }
@@ -266,7 +266,7 @@ mcp_servers:
     args:
       - "-y"
       - "-p"
-      - "@noelclaw/mcp@3.32.7"
+      - "@noelclaw/mcp@3.43.1"
       - "noelclaw-mcp"
 ```
 
@@ -1213,7 +1213,7 @@ Set in your MCP client config under the `env` block. All optional.
 | Error | Fix |
 |-------|-----|
 | Tools not appearing | Restart your MCP client after adding the server |
-| `npx` hangs on first run | Use `-y` flag: `npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp` |
+| `npx` hangs on first run | Use `-y` flag: `npx -y -p @noelclaw/mcp@3.43.1 noelclaw-mcp` |
 | Tools not found after restart | Run `npx clear-npx-cache` then restart |
 | Swap fails | Check balance with `base_mcp_balance`, confirm Base mainnet connectivity |
 | `humanize_text` fails | Set `MINIMAX_API_KEY` in env |

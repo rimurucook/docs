@@ -31,7 +31,7 @@ If the file is empty or doesn't exist yet, paste this:
   "mcpServers": {
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"]
     }
   }
 }
@@ -45,7 +45,7 @@ If the file already has other MCP servers, just add the `"noelclaw"` block insid
     "other-server": { ... },
     "noelclaw": {
       "command": "npx",
-      "args": ["-y", "-p", "@noelclaw/mcp@3.32.7", "noelclaw-mcp"]
+      "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"]
     }
   }
 }
@@ -55,7 +55,7 @@ If the file already has other MCP servers, just add the `"noelclaw"` block insid
 
 **Fully quit the app** - don't just close the window. On Mac: right-click the dock icon → Quit. On Windows: close all windows then check the system tray.
 
-Reopen Claude Desktop. All 108 tools are now available.
+Reopen Claude Desktop. All 121 tools are now available.
 
 ### 4. Verify it works
 
@@ -70,17 +70,17 @@ Claude will use `get_market_data` automatically and return live prices.
 ## Claude Code
 
 ```bash
-claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
+claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.43.1 noelclaw-mcp
 ```
 
 Verify it's registered:
 
 ```bash
 claude mcp list
-# noelclaw   npx -y -p @noelclaw/mcp@3.32.7 noelclaw-mcp
+# noelclaw   npx -y -p @noelclaw/mcp@3.43.1 noelclaw-mcp
 ```
 
-All 108 tools are now available in every Claude Code session.
+All 121 tools are now available in every Claude Code session.
 
 ---
 
@@ -103,7 +103,7 @@ Claude will pull from vault memory and answer accurately - even though this is a
 By default, memory is stored via the Noelclaw-hosted proxy. To run it entirely on your own machine instead - private, zero cost, no account needed - run the setup wizard from a terminal:
 
 ```bash
-npx -y -p @noelclaw/mcp@3.32.7 noelclaw setup
+npx -y -p @noelclaw/mcp@3.43.1 noelclaw setup
 ```
 
 This walks you through:
@@ -113,7 +113,7 @@ This walks you through:
 Once enabled, restart Claude Desktop (or start a new Claude Code session) - memory tools will use your local server automatically. Check status anytime with:
 
 ```bash
-npx -y -p @noelclaw/mcp@3.32.7 noelclaw doctor
+npx -y -p @noelclaw/mcp@3.43.1 noelclaw doctor
 ```
 
 ---

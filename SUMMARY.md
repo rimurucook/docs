@@ -22,9 +22,10 @@
 * [Wallet & DeFi](wallet-defi.md)
 * [Noel Shell](noel-shell.md)
 * [Base Watchdog (Token Monitoring)](base-watchdog.md)
+* [x402 API Market](x402-api-market.md)
 
 ## Reference
 
-* [All 108 Tools](mcp-server.md)
+* [All 121 Tools](mcp-server.md)
 * [Environment Variables](env-vars.md)
 * [Architecture](architecture.md)

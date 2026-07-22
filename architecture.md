@@ -15,7 +15,7 @@ Noelclaw is a local MCP server (`@noelclaw/mcp`) that runs as a Node.js process 
          ┌─────────────────────┐
          │   @noelclaw/mcp     │
          │   Node.js, local    │
-         │   108 tools         │
+         │   121 tools         │
          └──────────┬──────────┘
                     │
        ┌────────────┼────────────────┐
@@ -167,7 +167,7 @@ POST api.noelclaw.com/swarm/research
 | Private key decryption | `getDecryptedPKByUserId` is internalAction only — never callable from client |
 | Wallet creation | `createWallet` is internalAction only — prevents arbitrary wallet creation |
 | Private key retrieval | `getPrivateKey` returns address only, never the raw key |
-| OTP brute force | 5-attempt lockout on OTP verification |
+| Session / API key abuse | Rate-limited auth + short-lived session tokens |
 
 **8 security boundaries** enforced across the backend + **5 vulnerability fixes** in v3.32.7.
 

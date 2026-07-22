@@ -180,7 +180,7 @@ get_market_data
 ### 3. Check your portfolio
 
 ```
-get_portfolio
+base_mcp_balance
 ```
 
 ### 4. Ask Noel
@@ -229,5 +229,4 @@ See [Environment Variables](env-vars.md) for the full list.
 | Server starts but no response | Normal - the MCP server waits for stdin (MCP protocol), it does not serve HTTP |
 | Slow first start | `npx` downloads the package on first run. Subsequent starts are instant |
 | `connect_timeout` errors | Increase to `connect_timeout: 20` in your config - first run takes longer |
-| `humanize_text` fails | Requires `MINIMAX_API_KEY` env var |
 | Coder tools fail | Requires `BANKR_API_KEY` env var |

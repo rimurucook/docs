@@ -71,36 +71,35 @@ No build step. No config required. Runs on first use.
 
 ---
 
-## 121 Tools Across 22 Categories
+## 121 Tools
 
 > **Noel Shell:** The webapp chat supports native tool calling. Shell tools let the chat spawn agents, save to vault, search memory, create automations, estimate + execute swaps, list agents, and check wallet balances — all from natural conversation. See [Noel Shell](noel-shell.md).
 
-Grouped by pillar - every tool serves Memory, Agents, Workflows, or the execution domains those workflows can target.
+Grouped by pillar — counts match the live tool registry exactly. Full catalog: [All 121 Tools](mcp-server.md).
 
 | Pillar | Category | Tools | What it does |
-|--------|----------|-------|-------------|
-| **Memory** | Vault | 14 | Persistent notes with versioning, search, diff, export, credentials, knowledge graph |
-| **Memory** | Semantic Memory | 10 | Vector search, cross-session recall, URL ingestion, dedup, decay, consolidate, publish |
-| **Memory** | Chronicle | 4 | Append-only audit trail - add, list, search by keyword, activity stats |
-| **Agents** | Agents | 12 | Persistent named agents, hire specialists, identity, ledger, recall, update, autonomous scheduling |
-| **Agents** | Playbooks | 3 | Browse and run playbooks, audit ledger |
-| **Workflows** | Automations | 6 | DCA, price alerts, conditional buy/sell, dry-run, execution history with error categories |
-| **Workflows** | Autonomous Monitor | 4 | Schedule research, create recurring monitors, list, cancel |
+|--------|----------|:-----:|-------------|
+| **Memory** | Vault | 15 | Versioned notes: save, read, search, history, diff, export, credentials, tags, links, knowledge graph |
+| **Memory** | Semantic Memory | 10 | Semantic search, cross-session recall, extract, consolidate, insight, publish/delete with confirm |
+| **Memory** | Chronicle | 4 | Append-only audit trail — add, list, search, activity stats |
+| **Agents** | Agents | 12 | Persistent named agents: spawn, recall, update, identity, ledger, schedule/pause/resume, runs, hire, list |
+| **Agents** | Playbooks | 3 | Browse and run curated playbooks with an audit ledger |
+| **Workflows** | Automations | 6 | DCA, price alerts, conditional buy/sell, dry-run, pause/delete, execution history |
+| **Workflows** | Monitors | 3 | Scheduled research monitors: schedule, list, cancel |
 | **Workflows** | Packets (Flows) | 4 | Create, run, list, and share reusable workflow packets |
-| **Workflows** | Deep Research | 3 | Multi-agent parallel research, compare two reports, walk research chains across time |
-| **Execution** | DeFi Execution | 1 | Yield discovery on Base (DefiLlama-sourced) |
-| **Execution** | Base Chain | 11 | Morpho vaults, Moonwell markets, swap with MEV-protect opt-in + slippage caps, send, balance, resolve, deposit prep, chain stats |
-| **Execution** | Market & Intel | 5 | Live prices, token data, comparison, overview, OHLC history |
-| **Execution** | Token Scanner | 3 | Score tokens, safety check, scan for dips or momentum |
-| **Execution** | Research & Insight | 3 | AI analyst, market thesis, trade plan |
-| **Execution** | Web Research | 2 | Live web search, scrape any URL |
-| **Execution** | GitHub | 8 | List repos/PRs/issues, read files, commits, search code |
-| **Execution** | Coder | 5 | Generate contracts, audit (with static-scan grounding), explain, review, MCP skill builder |
-| **Execution** | Content & Humanizer | 2 | Humanize text, write threads and posts |
+| **Workflows** | Research | 3 | `deep_research` (keyless evidence packs), compare two reports, walk a research chain |
+| **Execution** | Base DeFi | 12 | `base_mcp_*`: balances with impostor detection, send, 0x Permit2 swaps, Morpho/Moonwell yields, basenames — see [Base](base.md) |
+| **Execution** | Robinhood Chain | 14 | `rh_*`: 22 tokenized stocks + any RH-chain crypto, V2/V3/V4 best-fill routing, risk screens, DCA/TP/SL orders, stock bridge — see [Robinhood Chain](robinhood.md) |
+| **Execution** | Stocks (SEC) | 3 | Fundamentals (XBRL), insider trades (Form 4), material events (8-K) — see [Stocks & SEC Data](stocks-sec.md) |
+| **Execution** | Market Data | 6 | Live prices, token data, market overview, OHLC history, market thesis |
+| **Execution** | Token Scanner | 3 | Score, safety-check, and compare tokens on Base |
+| **Execution** | Web Research | 2 | Live web search + scrape any URL (proxied, keyless) |
+| **Execution** | GitHub | 8 | Repos, PRs, issues, files, commits, code search (read-only) |
+| **Execution** | Code Audit | 1 | Static Solidity security scan with review rubric |
+| **Execution** | Insight | 3 | `ask_noel`, trade planning, DeFi yields |
 | **Execution** | MiroShark | 3 | Multi-agent market simulation |
-| **Execution** | Wallet | 3 | Live balance with USD pricing, wallet address, sign message (EIP-191) |
-| **Execution** | Diagnostics | 1 | Pre-flight health check - Convex, Firecrawl, Supermemory, API key status |
-| **Runtime** | Session OS | 1 | System dashboard - memory, agents, automations, research, scores |
+| **Execution** | Wallet | 3 | Wallet address, live balance with USD pricing, EIP-191 message signing |
+| **Runtime** | OS | 3 | `noel_status` dashboard, `noel_diagnostics` health check, Noel Shell chat bridge |
 
 ---
 

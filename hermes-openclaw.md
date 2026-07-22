@@ -49,7 +49,7 @@ Then run `/reload-mcp` in any Hermes session.
 /list-tools
 ```
 
-You should see all 121 tools listed - including `get_market_data`, `memory_search`, `swap_tokens`, `miroshark_simulate`, and more.
+You should see all 121 tools listed - including `get_market_data`, `memory_search`, `base_mcp_swap`, `rh_mcp_estimate`, `miroshark_simulate`, and more.
 
 ---
 

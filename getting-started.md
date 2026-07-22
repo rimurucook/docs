@@ -224,5 +224,5 @@ Seven agents are available in the webapp: **Noel** (crypto), **CoinGecko** (cryp
 | First message is slow | Normal - first run downloads the package (~5 seconds). Fast after that. |
 | Tool call fails with auth error | Make sure you're signed in at [app.noelclaw.com](https://app.noelclaw.com) |
 | Vault tools return empty | Normal on first use - start by saving something with `vault_save` |
-| `create_monitor` not working | Add `TRIGGER_SECRET_KEY` to your MCP config env block |
+| `schedule_research` not working | Add `TRIGGER_SECRET_KEY` to your MCP config env block |
 | Monitor runs but no Telegram | Add `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` to your MCP config env |

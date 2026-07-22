@@ -3,24 +3,34 @@
 ## Getting Started
 
 * [Introduction](README.md)
-* [Getting Started](getting-started.md)
+* [Quickstart](getting-started.md)
+* [Setup & Configuration](setup.md)
 
 ## Install by Client
 
 * [Claude Code / Claude Desktop](claude-install.md)
-* [Hermes](hermes-openclaw.md)
 * [Cursor / Windsurf](cursor-install.md)
 * [Codex](codex-install.md)
+* [Hermes](hermes-openclaw.md)
 * [Aeon](aeon.md)
 
-## Features
+## Memory & Knowledge
 
 * [Semantic Memory](memory.md)
 * [Chronicle (Audit Trail)](chronicle.md)
+
+## Agents & Workflows
+
 * [Packets (Flows)](packets.md)
-* [MiroShark Simulation](miroshark.md)
-* [Wallet & DeFi](wallet-defi.md)
 * [Noel Shell](noel-shell.md)
+* [MiroShark Simulation](miroshark.md)
+
+## Trading & DeFi
+
+* [Wallet & DeFi](wallet-defi.md)
+* [Base DeFi (base_mcp_*)](base.md)
+* [Robinhood Chain (rh_*)](robinhood.md)
+* [Stocks & SEC Data](stocks-sec.md)
 * [Base Watchdog (Token Monitoring)](base-watchdog.md)
 * [x402 API Market](x402-api-market.md)
 

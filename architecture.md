@@ -101,7 +101,7 @@ User prompts AI
 ## Data Flow: Autonomous Monitor
 
 ```
-create_monitor called
+schedule_research called
       │
       ▼
 1. Schedule registered on Trigger.dev (via api.noelclaw.com)
@@ -125,7 +125,7 @@ Next run: compares new findings to previous briefing
 ## Data Flow: Wallet Transactions
 
 ```
-swap_tokens / send_token called
+base_mcp_swap / base_mcp_send called
       │
       ▼
 @noelclaw/mcp:
@@ -183,7 +183,7 @@ All optional. Set in the `env` block of your MCP config.
 | `ANTHROPIC_API_KEY` | Use your own Claude quota instead of the platform |
 | `BANKR_API_KEY` | Use Bankr/Grok instead of Anthropic |
 | `FIRECRAWL_API_KEY` | Required for `deep_research` and `web_search`; optional for `web_scrape` (falls back to basic fetch) |
-| `TRIGGER_SECRET_KEY` | Required for create_monitor (Trigger.dev) |
+| `TRIGGER_SECRET_KEY` | Required for schedule_research (Trigger.dev) |
 | `TELEGRAM_BOT_TOKEN` | Your Telegram bot token - for monitor notifications |
 | `TELEGRAM_CHAT_ID` | Your Telegram chat ID - for monitor delivery |
 | `ALCHEMY_API_KEY` | Faster swap quotes and Base balance lookups |

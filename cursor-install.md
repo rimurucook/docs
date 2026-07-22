@@ -90,11 +90,11 @@ ask_noel question: "What's moving in crypto right now?"
 ```
 
 ```
-get_portfolio
+base_mcp_balance
 ```
 
 ```
-swap_tokens fromToken: "ETH" toToken: "USDC" amount: "0.01"
+base_mcp_swap fromToken: "ETH" toToken: "USDC" amount: "0.01"
 ```
 
 ---

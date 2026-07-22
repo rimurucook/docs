@@ -1,1222 +1,338 @@
-# MCP Server Reference
+# All 121 Tools
+
+> This page is generated from the live tool registry (`ALL_TOOLS`) of `@noelclaw/mcp` — every tool below exists exactly as named, with its real description. Nothing here is aspirational.
+
+**121 tools.** Install once, they all load — no per-tool setup. Tools that move funds require `confirm: true` and never execute from a bare estimate.
+
+## Semantic Memory (10)
+
+Persistent memory with semantic search, time-decay, and dedupe. Works against Noelclaw cloud or a free self-hosted supermemory server (`noelclaw setup`).
+
+| Tool | What it does |
+|------|--------------|
+| `memory_add` | Add content to your Noelclaw semantic memory - no setup needed, no extra API keys. |
+| `memory_search` | Hybrid memory search - fuses semantic (embedding) + lexical (full-text BM25) retrieval via Reciprocal Rank Fusion. |
+| `memory_context` | Retrieve the most semantically relevant memories for a topic, formatted as AI-ready context. |
+| `memory_profile` | Show your semantic memory stats - total memories stored, your memory space, and connected sources. |
+| `memory_list` | List your most recent Noelclaw memories without a search query. |
+| `memory_delete` | PERMANENT. Delete a specific memory by its ID — it cannot be recovered. Get IDs from memory_search or memory_list. Requires confirm: true. Show the user which memory you are about to delete (title/content) and get… |
+| `memory_insight` | Get a full intelligence report on any topic - combines semantic memory AND vault entries, then identifies knowledge gaps and suggests next actions. |
+| `memory_extract` | Save discrete facts, preferences and decisions to semantic memory as individually searchable atoms instead of one wall of text. |
+| `memory_publish` | IRREVERSIBLE, PUBLIC. Publish a memory snippet to the Memory Marketplace — visible to ALL Noelclaw users at /memory-marketplace. Reversible with vault_unpublish, but only for future discovery — anyone who already… |
+| `memory_consolidate` | Clean up fragmented knowledge after heavy research sessions. |
+
+## Vault (15)
+
+Git-style versioned notes with knowledge-graph links, tags, credentials, and export. Credentials are excluded from list/search/export and only readable by exact name.
+
+| Tool | What it does |
+|------|--------------|
+| `vault_save` | Save or update a versioned artifact in Noel-Vault. |
+| `vault_read` | Read a Noel-Vault entry by its key. Returns full content, version, tags, and any linked entries. |
+| `vault_list` | List Noel-Vault entries. Filter by type, agent, or pinned status. Returns previews, not full content. |
+| `vault_search` | Search Noel-Vault using semantic AI search (powered by Supermemory) when available, with automatic fallback to full-text search. |
+| `vault_history` | Get the full version history of a Noel-Vault entry - like git log. |
+| `vault_diff` | Compare two versions of a Noel-Vault entry - like git diff. |
+| `vault_export` | Export your entire Noel-Vault or a specific type as a structured bundle. |
+| `vault_store_credential` | Securely store an API key, token, or secret in your vault. |
+| `vault_get_credential` | Retrieve a stored credential from the vault by name. |
+| `vault_pin` | Pin or unpin a Noel-Vault entry. Pinned entries always appear first in vault_list and are prioritized in memory_context and search results. Use for your most important research, key prompts, or canonical references. |
+| `vault_unpublish` | Make a previously shared Noel-Vault entry private again, removing it from the public community listing. |
+| `vault_delete` | PERMANENT. Delete a Noel-Vault entry and ALL of its version history — this cannot be undone. Requires confirm: true. Use vault_list to browse first, and show the user the exact entry (key + title) you are about to… |
+| `vault_tag` | Add or replace tags on an existing Noel-Vault entry without modifying its content. |
+| `vault_link` | Create a semantic relationship between two Noel-Vault entries - building a knowledge graph. |
+| `vault_related` | Traverse the Noel-Vault knowledge graph - get all entries linked to a given entry. |
 
-`@noelclaw/mcp` is an MCP server that exposes all Noelclaw tools to any MCP-compatible AI client. Install once via `npx` - no build step, no account, no config required.
+## Chronicle (Audit Trail) (4)
 
-**121 tools across 22 categories.** Persistent vault, semantic memory, chronicle search, autonomous agents, DeFi execution on Base (estimate + execute swaps), live wallet pricing, diagnostics, token scanning, deep research, live web research, autonomous monitors, GitHub integration, AI code generation, audit trail, workflow packets, MiroShark simulation, and more.
+Append-only log of everything the runtime does, searchable by keyword with activity stats.
 
----
-
-## Tool Categories
-
-### Market & Intel (5)
-
-| Tool | Description |
-|------|-------------|
-| `get_market_data` | Live top-20 coins by market cap, trending, BTC/ETH/SOL key prices - from CoinGecko, no API key needed |
-| `get_token_data` | Price, 24h change, market cap, volume, and ATH for any specific token |
-| `compare_tokens` | Side-by-side comparison of two or more tokens - price, volume, market cap |
-| `market_overview` | Top movers, Fear & Greed index, BTC dominance |
-| `token_history` | Historical OHLC price data for any token |
-
-### Research & Insight (3)
-
-| Tool | Description |
-|------|-------------|
-| `ask_noel` | Chat with Noel - crypto AI with live market context, DeFi analysis, and trade ideas |
-| `market_thesis` | Bull/bear thesis for any token or sector |
-| `trade_plan` | Entry, exit, and risk levels for a trade setup |
-
-### DeFi & Base (9)
-
-> Transactions signed client-side via ethers.js - private key never leaves your machine.
-
-| Tool | Description |
-|------|-------------|
-| `base_mcp_balance` | Current token balances for your local wallet on Base with live ETH price from CoinGecko |
-| `base_mcp_estimate` | Preview a swap - expected output and price impact, without executing |
-| `base_mcp_swap` | Swap tokens on Base via 0x Permit2. Signed locally. Slippage capped 1%, price-impact guard 3% |
-| `execute_swap` | Execute a token swap on Base mainnet from Noel Shell. Requires `confirmed=true` after explicit user confirmation. Enforces estimate → preview → confirm → execute flow. Returns tx hash + Basescan link. |
-| `base_mcp_send` | Send ETH or ERC-20 tokens to any address or ENS name on Base mainnet |
-| `base_mcp_status` | Check MCP wallet status and config |
-| `base_mcp_resolve` | Resolve an ENS name or address alias to a checksummed Base address |
-| `base_mcp_lend` | Step-by-step instructions to deposit into a Morpho vault - no auto-execution |
-| `get_defi_yields` | Top DeFi yield opportunities on Base - live APY and TVL from DeFiLlama |
-
-### Automations (6)
-
-| Tool | Description |
-|------|-------------|
-| `create_automation` | Create DCA, price alert, or conditional buy/sell in plain English |
-| `list_automations` | All automations with status, run counts, and next run time |
-| `pause_automation` | Pause or resume an automation by ID |
-| `delete_automation` | Permanently delete an automation |
-| `get_automation_runs` | Execution history for an automation - status, tx hash, error per run |
-| `run_automation` | Trigger an automation manually right now |
-
-### Noel Framework (3)
-
-| Tool | Description |
-|------|-------------|
-| `list_playbooks` | Available playbooks with step counts and usage |
-| `run_playbook` | Execute a playbook with Sentinel gating per step |
-| `get_noel_ledger` | Sentinel audit trail - every gate decision with check type, duration, and reason |
-
-### Noel Vault (14)
-
-| Tool | Description |
-|------|-------------|
-| `vault_save` | Save or update an artifact with auto-versioning |
-| `vault_read` | Read a vault entry by key |
-| `vault_list` | List vault entries filtered by type, agent, or pinned status |
-| `vault_search` | Full-text search across the vault |
-| `vault_history` | Full version history of a vault entry (git log style) |
-| `vault_diff` | Compare two versions of a vault entry (git diff style) |
-| `vault_export` | Export entire vault or specific type as a structured bundle |
-| `vault_store_credential` | Securely store an API key or secret in the vault |
-| `vault_get_credential` | Retrieve a stored credential by name |
-| `vault_pin` | Pin an important entry |
-| `vault_delete` | Delete a vault entry permanently |
-| `vault_tag` | Add or update tags on an entry |
-| `vault_link` | Create a semantic relationship between two vault entries - build a knowledge graph |
-| `vault_related` | Traverse the knowledge graph - see all entries linked to a given key |
-
-### Wallet (3)
-
-| Tool | Description |
-|------|-------------|
-| `get_wallet_address` | Your local Noelclaw wallet address - keys stored at `~/.noelclaw/wallet.json`, never leave your machine |
-| `get_wallet_balance` | Live ETH + USDC balance from Base mainnet with real-time USD pricing from CoinGecko. No API key required. |
-| `wallet_sign_message` | EIP-191 personal_sign with the local Noelclaw wallet. Returns signature + verification instructions. Prove wallet ownership off-chain without sending a transaction. |
-
-### MiroShark (3)
-
-| Tool | Description |
-|------|-------------|
-| `miroshark_simulate` | Run a multi-agent social simulation for any scenario in plain English |
-| `miroshark_status` | Poll simulation status - prep, running, and completion with AI brief |
-| `miroshark_stop` | Stop a running simulation |
-
-### Agents (12)
-
-| Tool | Description |
-|------|-------------|
-| `list_agents` | List all available specialist agents - built-in experts plus community-published agents |
-| `hire_agent` | Hire a specialist agent (analyst, risk-manager, researcher, executor, scout) to run a task |
-| `agent_spawn` | Create a persistent named agent with a goal - survives across sessions, state saved to vault |
-| `agent_recall` | Recall a persistent agent - loads goal, status, progress history, and next step |
-| `agent_update` | Log progress and findings to a persistent agent - creates a new vault version automatically |
-| `agent_identity` | Get or set the identity profile for a persistent agent |
-| `agent_ledger` | Full execution ledger for an agent - all updates, findings, and status changes |
-| `agent_schedule` | Schedule an agent to run autonomously on a cron-like schedule (daily, weekly, or custom) |
-| `agent_unschedule` | Remove a schedule from an agent without deleting the agent |
-| `agent_pause` | Pause an autonomous agent - suspends the schedule without losing state |
-| `agent_resume` | Resume a paused agent from its last checkpoint |
-| `agent_runs` | View execution history for an autonomous agent - timestamps, outcomes, errors |
-
-### Token Scanner (3)
-
-| Tool | Description |
-|------|-------------|
-| `score_token` | Score a specific token for dip-reversal potential - hard gates + weighted scoring |
-| `check_token` | Safety check a token address - honeypot detection, liquidity, sell-side risk |
-| `scan_market` | Scan live Base pools - `mode=dips` for reversal setups, `mode=momentum` for breakouts |
-
-### Coder (5)
-
-| Tool | Description |
-|------|-------------|
-| `generate_contract` | Generate a Solidity smart contract (ERC-20, ERC-721, DeFi hooks, Uniswap v3/v4) with NatSpec |
-| `audit_contract` | AI code review of a Solidity contract - reentrancy, access control, overflow, gas issues |
-| `explain_code` | Plain-English explanation of any code snippet - Solidity, TypeScript, or config |
-| `review_code` | Code review with actionable feedback on logic, patterns, and best practices |
-| `generate_mcp_skill` | Generate a new MCP tool definition from a plain-English description |
-
-### Base & Chain (4)
-
-| Tool | Description |
-|------|-------------|
-| `base_query_vaults` | List Morpho yield vaults on Base sorted by APY - vault name, asset, APY, total deposits |
-| `base_list_markets` | List Moonwell lending/borrowing markets - supply APY, borrow APY, liquidity, utilization |
-| `base_prepare_deposit` | Get deposit instructions for a Morpho vault - address, APY, and step-by-step guide |
-| `base_chain_stats` | Real-time Base chain stats: ETH price, gas in gwei, and latest block info |
-
-### Content & Humanizer (2)
-
-| Tool | Description |
-|------|-------------|
-| `humanize_text` | Strip AI writing patterns - makes output sound natural (requires `MINIMAX_API_KEY`) |
-| `write_content` | Write a Twitter/X thread or single post - `format=thread` (default) or `format=post` |
-
-### Semantic Memory (10)
-
-| Tool | Description |
-|------|-------------|
-| `memory_add` | Add text, notes, or auto-fetch a URL to semantic memory |
-| `memory_search` | Search by meaning - "what did I save about X?" |
-| `memory_context` | Load entries relevant to the current session topic |
-| `memory_profile` | Your memory profile - preferences, history, patterns |
-| `memory_list` | List recent memory entries |
-| `memory_delete` | Remove a memory entry by ID |
-| `memory_insight` | AI insights derived from your memory patterns |
-| `memory_extract` | Auto-extract discrete facts from any text and save each individually |
-| `memory_consolidate` | Merge overlapping memories on a topic into one clean summary |
-| `memory_publish` | Publish a memory entry to the Memory Marketplace for others to discover |
-
-### Web Research (2)
-
-| Tool | Description |
-|------|-------------|
-| `web_search` | Search the web in real time - returns top results with titles, URLs, and summaries |
-| `web_scrape` | Read any URL and return its full content - articles, docs, pages |
-
-### Autonomous Monitor (4)
-
-> Runs research on a schedule - no chat needed. Saves findings to vault and sends Telegram briefings.
-
-| Tool | Description |
-|------|-------------|
-| `schedule_research` | Schedule a recurring research topic with a preset (daily, weekly) and optional vault save |
-| `create_monitor` | Set up a recurring research agent for any topic - daily, weekly, or custom cron |
-| `list_monitors` | List all active monitors with topic, schedule, and next run time |
-| `cancel_monitor` | Stop and delete a monitor by ID |
-
-### Session OS (1)
-
-| Tool | Description |
-|------|-------------|
-| `noel_status` | Full dashboard - memory usage, active agents, active automations, recent research, execution scores |
-
-### Diagnostics (1)
-
-| Tool | Description |
-|------|-------------|
-| `noel_diagnostics` | Pre-flight health check: pings Convex backend, Firecrawl, and Supermemory; lists which API keys are configured; warns on missing LLM key or Firecrawl key with actionable hints. Run before any long research session. |
-
----
-
-## How It Works
-
-```
-AI Client (Claude / Cursor / Hermes / Windsurf / Aeon)
-    │
-    │  MCP protocol (stdio)
-    ▼
-@noelclaw/mcp (Node.js)
-    │  Market data → CoinGecko (free, no key)
-    │  DeFi yields → DeFiLlama (free, no key)
-    │  Base chain data → Morpho + Moonwell APIs
-    │  Swap routing → 0x Protocol v2
-    │  Everything else → HTTPS with auto-retry on 429/5xx
-    ▼
-api.noelclaw.com  ← rate limit + CORS + auth
-    │
-    ├── Noelclaw backend  → vault, memory, automations, agents, DeFi, OS, monitors
-    └── MiroShark backend → multi-agent simulation engine
-```
-
-Wallet signing happens locally via ethers.js. The private key lives at `~/.noelclaw/wallet.json` and never leaves your machine.
-
----
-
-## Install
-
-### Claude Code
-
-```bash
-claude mcp add noelclaw -s user -- npx -y -p @noelclaw/mcp@3.43.1 noelclaw-mcp
-```
-
-### Claude Desktop
-
-Mac: `~/Library/Application Support/Claude/claude_desktop_config.json`
-Windows: `%APPDATA%\Claude\claude_desktop_config.json`
-
-```json
-{
-  "mcpServers": {
-    "noelclaw": {
-      "command": "npx",
-      "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"]
-    }
-  }
-}
-```
-
-### Cursor / Windsurf
-
-Edit `~/.cursor/mcp.json` (Cursor) or `~/.windsurf/mcp_config.json` (Windsurf):
-
-```json
-{
-  "mcpServers": {
-    "noelclaw": {
-      "command": "npx",
-      "args": ["-y", "-p", "@noelclaw/mcp@3.43.1", "noelclaw-mcp"]
-    }
-  }
-}
-```
-
-### Hermes
-
-```yaml
-mcp_servers:
-  noelclaw:
-    command: npx
-    args:
-      - "-y"
-      - "-p"
-      - "@noelclaw/mcp@3.43.1"
-      - "noelclaw-mcp"
-```
-
----
-
-## Tool Reference
-
-### `get_market_data`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `token` | string | no | Focus on a specific token, e.g. `"BTC"`, `"ETH"` |
-
-No parameters = returns top-20 by market cap + trending + BTC/ETH/SOL key prices.
-
----
-
-### `get_token_data`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `question` | string | yes | Token name or query, e.g. `"show me ETH"`, `"PEPE price"` |
-
----
-
-### `compare_tokens`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `tokens` | string[] | yes | Token symbols to compare, e.g. `["ETH", "SOL", "BTC"]` |
-
----
-
-### `market_overview`
-
-No parameters. Returns top movers, Fear & Greed index, and BTC dominance.
-
----
-
-### `token_history`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `token` | string | yes | Token symbol, e.g. `"ETH"` |
-| `days` | number | no | Number of days of history (default 7) |
-
----
-
-### `ask_noel`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `question` | string | yes | Your question or prompt |
-| `messages` | array | no | Prior conversation turns for context |
-
----
-
-### `market_thesis`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `token` | string | yes | Token or sector to analyze |
-
-Returns bull case, bear case, and key risks.
-
----
-
-### `trade_plan`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `token` | string | yes | Token to plan a trade for |
-| `direction` | string | no | `"long"` or `"short"` |
-
-Returns entry, target, stop-loss, and position sizing guidance.
-
----
-
-### `base_mcp_balance`
-
-No parameters. Returns token balances for your local wallet on Base. Call before swapping to confirm balance.
-
----
-
-### `base_mcp_estimate`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `fromToken` | string | yes | Token to sell: `ETH`, `USDC`, `USDT`, `DAI`, `WETH` |
-| `toToken` | string | yes | Token to buy |
-| `amount` | string | yes | Amount, e.g. `"0.01"` or `"50%"` |
-
-Returns expected output and price impact. Does not execute.
-
----
-
-### `base_mcp_swap`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `fromToken` | string | yes | Token to sell: `ETH`, `USDC`, `USDT`, `DAI`, `WETH` |
-| `toToken` | string | yes | Token to buy |
-| `amount` | string | yes | Human-readable amount, e.g. `"0.01"` or `"50%"` of balance |
-| `maxPriceImpactPct` | number | no | Abort if price impact exceeds this % (default 3) |
-
-Routes through 0x Permit2 on Base mainnet. Signed locally - private key never leaves your device. Slippage capped at 1% by default.
-
----
-
-### `base_mcp_send`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `token` | string | yes | `ETH`, `USDC`, `USDT`, `DAI`, or `WETH` |
-| `toAddress` | string | yes | Recipient address (`0x...`) or ENS name |
-| `amount` | string | yes | Human-readable amount, e.g. `"0.5"` |
-
----
-
-### `get_defi_yields`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `token` | string | no | Filter by token, e.g. `"USDC"`, `"ETH"` |
-| `minApy` | number | no | Minimum APY % to show (default 1) |
-| `limit` | number | no | Max results (default 20) |
-
-Fetches live data from DeFiLlama. No API key required.
-
----
-
-### `create_automation`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `rawInput` | string | yes | Plain English description |
-
-Examples:
-- `"Buy 50 USDC of ETH every day at 9am"`
-- `"Alert me when BTC hits $120,000"`
-- `"If ETH drops 5% in 1 hour, buy $100 worth"`
-
----
-
-### `list_automations`
-
-No parameters. Returns all automations with status, run counts, and next scheduled run.
-
----
-
-### `pause_automation`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `automationId` | string | yes | ID from `list_automations` |
-
----
-
-### `delete_automation`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `automationId` | string | yes | ID from `list_automations` |
-
----
-
-### `get_automation_runs`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `automationId` | string | yes | ID from `list_automations` |
-| `limit` | number | no | Max runs to return (default 20) |
-
-Returns each run's status (success/failed/skipped), amount, tx hash, and error message if any.
-
----
-
-### `run_automation`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `automationId` | string | yes | ID from `list_automations` |
-
-Triggers the automation immediately, regardless of its schedule.
-
----
-
-### `list_playbooks`
-
-No parameters. Returns available playbooks with step counts and last run.
-
----
-
-### `run_playbook`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `playbookId` | string | yes | ID from `list_playbooks` |
-| `context` | object | no | Runtime variables |
-
-Each step passes through Sentinel gating. Blocked steps halt the run and log to the ledger.
-
----
-
-### `get_noel_ledger`
-
-No parameters. Sentinel audit trail - every gate decision with check type, duration, and reason.
-
----
-
-### `vault_save`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `type` | string | yes | `research`, `execution`, `workflow`, `prompt`, `file`, `memory` |
-| `title` | string | yes | Human-readable title |
-| `content` | string | yes | Content - markdown, JSON, code, or plain text |
-| `key` | string | no | Slug key, e.g. `research/btc-analysis` (auto-generated if omitted) |
-| `contentType` | string | no | `markdown`, `json`, `text`, `code` |
-| `tags` | string[] | no | Tags for filtering |
-| `commitMsg` | string | no | Version message |
-
-Auto-versions on every update - all previous versions accessible via `vault_history`.
-
----
-
-### `vault_read`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `key` | string | yes | Vault key |
-
----
-
-### `vault_list`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `type` | string | no | Filter by type |
-| `pinned` | boolean | no | Only pinned entries |
-| `limit` | number | no | Max entries (default 50) |
-
----
-
-### `vault_search`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `query` | string | yes | Full-text search query |
-| `type` | string | no | Filter by type |
-| `limit` | number | no | Max results (default 20) |
-
----
-
-### `vault_history`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `key` | string | yes | Vault key |
-
----
-
-### `vault_diff`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `key` | string | yes | Vault key |
-| `fromVersion` | number | yes | Earlier version number |
-| `toVersion` | number | yes | Later version number |
-
----
-
-### `vault_export`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `type` | string | no | Export only this type (omit for full vault export) |
-
----
-
-### `vault_store_credential`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Credential name, e.g. `"alchemy_key"` |
-| `value` | string | yes | The secret value |
-
----
-
-### `vault_get_credential`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Credential name to retrieve |
-
----
-
-### `vault_pin`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `key` | string | yes | Vault key to pin |
-
----
-
-### `vault_delete`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `key` | string | yes | Vault key to delete |
-
----
-
-### `vault_tag`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `key` | string | yes | Vault key |
-| `tags` | string[] | yes | Tags to set (replaces existing tags) |
-
----
-
-### `vault_link`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `fromKey` | string | yes | Source vault entry key |
-| `toKey` | string | yes | Target vault entry key |
-| `relation` | string | yes | How `fromKey` relates to `toKey` - see relation types below |
-
-Creates a directed edge between two vault entries, building a knowledge graph over time. Both entries must already exist in your vault. Duplicate links are updated in-place instead of creating duplicates.
-
-**Relation types:**
-
-| Relation | Meaning |
-|----------|---------|
-| `references` | This entry cites or uses information from the target |
-| `derived_from` | This entry was built from or synthesizes the target |
-| `supersedes` | This entry replaces or improves on the target |
-| `related` | General association - thematically connected |
-| `continues` | This entry is a follow-on to the target (e.g. part 2 of a thread) |
-
-**Example:**
-```
-vault_link fromKey="research/eth-analysis" toKey="research/btc-analysis" relation="related"
-vault_link fromKey="research/q2-synthesis" toKey="research/eth-analysis" relation="derived_from"
-vault_link fromKey="agent/market-researcher" toKey="research/q2-synthesis" relation="references"
-```
-
----
-
-### `vault_related`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `key` | string | yes | Vault key to find connections for |
-| `relation` | string | no | Filter to only this relation type (omit to return all) |
+| Tool | What it does |
+|------|--------------|
+| `chronicle_add` | Log an event to Noel Chronicle - the system-wide audit log for your AI runtime. |
+| `chronicle_list` | Read the Noel Chronicle event log - your AI runtime timeline. |
+| `chronicle_search` | Search the Noel Chronicle by keyword. Matches against event titles and details. Useful for finding when something specific happened: 'when did I last research ETH?' or 'find all vault saves for Base'. |
+| `chronicle_stats` | Activity stats for your AI runtime - breakdown by event type, daily activity heatmap, busiest days, and most active categories. |
 
-Traverses the knowledge graph from a given entry. Returns both **outbound** links (entries this entry references) and **inbound** links (entries that reference this one), so you see the full network around any entry.
+## Agents (12)
 
-Each result includes `key`, `title`, `type`, `relation`, and `direction` (`outbound` or `inbound`).
+Named persistent agents that survive across sessions, accumulate learnings, and can run on a schedule.
 
-**Example output:**
-```
-Related entries for `agent/market-researcher` (2)
+| Tool | What it does |
+|------|--------------|
+| `list_agents` | List all available specialist agents you can hire - built-in experts (analyst, risk-manager, researcher, executor, scout) plus any community-published agents. |
+| `hire_agent` | Load a specialist agent's expertise and apply it to a task YOURSELF — the tool returns the agent's full persona (its framework, thresholds and house rules) scoped to your task, and you answer in that voice. |
+| `agent_spawn` | Create a persistent NAMED agent with a goal - survives across sessions, state saved to vault under `agent/<name>` key. |
+| `agent_recall` | Recall a persistent agent by name - loads its goal, current progress, findings, full history, and accumulated learnings (patterns the agent extracted from past runs). |
+| `agent_update` | Update a persistent agent's progress and findings. |
+| `agent_identity` | Get or create a persistent on-chain identity (wallet address) for a named agent. |
+| `agent_ledger` | View the full activity ledger for a persistent agent - every update, status change, and finding logged in order. |
+| `agent_schedule` | Attach an autonomous schedule to an existing agent. |
+| `agent_unschedule` | Remove the autonomous schedule from an agent. |
+| `agent_pause` | Pause an agent's autonomous schedule without deleting it. |
+| `agent_resume` | Re-enable a paused agent's schedule. Resets the consecutive-failure counter. |
+| `agent_runs` | View recent autonomous run history for a scheduled agent - when it ran, success/failure status, vault key where the output was saved, and duration. |
 
-- BTC Analysis Q2 (research/btc-analysis) [research] - outbound references
-- ETH Momentum Thesis (research/eth-analysis) [research] - outbound related
-```
+## Playbooks (3)
 
-**How the graph builds over time:** As you save research, link entries together, and spawn agents that reference vault content, the graph accumulates context automatically. `vault_related` is how you see that accumulated structure - what an agent is drawing on, what a synthesis was built from, how findings chain together.
+Curated multi-step playbooks executed through the Noel Framework with a full audit ledger.
 
----
-
-### `get_wallet_address`
-
-No parameters. Returns your local wallet address. Keys stored at `~/.noelclaw/wallet.json` and never leave your device.
-
----
-
-### `miroshark_simulate`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `scenario` | string | yes | What to simulate - plain English, any topic |
-
-Builds a knowledge graph, generates agent personas, runs belief propagation. Returns a `simulation_id`. Poll with `miroshark_status`.
-
----
-
-### `miroshark_status`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `simulation_id` | string | yes | ID from `miroshark_simulate` |
-
-Polls through: `preparing → running → complete`.
-
----
-
-### `miroshark_stop`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `simulation_id` | string | yes | Simulation ID to stop |
-
----
-
-### `list_agents`
-
-No parameters. Returns all specialist agents with name, ID, description, and pricing type.
-
----
-
-### `hire_agent`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `agentId` | string | yes | Agent ID from `list_agents`. Built-in: `analyst`, `risk-manager`, `researcher`, `executor`, `scout` |
-| `task` | string | yes | The task or question - be specific |
-| `maxTokens` | number | no | Max response tokens (default 800) |
-
----
-
-### `agent_spawn`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Unique agent name - lowercase alphanumeric with hyphens (e.g. `market-researcher`, `base-tracker`) |
-| `goal` | string | yes | What this agent is trying to accomplish |
-| `context` | string | no | Starting context, data, or notes the agent should carry |
-
-Creates a persistent named agent and saves its initial state to vault at key `agent/{name}`. The agent starts with a goal, a status of `active`, and an empty update log. It survives indefinitely across sessions - recall it anytime with `agent_recall`.
-
-**How it works:** Agent state is stored as a versioned vault entry (type `memory`). Every `agent_update` creates a new vault version, so the full history of an agent's work is preserved and diffable.
-
-```
-agent_spawn name="base-tracker" goal="monitor emerging Base chain protocols weekly"
-→ Agent base-tracker spawned. Recall with agent_recall.
-```
-
----
-
-### `agent_recall`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Agent name as used in `agent_spawn` |
-
-Loads a persistent agent's full state from vault - goal, current status, vault version, last updated timestamp, and the 3 most recent progress updates with findings and next steps.
-
-Use this at the start of a session to pick up where you left off, or to check what an agent last did before continuing its work.
-
-```
-agent_recall name="base-tracker"
-→ Goal: monitor emerging Base chain protocols weekly
-→ Status: active - v4
-→ Last progress: found 3 new protocols - Morpho, Aerodrome v2, Seamless
-→ Next: check TVL trends for each
-```
-
----
-
-### `agent_update`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Agent name |
-| `progress` | string | yes | What was accomplished in this update |
-| `findings` | string | no | Key findings, data, or outputs from this step |
-| `status` | string | no | `active` (default) \| `blocked` \| `complete` |
-| `nextStep` | string | no | What should happen next - helps on the next recall |
-
-Appends a progress entry to the agent's update log and saves a new vault version. The log keeps the last 20 updates - older entries are trimmed automatically. `nextStep` is surfaced prominently on `agent_recall` so the agent always knows where to continue.
-
-**Status values:**
-- `active` - ongoing, will continue
-- `blocked` - stuck, needs input or a different approach
-- `complete` - goal achieved
-
-```
-agent_update name="base-tracker" progress="analyzed Morpho TVL trend" findings="TVL up 40% in 30d, protocol is gaining traction" status="active" nextStep="check Aerodrome v2 next"
-→ Agent base-tracker updated (v5)
-```
-
-**Typical session pattern:**
-```
-agent_recall name="base-tracker"        ← resume from last state
-[do the work]
-agent_update name="base-tracker" ...    ← save progress
-agent_update name="base-tracker" ...    ← save more progress
-```
-
----
-
-### `agent_schedule`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Agent name as used in `agent_spawn` |
-| `schedule` | string | yes | `"daily"`, `"weekly"`, or a cron expression |
-| `task` | string | yes | What to do on each run - plain English |
-
-Schedules an agent to run autonomously. Each firing loads the agent state, executes the task, and appends to the agent's update log.
-
----
-
-### `agent_unschedule`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Agent name |
-
-Removes the schedule without deleting the agent or its state.
-
----
-
-### `agent_pause`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Agent name |
-
-Suspends the schedule. The agent retains all state - resume anytime.
-
----
-
-### `agent_resume`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Agent name |
-
-Reactivates a paused agent from its last checkpoint.
-
----
-
-### `agent_runs`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Agent name |
-| `limit` | number | no | Max runs to return (default 20) |
-
-Returns execution history - timestamps, outcomes, and errors for each autonomous run.
-
----
-
-### `score_token`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `mint` | string | yes | Token contract address |
-| `minLiquidity` | number | no | Minimum liquidity in USD (default 50000) |
-
-Returns a 0–100 score, pass/fail, pattern label, and factor breakdown.
-
----
-
-### `check_token`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `address` | string | yes | Token contract address to check |
-
-Honeypot detection, liquidity depth, and sell-side risk flags.
-
----
-
-### `scan_market`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `mode` | string | no | `"dips"` (default) for reversal setups, `"momentum"` for breakouts |
-| `minScore` | number | no | Minimum score (default 50) |
-| `minLiquidity` | number | no | Minimum liquidity in USD (default 50000) |
-| `limit` | number | no | Max pools to scan (default 40) |
-
----
-
-### `generate_contract`
+| Tool | What it does |
+|------|--------------|
+| `list_playbooks` | List available Noel Framework playbooks - predefined multi-step workflows. |
+| `run_playbook` | Execute a Noel Framework playbook. Each step runs through Sentinel before the matching tool executes it. Steps map directly to noelclaw tools (market, vault, agent, memory, automation). Playbook halts immediately if… |
+| `get_noel_ledger` | Get the Noel Framework audit trail - every Sentinel gate decision (approved / blocked / warned), which checks ran, duration, and reason. |
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `description` | string | yes | What the contract does, token type, key mechanics |
-| `chain` | string | no | Target chain (default: Base) |
+## Automations (6)
 
-Generates Solidity with NatSpec and SPDX license.
+Scheduled and conditional workflows: DCA, price alerts, conditional buy/sell. Dry-run supported.
 
----
-
-### `audit_contract`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `code` | string | yes | Solidity source code to audit |
-
-Reviews for reentrancy, access control, overflow, and gas issues.
-
----
-
-### `explain_code`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `code` | string | yes | Code snippet to explain |
-| `context` | string | no | What the code is part of |
-
----
-
-### `review_code`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `code` | string | yes | Code to review |
-| `focus` | string | no | `"security"`, `"performance"`, `"readability"`, `"all"` |
-
----
-
-### `generate_mcp_skill`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `description` | string | yes | Plain-English description of the MCP tool to generate |
-
-Generates a complete tool definition including name, inputSchema, and handler stub.
-
----
-
-### `base_query_vaults`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `asset` | string | no | Filter by asset symbol, e.g. `USDC`, `WETH`, `cbBTC` |
-| `limit` | number | no | Max vaults to return (default 10) |
-
-Returns Morpho yield vaults on Base sorted by APY.
-
----
-
-### `base_list_markets`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `asset` | string | no | Filter by asset symbol, e.g. `USDC`, `ETH` |
-
-Returns Moonwell lending/borrowing markets with supply APY, borrow APY, total liquidity, and utilization rate.
-
----
-
-### `base_prepare_deposit`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `vaultName` | string | yes | Name or partial name of the vault, e.g. `"Gauntlet USDC"` |
-| `amount` | string | yes | Amount to deposit, e.g. `"100"` |
-| `asset` | string | yes | Asset to deposit, e.g. `USDC`, `WETH` |
-
-Returns vault address, expected APY, and step-by-step deposit instructions. Does NOT execute the transaction.
-
----
-
-### `base_chain_stats`
-
-No parameters. Returns real-time Base chain stats: ETH price, gas price in gwei, and latest block info.
-
----
-
-### `humanize_text`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `text` | string | yes | AI-generated text to rewrite |
-
-Strips AI patterns using MiniMax. Requires `MINIMAX_API_KEY` in env.
-
----
-
-### `write_content`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `topic` | string | yes | What to write about |
-| `format` | string | no | `"thread"` (default) for multi-tweet thread, `"post"` for single tweet |
-| `tone` | string | no | Thread: `"alpha"`, `"educational"`, `"opinion"`, `"story"`. Post: `"hook"`, `"hot-take"`, `"alpha"`, `"question"`, `"observation"` |
-| `tweets` | number | no | Number of tweets in a thread, 4–12 (default 7) |
-| `long` | boolean | no | Allow up to 500 chars for post format (default false = 280 chars) |
-| `voice_sample` | string | no | Your own tweets to match your voice |
-
----
-
-### `memory_add`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `content` | string | yes | Text, notes, or a URL to auto-fetch and save |
-| `tags` | string[] | no | Tags for this memory entry |
-
----
-
-### `memory_search`
+| Tool | What it does |
+|------|--------------|
+| `create_automation` | Create an automation in plain English. Supports DCA, price alerts, conditional buys/sells, and recurring market updates. |
+| `list_automations` | List all your automations - active, paused, and completed - with status, run counts, and next scheduled run. |
+| `pause_automation` | Pause or resume an automation by ID. |
+| `delete_automation` | PERMANENT. Delete an automation — this cannot be undone. Requires confirm: true. Run list_automations first and show the user which automation (id + name) you are about to remove. If they only want it to stop… |
+| `get_automation_runs` | Get the execution history for an automation - each run's status (success/failed/skipped), amount spent, tx hash, and error message if any. |
+| `run_automation` | Trigger an automation immediately - regardless of its schedule or trigger condition. |
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `query` | string | yes | Search by meaning - e.g. `"ETH yield strategies"` |
-| `n` | number | no | Max results to return (default 10) |
-
-Semantic search - finds by meaning, not just keywords.
-
----
-
-### `memory_context`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `topic` | string | yes | Current topic or session focus |
-| `n` | number | no | Max entries to load (default 5) |
-
----
-
-### `memory_profile`
-
-No parameters. Returns your memory profile - preferences, history, and patterns learned from your saved entries.
-
----
+## Monitors (3)
 
-### `memory_list`
+Recurring research monitors that run after you close the chat.
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `n` | number | no | Max entries to return (default 20) |
-| `tag` | string | no | Filter by tag |
+| Tool | What it does |
+|------|--------------|
+| `schedule_research` | Schedule recurring autonomous research on any topic - runs on a cron schedule, saves findings to vault, and sends a Telegram notification. |
+| `list_monitors` | List all active scheduled research monitors - shows topic, schedule, next run, and monitor ID. |
+| `cancel_monitor` | PERMANENT. Cancel and delete a scheduled research monitor — the schedule is removed and cannot be restored. Requires confirm: true. Run list_monitors first and show the user which monitor (id + topic) you are about… |
 
----
+## Packets (Flows) (4)
 
-### `memory_delete`
+Reusable multi-step workflow packets: create, run, list, share.
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `id` | string | yes | Memory entry ID from `memory_list` or `memory_search` |
+| Tool | What it does |
+|------|--------------|
+| `packet_create` | Create or update a Packet - a named, reusable AI workflow stored in your vault. |
+| `packet_run` | Load and execute a Packet by name. Returns all steps formatted for sequential execution. After calling this, execute each step in order - tool steps are called directly, prompt steps are interpreted as instructions. |
+| `packet_list` | List all your Packets - reusable workflows stored in vault. |
+| `packet_share` | Publish a Packet to the community so others can discover and use it. |
 
----
+## Deep Research (1)
 
-### `memory_insight`
+Multi-angle web research. Default `mode: "sources"` returns a cited evidence pack with zero API keys; `mode: "report"` adds server-side synthesis (needs an LLM key).
 
-No parameters. AI-generated insights from patterns across your saved memories.
+| Tool | What it does |
+|------|--------------|
+| `deep_research` | Web research engine: searches, scrapes, ranks and de-duplicates sources, then returns them as a numbered, citable evidence pack for YOU to synthesise. |
 
----
+## Research Compare (1)
 
-### `memory_extract`
+Compare two saved research reports.
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `text` | string | yes | Source text to extract facts from |
-| `tags` | string[] | no | Tags to apply to each extracted fact |
+| Tool | What it does |
+|------|--------------|
+| `research_compare` | Diff two vault research reports. Two-pass, no API key needed. PASS 1 — call with keyA + keyB: loads both reports, extracts their section structure, and returns both bodies plus the comparison rubric for YOU to write.… |
 
-Splits a block of text into discrete facts and saves each as a separate memory entry.
+## Research Chain (1)
 
----
+Walk a topic's research history across time.
 
-### `memory_consolidate`
+| Tool | What it does |
+|------|--------------|
+| `research_chain` | Walk a research topic's timeline. Follows `continues` relations both backward and forward from a starting report and returns the chronological list with each report's date/title/TL;DR, plus the rubric for YOU to… |
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `topic` | string | yes | Topic to consolidate memories on |
-| `n` | number | no | Max memories to search and merge (default 20) |
+## Web Research (2)
 
-Finds overlapping memories on a topic, merges them into one clean summary, saves it back.
+Live web search and page scraping (proxied — no Firecrawl key needed).
 
----
+| Tool | What it does |
+|------|--------------|
+| `web_scrape` | Fetch and extract clean readable content from any URL - returns markdown. |
+| `web_search` | Search the web and return raw results: titles, URLs, and snippets. |
 
-### `web_search`
+## Market Data (6)
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `query` | string | yes | What to search for |
-| `limit` | number | no | Max results to return (default 5) |
+Live crypto market data and structured market-thesis rubrics from verified price sources (CoinGecko, DexScreener, Pyth cross-checked).
 
-Searches the web in real time via Firecrawl. Requires `FIRECRAWL_API_KEY` in env.
+| Tool | What it does |
+|------|--------------|
+| `get_market_data` | Get live crypto market data: top 20 coins by market cap, trending coins, and key prices for BTC/ETH/SOL. |
+| `get_token_data` | Get live market data for a specific token. |
+| `compare_tokens` | Compare 2–5 tokens side by side - price, 24h/7d change, market cap, volume, and ATH drawdown. |
+| `market_overview` | Global crypto market snapshot: Fear & Greed Index, BTC dominance, total market cap, DeFi TVL, ETH gas, trending tokens, and top sector leaders. |
+| `token_history` | Get historical price data for a token. Returns OHLC candles for the requested timeframe. Use to understand price trends, identify support/resistance levels, or calculate % changes over time. |
+| `get_base_token_data` | Get live market data for any Base-chain token by contract address, sourced from DexScreener: price, 1h/6h/24h change, volume, liquidity, market cap, FDV, pair age, and website/social links. |
 
----
+## Token Scanner (3)
 
-### `web_scrape`
+Token due-diligence on Base: score, compare, history, market scans.
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `url` | string | yes | URL to read |
+| Tool | What it does |
+|------|--------------|
+| `score_token` | Run the 6-component dip-reversal score on any Base token. |
+| `check_token` | Security audit a Base token: honeypot, rug risk score, mint authority, freeze authority, LP lock %, buy/sell tax, holder count. |
+| `scan_market` | Scan all trending + new Base pools for trading opportunities. |
 
-Returns the full text content of any web page. Requires `FIRECRAWL_API_KEY` in env.
+## Wallet & DeFi (Base) (1)
 
----
+Custodial-style local MCP wallet (key stored in `~/.noelclaw`), balances, DeFi yields, trade planning.
 
-### `create_monitor`
+| Tool | What it does |
+|------|--------------|
+| `get_defi_yields` | Fetch top DeFi yield opportunities on Base - Morpho, Moonwell, Aerodrome, Uniswap, and more. |
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `topic` | string | yes | What to research - topic, keyword, or question |
-| `schedule` | string | yes | Cron preset or expression. Presets: `daily-8am`, `daily-6pm`, `weekly-monday`, `hourly`. Or raw cron: `0 8 * * *` |
-| `label` | string | no | Short label to identify this monitor, e.g. `"morning brief"` |
+## Base MCP (base_mcp_*) (7)
 
-Creates a scheduled job that automatically researches the topic, saves findings to vault, and sends a Telegram notification. Requires `TRIGGER_SECRET_KEY` in env.
+Full Base mainnet (8453) rail: balances via Blockscout enumeration with impostor-token detection, sends, 0x Permit2 swaps, Morpho/Moonwell yield data, basename resolution. See [Base](base.md).
 
----
+| Tool | What it does |
+|------|--------------|
+| `base_mcp_status` | Base MCP - get live status of your Base wallet: address, chain info, current ETH price, gas. |
+| `base_mcp_balance` | Base MCP - get your current token balances on Base mainnet (ETH, USDC, USDT, DAI, WETH). |
+| `base_mcp_send` | IRREVERSIBLE. Send ETH or ERC-20 tokens to any address (or basename like `jesse.base.eth`) on Base mainnet. Signed and broadcast locally from your wallet — an on-chain transfer cannot be recalled. Requires confirm:… |
+| `base_mcp_swap` | Base MCP - swap tokens on Base (chainId 8453) via 0x Protocol Permit2 (signature-based, no separate approval tx). |
+| `base_mcp_estimate` | Base MCP - preview a swap's expected output and price impact without executing. |
+| `base_mcp_lend` | Base MCP - find the best lending venues for a token on Base (Morpho vaults + Moonwell markets), ranked by APY × TVL safety score. |
+| `base_mcp_resolve` | Base MCP - resolve a Base basename (like `jesse.base.eth`) to its 0x address. |
 
-### `list_monitors`
+## Base Network Data (4)
 
-No parameters. Returns all active monitors with their topic, schedule, next run time, and ID.
+Read-only Base network stats and yield/lending data.
 
----
+| Tool | What it does |
+|------|--------------|
+| `base_mcp_yield_vaults` | Find the best yield/earning opportunities on Base chain using Morpho vaults. |
+| `base_mcp_lending_rates` | Get lending and borrowing rates across all Moonwell markets on Base. |
+| `base_mcp_deposit_guide` | Get step-by-step deposit instructions for a Morpho vault — shows the vault address, expected APY, and manual deposit steps. |
+| `base_mcp_network` | Get real-time Base network stats: ETH price in USD, gas price in gwei, and latest block number. |
 
-### `cancel_monitor`
+## Robinhood Chain (rh_*) (8)
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `id` | string | yes | Monitor ID from `list_monitors` |
+Tokenized stocks + arbitrary crypto on Robinhood Chain (4663) with V2/V3/V4 best-fill routing, market and safety pre-screens. See [Robinhood Chain](robinhood.md).
 
----
+| Tool | What it does |
+|------|--------------|
+| `rh_mcp_status` | Robinhood Chain MCP - status of RH rail (chainId 4663): wallet address, RPC, ETH gas balance on RH, explorer. |
+| `rh_mcp_list_stocks` | Robinhood Chain MCP - list the 22 NoelClaw/ClawHood tokenized stock tickers (symbol, name, contract address) tradeable via Uniswap V4 on chain 4663. |
+| `rh_mcp_balance` | Robinhood Chain MCP - ETH + tokenized stock balances on RH (chain 4663) for your NoelClaw MCP wallet (same address as Base). |
+| `rh_mcp_estimate` | Robinhood Chain MCP - preview ETH↔token swap quote via Uniswap V4 (direct or multi-hop via USDG). |
+| `rh_mcp_swap` | Robinhood Chain MCP - execute ETH↔token swap on chain 4663. |
+| `rh_token_resolve` | Robinhood Chain MCP - resolve a crypto ticker OR 0x contract address to a tradeable token on chain 4663 via DexScreener. |
+| `rh_analyze` | Robinhood Chain MCP - market + risk pre-screen for any RH-chain token (ticker or 0x address). |
+| `rh_safety_check` | Robinhood Chain MCP - free onchain safety scan for a token (ticker or 0x address). |
 
-### `noel_status`
+## Robinhood Chain Orders (5)
 
-No parameters. Full dashboard - memory usage, swarm health, active automations, recent research, and execution scores.
+Local DCA / take-profit / stop-loss order engine. Orders persist to `~/.noelclaw/rh-orders.json`; `rh_orders_tick` previews by default and only trades with `execute: true`.
 
----
+| Tool | What it does |
+|------|--------------|
+| `rh_dca_create` | Robinhood Chain — create a DCA plan: buy a fixed ETH amount of a token every N hours, up to a total number of buys, capped by maxSpendEth. |
+| `rh_bracket_create` | Robinhood Chain — set take-profit and/or stop-loss on a token you HOLD. |
+| `rh_orders_list` | Robinhood Chain — list saved DCA / TP / SL orders and their progress. |
+| `rh_order_cancel` | Robinhood Chain — cancel a saved order by id (stops future DCA buys / TP-SL fills). |
+| `rh_orders_tick` | Robinhood Chain — evaluate all active orders and act on any that are due (DCA interval reached) or triggered (TP/SL price crossed). |
 
-## Environment Variables
+## Stock Bridge (1)
 
-Set in your MCP client config under the `env` block. All optional.
+Tokenized stock vs real US equity: price gap, pool depth, market open/closed.
 
-| Variable | Purpose |
-|----------|---------|
-| `ANTHROPIC_API_KEY` | Use your own Anthropic key for the CLI agent. Without it, calls proxy through the Noelclaw platform automatically |
-| `BANKR_API_KEY` | Use Bankr (Grok-3) for the CLI agent instead of Anthropic |
-| `NOELCLAW_MODEL` | Override model across the full stack (default: `claude-haiku-4-5-20251001`) |
-| `ALCHEMY_API_KEY` | Faster swap quotes and Base balance lookups |
-| `TELEGRAM_BOT_TOKEN` | Your Telegram bot token for automation alerts |
-| `TELEGRAM_CHAT_ID` | Your Telegram chat ID for delivery |
-| `MINIMAX_API_KEY` | Required for `humanize_text` |
-| `GITHUB_TOKEN` | Personal access token - required for private repos, recommended for higher rate limits |
+| Tool | What it does |
+|------|--------------|
+| `rh_stock_bridge` | Compare a tokenized stock on Robinhood Chain (4663) against the real US equity: on-chain price vs live share price, the premium/discount between them, pool depth, and whether the US market is currently open. |
 
----
+## Stock Fundamentals (SEC) (1)
 
-### GitHub (8)
+Company financials straight from SEC EDGAR XBRL — as filed, not vendor copies. See [Stocks & SEC Data](stocks-sec.md).
 
-> Read repos, PRs, issues, files, and commits from any GitHub repository. Set `GITHUB_TOKEN` for private repos - public repos work without a token.
+| Tool | What it does |
+|------|--------------|
+| `stock_fundamentals` | Fetch a public company's financials straight from SEC EDGAR XBRL (as filed in 10-Q/10-K) plus a live quote. |
 
-| Tool | Description |
-|------|-------------|
-| `github_list_repos` | List repos for a user or org. Leave username empty to list your own (requires token) |
-| `github_list_prs` | List pull requests for a repo - open, closed, or all |
-| `github_get_pr` | Full PR details: body, changed files with diffs, reviews, and comments |
-| `github_list_issues` | List issues for a repo - filter by state and label |
-| `github_get_issue` | Full issue details with all comments |
-| `github_get_file` | Read any file from a repo - decoded content up to 10k chars |
-| `github_get_commits` | Recent commits for a repo, branch, or specific file |
-| `github_search_code` | Search code on GitHub with qualifiers (repo:, language:, path:, filename:) |
+## Insider Activity (SEC) (1)
 
----
+Form 4 insider transactions with discretionary trades separated from automatic ones.
 
-### Chronicle (4)
+| Tool | What it does |
+|------|--------------|
+| `stock_insider` | Parse recent SEC Form 4 insider transactions for a US-listed company, straight from EDGAR. |
 
-> Append-only audit trail. Entries are permanent - nothing is updated or deleted.
+## Material Events (SEC) (1)
 
-| Tool | Description |
-|------|-------------|
-| `chronicle_add` | Add an entry to the audit trail - timestamped and permanent |
-| `chronicle_list` | Read the audit trail - filter by tag or date |
-| `chronicle_search` | Keyword search across chronicle events by title and detail. Find when anything happened without scrolling the full log. |
-| `chronicle_stats` | Runtime activity analytics: event breakdown by type, daily heatmap, busiest days, avg events/day over a configurable window (default 30 days, max 90). |
+Form 8-K timeline with item codes decoded into plain language.
 
----
+| Tool | What it does |
+|------|--------------|
+| `stock_events` | Timeline of a US company's material events from SEC Form 8-K, with the item codes decoded into plain language — earnings releases, executive departures, debt raises, dilution, restatements, impairments, layoffs. |
 
-### Packets (4)
+## GitHub (8)
 
-> Reusable workflow flows. Define a sequence of steps once, run on demand, share with others.
+Read-only GitHub integration: repos, PRs, issues, files, commits, code search.
 
-| Tool | Description |
-|------|-------------|
-| `packet_create` | Define a new workflow packet with a name and ordered steps |
-| `packet_run` | Execute a packet by name with optional runtime context |
-| `packet_list` | List all available packets - yours and shared |
-| `packet_share` | Share a packet - returns a shareable ID or URL |
+| Tool | What it does |
+|------|--------------|
+| `github_list_repos` | List GitHub repositories for a user or org. |
+| `github_list_prs` | List pull requests for a GitHub repository. |
+| `github_get_pr` | Get full details of a pull request - title, body, diff summary, changed files, reviews, and comments. |
+| `github_list_issues` | List issues for a GitHub repository. Returns issue number, title, author, labels, comment count. |
+| `github_get_issue` | Get a GitHub issue with full body and all comments. |
+| `github_get_file` | Read a file from a GitHub repository. Returns decoded content (up to 10k chars). Use for reading code, configs, READMEs. |
+| `github_get_commits` | Get recent commits for a repo, branch, or specific file. |
+| `github_search_code` | Search code on GitHub. Supports qualifiers: repo:owner/repo, language:typescript, path:src/, filename:package.json, etc. Requires GITHUB_TOKEN for best results. |
 
----
+## Code Audit (1)
 
-### `chronicle_add`
+Static Solidity security scan with a structured review rubric (no LLM).
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `content` | string | yes | What to record |
-| `tags` | string[] | no | Tags for filtering |
-| `source` | string | no | e.g. `"swarm"`, `"manual"`, `"automation"` |
+| Tool | What it does |
+|------|--------------|
+| `audit_contract` | Run a deterministic static scan over Solidity source for common antipatterns (tx.origin auth, reentrancy ordering, unchecked low-level calls, delegatecall hijack, floating pragma, etc). |
 
----
+## Noel Insight (3)
 
-### `chronicle_list`
+Ask the hosted Noel agent (used by playbooks; needs backend LLM).
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `limit` | number | no | Max entries (default 50) |
-| `tag` | string | no | Filter by tag |
-| `since` | string | no | ISO date - entries after this date only |
+| Tool | What it does |
+|------|--------------|
+| `ask_noel` | Ask Noel anything - analysis, opinions, explanations, strategy, or ideas. |
+| `market_thesis` | Fetch a cross-checked live price for any token (CoinGecko + DexScreener + Pyth, with a source-spread warning when they disagree) and return it with the bull/bear/verdict structure for YOU to write. |
+| `trade_plan` | Return the verified inputs for a trade plan on any token: cross-checked live price, a table of stop-loss and take-profit price levels computed off spot (signed for long or short), and position sizing math for the… |
 
----
+## MiroShark Simulation (3)
 
-### `packet_create`
+Agent-market simulation runs.
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Slug name, e.g. `"morning-brief"` |
-| `description` | string | yes | What this packet does |
-| `steps` | string[] | yes | Ordered steps in plain English |
-| `tags` | string[] | no | Tags for discovery |
+| Tool | What it does |
+|------|--------------|
+| `miroshark_simulate` | Simulate any scenario using MiroShark multi-agent AI. |
+| `miroshark_status` | Poll the status of a MiroShark simulation. |
+| `miroshark_stop` | Stop a running MiroShark simulation. |
 
----
+## Runtime / OS (3)
 
-### `packet_run`
+Status, diagnostics, and Noel Shell chat bridge.
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Packet name from `packet_list` |
-| `context` | object | no | Runtime variables injected into steps |
+| Tool | What it does |
+|------|--------------|
+| `noel_status` | Full runtime dashboard - memory size, persistent agents, active automations, recent vault research, execution scores, and your tier. |
+| `noel_diagnostics` | Health check for all Noelclaw services - Convex backend, Firecrawl, Supermemory, and configured API keys. |
+| `noel_shell_chat` | Chat with Noel Shell — AI terminal with tool calling. |
 
----
+## Wallet Signing (3)
 
-### `packet_list`
+Prove wallet ownership off-chain.
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `tag` | string | no | Filter by tag |
+| Tool | What it does |
+|------|--------------|
+| `get_wallet_address` | Get your Noelclaw wallet address. This is the local MCP wallet used to sign requests and receive on-chain assets. Keys never leave your machine. |
+| `get_wallet_balance` | Check ETH and USDC balance of your Noelclaw wallet on Base mainnet. |
+| `wallet_sign_message` | CAUTION: Sign an arbitrary message with the user's wallet (EIP-191 personal_sign). |
 
 ---
 
-### `packet_share`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | yes | Packet to share |
-| `public` | boolean | no | Make publicly discoverable (default false) |
-
----
+## Related
 
-## Troubleshooting
-
-| Error | Fix |
-|-------|-----|
-| Tools not appearing | Restart your MCP client after adding the server |
-| `npx` hangs on first run | Use `-y` flag: `npx -y -p @noelclaw/mcp@3.43.1 noelclaw-mcp` |
-| Tools not found after restart | Run `npx clear-npx-cache` then restart |
-| Swap fails | Check balance with `base_mcp_balance`, confirm Base mainnet connectivity |
-| `humanize_text` fails | Set `MINIMAX_API_KEY` in env |
-| Rate limit (429) | Auto-retries up to 3× with backoff - no action needed |
-| GitHub 401 | Set `GITHUB_TOKEN` in env - required for private repos |
-| GitHub 403 rate limit | Add `GITHUB_TOKEN` - unauthenticated requests have lower limits |
+- [Base DeFi](base.md) — the `base_mcp_*` rail in depth
+- [Robinhood Chain](robinhood.md) — the `rh_*` rail in depth
+- [Stocks & SEC Data](stocks-sec.md) — `stock_fundamentals` / `stock_insider` / `stock_events`
+- [Environment Variables](env-vars.md)
